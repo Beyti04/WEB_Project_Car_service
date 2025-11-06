@@ -85,10 +85,6 @@
                 </button>
                 <div class="flex flex-col gap-1">
                     <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
-                        <span class="material-symbols-outlined">person</span>
-                        <p class="text-sm font-medium leading-normal">My Profile</p>
-                    </a>
-                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
                         <span class="material-symbols-outlined">logout</span>
                         <p class="text-sm font-medium leading-normal">Logout</p>
                     </a>
