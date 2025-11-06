@@ -50,7 +50,7 @@
     <div class="relative flex min-h-screen w-full">
         <!-- SideNavBar -->
         <aside class="flex flex-col w-64 bg-card-light dark:bg-card-dark border-r border-border-light dark:border-border-dark p-4 shrink-0">
-            <div class="flex items-center gap-3 mb-8">
+            <a href="#" class="flex items-center gap-3 mb-8">
                 <div class="bg-primary/20 rounded-lg p-2 flex items-center justify-center">
                     <span class="material-symbols-outlined text-primary text-2xl">directions_car</span>
                 </div>
@@ -58,7 +58,7 @@
                     <h1 class="text-text-light dark:text-text-dark text-base font-bold leading-normal">AutoManager</h1>
                     <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal">Admin View</p>
                 </div>
-            </div>
+            </a>
             <nav class="flex flex-col gap-2 flex-1">
                 <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="#">
                     <span class="material-symbols-outlined text-primary">dashboard</span>

@@ -42,7 +42,7 @@
             <div class="px-4 sm:px-8 md:px-12 lg:px-20 xl:px-40 flex flex-1 justify-center py-5">
                 <div class="layout-content-container flex flex-col max-w-[1200px] flex-1">
                     <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#dbe0e6] dark:border-gray-700 px-4 sm:px-6 md:px-10 py-3 bg-white dark:bg-background-dark rounded-xl">
-                        <div class="flex items-center gap-4 text-[#111418] dark:text-white">
+                        <a href="index.php" class="flex items-center gap-4 text-[#111418] dark:text-white">
                             <div class="size-6 text-primary">
                                 <svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M39.5563 34.1455V13.8546C39.5563 15.708 36.8773 17.3437 32.7927 18.3189C30.2914 18.916 27.263 19.2655 24 19.2655C20.737 19.2655 17.7086 18.916 15.2073 18.3189C11.1227 17.3437 8.44365 15.708 8.44365 13.8546V34.1455C8.44365 35.9988 11.1227 37.6346 15.2073 38.6098C17.7086 39.2069 20.737 39.5564 24 39.5564C27.263 39.5564 30.2914 39.2069 32.7927 38.6098C36.8773 37.6346 39.5563 35.9988 39.5563 34.1455Z" fill="currentColor"></path>
@@ -50,10 +50,10 @@
                                 </svg>
                             </div>
                             <h2 class="text-[#111418] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Car Service Management</h2>
-                        </div>
+                        </a>
                         <div class="flex flex-1 justify-end items-center gap-4 sm:gap-6 md:gap-8">
                             <div class="hidden md:flex items-center gap-8">
-                                <a class="text-[#617589] dark:text-gray-400 text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary" href="#">Dashboard</a>
+                                <a class="text-[#617589] dark:text-gray-400 text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary" href="index.php">Dashboard</a>
                                 <a class="text-[#617589] dark:text-gray-400 text-sm font-medium leading-normal hover:text-primary dark:hover:text-primary" href="#">Appointments</a>
                                 <a class="text-primary dark:text-white text-sm font-bold leading-normal" href="#">Clients</a>
                             </div>
