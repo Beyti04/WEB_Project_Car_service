@@ -6,7 +6,7 @@ use PDO;
 use PDOException;
 
 class Database {
-    private static PDO $instance = null;
+    private static ?PDO $instance = null;
 
     private const HOST = 'localhost';
     private const DBNAME = 'car_service_db';
