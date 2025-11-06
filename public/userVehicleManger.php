@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>My Vehicles - Car Service Management</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#1173d4",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+              "destructive": "#D93025"
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+          font-variation-settings:
+          'FILL' 0,
+          'wght' 400,
+          'GRAD' 0,
+          'opsz' 24
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-[#333333] dark:text-gray-200">
+<div class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="flex w-64 flex-col border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-background-dark p-4">
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-3">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC3EL7G3L-TPpVwzN2lRIUTXXKzNbGkeoG_sdj7ICUY1A_Db_f43E66lY2qv5U83ChDf3vSLjpwfeqihXne5cH8GBSMJBbzgbvhhX531iGR7p9L6Dbu3Yx73eBQJfEtnngDGZnMiZUcycAnn8j6MxZG-n9mEosVgsGCIGYzvLrNoFRskWufhVUkn-4AWhct7dnUIGHLPZ2-6mNY90GjyNJXwzYiquZN7NMvsVNqhGdOAjIDtVbMtm7UwpeHqOcKvBCfD6PE4Ck9dd8");'></div>
+<div class="flex flex-col">
+<h1 class="text-base font-medium leading-normal text-[#111418] dark:text-white">John Doe</h1>
+<p class="text-sm font-normal leading-normal text-[#617589] dark:text-gray-400">john.doe@email.com</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2 mt-4">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#111418] dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined text-2xl">dashboard</span>
+<p class="text-sm font-medium leading-normal">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary dark:bg-primary/20 dark:text-white" href="#">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">directions_car</span>
+<p class="text-sm font-medium leading-normal">My Vehicles</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#111418] dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined text-2xl">history</span>
+<p class="text-sm font-medium leading-normal">Service History</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#111418] dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined text-2xl">event_upcoming</span>
+<p class="text-sm font-medium leading-normal">Appointments</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#111418] dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined text-2xl">person</span>
+<p class="text-sm font-medium leading-normal">Profile</p>
+</a>
+</nav>
+</div>
+<div class="mt-auto flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#111418] dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined text-2xl">settings</span>
+<p class="text-sm font-medium leading-normal">Settings</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#111418] dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined text-2xl">logout</span>
+<p class="text-sm font-medium leading-normal">Log out</p>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 p-8">
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+<!-- Left Column: Vehicle List -->
+<div class="xl:col-span-2">
+<div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+<h1 class="text-4xl font-black leading-tight tracking-[-0.033em] text-[#111418] dark:text-white">My Vehicles</h1>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined">add</span>
+<span class="truncate">Add New Vehicle</span>
+</button>
+</div>
+<!-- Vehicle Cards -->
+<div class="space-y-4">
+<!-- Card 1 -->
+<div class="flex flex-col md:flex-row items-stretch justify-between gap-4 rounded-lg bg-white dark:bg-gray-800 p-4 shadow-[0_0_4px_rgba(0,0,0,0.1)] dark:shadow-none border border-transparent dark:border-gray-700">
+<div class="flex flex-1 flex-col justify-between gap-4">
+<div class="flex flex-col gap-1">
+<p class="text-base font-bold leading-tight text-[#111418] dark:text-white">Honda Civic</p>
+<p class="text-sm font-normal leading-normal text-[#617589] dark:text-gray-400">2021 • ABC-123</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-700 px-4 text-sm font-medium leading-normal text-[#111418] dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+<span class="truncate">Edit</span>
+</button>
+<button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-transparent px-4 text-sm font-medium leading-normal text-destructive hover:bg-destructive/10 transition-colors">
+<span class="truncate">Remove</span>
+</button>
+</div>
+</div>
+<div class="w-full md:w-1/3 h-40 md:h-auto bg-center bg-no-repeat aspect-video bg-cover rounded-lg" data-alt="White Honda Civic parked on a city street" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuABZYkRChdrDZPF2favzFwd1CDeRxwT3_XqkB5IdMKvwmCAZqtpuB_0bB6ta90sVblqiJx0YmwHHcdymLJbhtazezBNVHTZayoP2Rkr98fkdtx855aOLj9UAG1_0WxuorLiAmF-qdIjnEah_z5hsLGJjACDov_4gtCSMPmQWxEROy7HlaTXwfVKzhKgAFEcg4NZMRg7OWqxrVyzguMPfAXXZYKenC4RUrsw0V0eXyZRboijYzsr-528XME2s2RyJgV5Y6MU4qNCq5I");'></div>
+</div>
+<!-- Card 2 -->
+<div class="flex flex-col md:flex-row items-stretch justify-between gap-4 rounded-lg bg-white dark:bg-gray-800 p-4 shadow-[0_0_4px_rgba(0,0,0,0.1)] dark:shadow-none border border-transparent dark:border-gray-700">
+<div class="flex flex-1 flex-col justify-between gap-4">
+<div class="flex flex-col gap-1">
+<p class="text-base font-bold leading-tight text-[#111418] dark:text-white">Ford F-150</p>
+<p class="text-sm font-normal leading-normal text-[#617589] dark:text-gray-400">2019 • XYZ-789</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-700 px-4 text-sm font-medium leading-normal text-[#111418] dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+<span class="truncate">Edit</span>
+</button>
+<button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-transparent px-4 text-sm font-medium leading-normal text-destructive hover:bg-destructive/10 transition-colors">
+<span class="truncate">Remove</span>
+</button>
+</div>
+</div>
+<div class="w-full md:w-1/3 h-40 md:h-auto bg-center bg-no-repeat aspect-video bg-cover rounded-lg" data-alt="Red Ford F-150 pickup truck on a dirt road" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAWEBIRNgvTc7qFgrrNumeObL32RGbuCk5RkVa6rNgDiWzDXQrkZgn5TaN3bs0E_NBOFhF3HjWcnB2UyCWrHxdECehIdmC_4rCYnd_eLpSbm_dATT7A6kAs6B43k87ySijfMs6sVUnDqsv00nL_rDM5btdh4qDehsH-Grl0Ry0O772DnkqHG024BwwaAqMuu5P6ko3W4xu_7pF4SczkweXwtPYmZZ8YRFDAnNGAzgFwgX_bMoc5jOXA7UvLhGxVN2HLoEwG9BoZBjI");'></div>
+</div>
+<!-- Empty State Example (can be shown conditionally) -->
+<!-- 
+                        <div class="flex flex-col items-center justify-center text-center p-12 bg-white dark:bg-gray-800 rounded-lg border border-dashed border-gray-300 dark:border-gray-600">
+                           <span class="material-symbols-outlined text-6xl text-gray-400 dark:text-gray-500">add_circle</span>
+                           <h3 class="mt-4 text-lg font-medium text-[#111418] dark:text-white">No vehicles added yet</h3>
+                           <p class="mt-1 text-sm text-[#617589] dark:text-gray-400">Click 'Add New Vehicle' to get started.</p>
+                        </div>
+                        -->
+</div>
+</div>
+<!-- Right Column: Add/Edit Form Panel -->
+<div class="xl:col-span-1">
+<div class="sticky top-8 bg-white dark:bg-gray-800 rounded-lg shadow-[0_0_4px_rgba(0,0,0,0.1)] dark:shadow-none border border-transparent dark:border-gray-700 p-6">
+<h2 class="text-xl font-bold text-[#111418] dark:text-white mb-6">Add a New Vehicle</h2>
+<form class="space-y-4">
+<div>
+<label class="block text-sm font-medium text-[#333333] dark:text-gray-300 mb-1" for="make">Make</label>
+<input class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[#333333] dark:text-white focus:border-primary focus:ring-primary" id="make" name="make" placeholder="e.g., Honda" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-[#333333] dark:text-gray-300 mb-1" for="model">Model</label>
+<input class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[#333333] dark:text-white focus:border-primary focus:ring-primary" id="model" name="model" placeholder="e.g., Civic" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-[#333333] dark:text-gray-300 mb-1" for="year">Year</label>
+<select class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[#333333] dark:text-white focus:border-primary focus:ring-primary" id="year" name="year">
+<option>2024</option>
+<option>2023</option>
+<option>2022</option>
+<option selected="">2021</option>
+<option>2020</option>
+<option>2019</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-[#333333] dark:text-gray-300 mb-1" for="license-plate">License Plate</label>
+<input class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[#333333] dark:text-white focus:border-primary focus:ring-primary" id="license-plate" name="license-plate" placeholder="e.g., ABC-123" type="text"/>
+</div>
+<div>
+<label class="block text-sm font-medium text-[#333333] dark:text-gray-300 mb-1" for="vin">VIN</label>
+<input class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[#333333] dark:text-white focus:border-primary focus:ring-primary" id="vin" name="vin" placeholder="17-digit vehicle identification number" type="text"/>
+<p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Usually found on your dashboard or driver-side door jamb.</p>
+</div>
+<div class="flex items-center justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+<button class="flex h-10 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-700 px-4 text-sm font-medium text-[#111418] dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors" type="button">Cancel</button>
+<button class="flex h-10 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary px-4 text-sm font-bold text-white hover:bg-primary/90 transition-colors" type="submit">Save Vehicle</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+<!-- Confirmation Modal (dialog) -->
+<!-- 
+            <div class="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center p-4">
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg max-w-md w-full p-6">
+                    <div class="flex items-start gap-4">
+                        <div class="bg-destructive/10 rounded-full p-2">
+                           <span class="material-symbols-outlined text-destructive text-2xl">warning</span>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-bold text-[#111418] dark:text-white">Remove Vehicle?</h3>
+                            <p class="text-sm text-[#617589] dark:text-gray-400 mt-1">
+                                Are you sure you want to remove the <strong>Honda Civic (ABC-123)</strong>? This action cannot be undone.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex justify-end gap-3 mt-6">
+                        <button class="flex h-10 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-700 px-4 text-sm font-medium text-[#111418] dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">Cancel</button>
+                        <button class="flex h-10 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-destructive px-4 text-sm font-bold text-white hover:bg-destructive/90 transition-colors">Confirm Remove</button>
+                    </div>
+                </div>
+            </div> 
+            -->
+</main>
+</div>
+</body></html>
