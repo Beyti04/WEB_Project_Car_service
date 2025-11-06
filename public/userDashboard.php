@@ -66,7 +66,7 @@
                     <span class="material-symbols-outlined">calendar_month</span>
                     <p class="text-sm font-medium leading-normal">My Appointments</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#service_history">
                     <span class="material-symbols-outlined">history</span>
                     <p class="text-sm font-medium leading-normal">Service History</p>
                 </a>
@@ -143,6 +143,7 @@
                                 </div>
                             </div>
                         </div>
+                        <a name="service_history">
                         <div class="rounded-xl border border-border-light dark:border-border-dark p-6 bg-card-light dark:bg-card-dark">
                             <div class="flex justify-between items-center mb-4">
                                 <h2 class="text-lg font-bold leading-normal">Service History</h2>
@@ -181,6 +182,7 @@
                                 </table>
                             </div>
                         </div>
+                        </a>
                     </div>
                     <div class="flex flex-col gap-6">
                         <div class="flex flex-col gap-4 rounded-xl border border-border-light dark:border-border-dark p-6 bg-card-light dark:bg-card-dark">
@@ -203,9 +205,8 @@
                             </div>
                         </div>
                         <div class="flex flex-col gap-4 rounded-xl border border-border-light dark:border-border-dark p-6 bg-card-light dark:bg-card-dark">
-                            <h2 class="text-lg font-bold leading-normal">My Vehicle</h2>
+                            <h2 class="text-lg font-bold leading-normal">Selected Vehicle</h2>
                             <div class="flex flex-col gap-2">
-                                <img alt="Toyota Highlander" class="rounded-lg aspect-video object-cover w-full mb-2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWYfPXOjk1el02_UukxwhLYGK4n8f4bG-nMQspygYTgt4BLFl7pdhyZN_6529C43LxEbCI0JteOjLB3UXVMDLRa-C9HvMtIGXPsl8KgqQRRAf-Oai-o1y6-sMPvPmaL5xH-ODdYZCx71kNiB1GGQfHwkrGUFbhW1mn8I8K6afhj-iSoDx5MGiUrPUavgynZuwT4i1Sac_YOLFYfcJYoCZszFdDMx8C7sSrrdqqKd7YiAZciu_Ggr3Q-1ZOfqodKhc7p4nxAuvF-18" />
                                 <p class="font-bold text-base">2022 Toyota Highlander</p>
                                 <p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">VIN: ************5432</p>
                                 <button class="w-full text-center mt-2 py-2 text-sm font-bold text-primary hover:bg-primary/10 rounded-lg transition-colors">Manage Vehicles</button>
