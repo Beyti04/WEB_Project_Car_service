@@ -1,5 +1,6 @@
 <?php
 
+use Configing\Database;
 use PDO;
 
 class Material {
