@@ -46,8 +46,8 @@
 <body class="font-display bg-background-light dark:bg-background-dark">
     <div class="relative flex min-h-screen w-full">
         <!-- SideNavBar -->
-        <aside class="flex flex-col w-64 bg-card-light dark:bg-card-dark border-r border-border-light dark:border-border-dark p-4 shrink-0">
-            <a href="adminDashboard.php" class="flex items-center gap-3 mb-8">
+        <aside class="flex flex-col w-64 bg-white border-r border-border-light p-4 shrink-0">
+            <a href="#" class="flex items-center gap-3 mb-8">
                 <div class="bg-primary/20 rounded-lg p-2 flex items-center justify-center">
                     <span class="material-symbols-outlined text-primary text-2xl">directions_car</span>
                 </div>
@@ -77,7 +77,7 @@
                     <span class="material-symbols-outlined">badge</span>
                     <p class="text-sm font-medium leading-normal">Employees</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="#">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="serviceManager.php">
                     <span class="material-symbols-outlined text-primary">build</span>
                     <p class="text-sm font-medium leading-normal">Services</p>
                 </a>
@@ -102,23 +102,25 @@
                 </div>
             </div>
         </aside>
+
         <!-- Main Content -->
         <div class="flex-1 flex flex-col">
             <!-- TopNavBar -->
-            <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-border-light dark:border-border-dark px-10 py-3 bg-card-light dark:bg-card-dark">
-                <div class="flex flex-1 justify-end gap-4 items-center">
-                    <button class="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark hover:bg-primary/10 transition-colors">
-                        <span class="material-symbols-outlined">notifications</span>
-                    </button>
-                    <div class="flex items-center gap-3">
-                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuADijiRLLPR2eRQXqbVqSmI5KeUFyXAg8F2zmY2mwfb1Pgm6eF-NmHWlSRm0xVvnz3wcPCkB7pflS81XhFJqdUyEEk4srBqEw81WqNgyxpAXWyBF4WXayX_79fjNwvjFvRP2mygTB8JtFtvmgwCmXAkWO1vUyZ6xTjfEnPmwsZD1QhwGVWu-iSAwpmnxmU_NGK7U5sH-U54t-zfth88S-uqzwxhC_4dJgAlM1nGXJJ3Wb2EztyredxX5Mc4g-N4vxPoQmZFTCyPxOs");'></div>
-                        <div class="flex flex-col text-sm">
-                            <p class="font-bold">John Doe</p>
-                            <p class="text-text-secondary-light dark:text-text-secondary-dark">Admin</p>
-                        </div>
-                    </div>
-                </div>
-            </header>
+            <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-border-light px-10 py-3 bg-white">
+    <div class="flex flex-1 justify-end gap-4 items-center">
+        <button class="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-background-light text-text-light hover:bg-primary/10 transition-colors">
+            <span class="material-symbols-outlined">notifications</span>
+        </button>
+        <div class="flex items-center gap-3">
+            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar image" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuADijiRLLPR2eRQXqbVqSmI5KeUFyXAg8F2zmY2mwfb1Pgm6eF-NmHWlSRm0xVvnz3wcPCkB7pflS81XhFJqdUyEEk4srBqEw81WqNgyxpAXWyBF4WXayX_79fjNwvjFvRP2mygTB8JtFtvmgwCmXAkWO1vUyZ6xTjfEnPmwsZD1QhwGVWu-iSAwpmnxmU_NGK7U5sH-U54t-zfth88S-uqzwxhC_4dJgAlM1nGXJJ3Wb2EztyredxX5Mc4g-N4vxPoQmZFTCyPxOs');"></div>
+            <div class="flex flex-col text-sm">
+                <p class="font-bold">John Doe</p>
+                <p class="text-text-secondary-light">Admin</p>
+            </div>
+        </div>
+    </div>
+</header>
+
             <main class="flex-1 p-6 lg:p-8">
                 <div class="mx-auto max-w-7xl">
                     <!-- PageHeading -->
