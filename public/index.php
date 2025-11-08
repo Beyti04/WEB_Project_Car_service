@@ -89,9 +89,6 @@
                                 <h1 class="text-white text-4xl font-black leading-tight tracking-[-0.033em] md:text-5xl">The All-in-One Platform for Your Auto Service Center</h1>
                                 <h2 class="text-white text-base font-normal leading-normal md:text-lg">Manage bookings, communicate with clients, and optimize your workshop's efficiency.</h2>
                             </div>
-                            <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-white dark:bg-secondary dark:text-primary text-base font-bold leading-normal tracking-[0.015em] hover:opacity-90 transition-opacity">
-                                <span class="truncate">Get Started Free</span>
-                            </button>
                         </div>
                     </div>
                 </section>

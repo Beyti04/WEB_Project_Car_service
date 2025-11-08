@@ -45,10 +45,10 @@
     </script>
 </head>
 
-<body class="font-display bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark">
+<body class="font-display bg-background-light dark:bg-background-dark text-[#333333] dark:text-gray-200">
     <div class="relative flex min-h-screen w-full">
         <aside class="flex flex-col w-64 bg-card-light dark:bg-card-dark border-r border-border-light dark:border-border-dark p-4 shrink-0">
-            <div class="flex items-center gap-3 mb-8">
+            <a href="#" class="flex items-center gap-3 mb-8">
                 <div class="bg-primary/20 rounded-lg p-2 flex items-center justify-center">
                     <span class="material-symbols-outlined text-primary text-2xl">directions_car</span>
                 </div>
@@ -56,11 +56,15 @@
                     <h1 class="text-text-light dark:text-text-dark text-base font-bold leading-normal">AutoManager</h1>
                     <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal">Client Portal</p>
                 </div>
-            </div>
+            </a>
             <nav class="flex flex-col gap-2 flex-1">
                 <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="#">
                     <span class="material-symbols-outlined text-primary">dashboard</span>
                     <p class="text-sm font-bold leading-normal">Dashboard</p>
+                </a>
+                <a href="userVehicleManager.php" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors">
+                    <span class="material-symbols-outlined">directions_car</span>
+                    <p class="text-sm font-medium leading-normal">My Vehicles</p>
                 </a>
                 <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
                     <span class="material-symbols-outlined">calendar_month</span>
@@ -70,10 +74,7 @@
                     <span class="material-symbols-outlined">history</span>
                     <p class="text-sm font-medium leading-normal">Service History</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
-                    <span class="material-symbols-outlined">directions_car</span>
-                    <p class="text-sm font-medium leading-normal">My Vehicles</p>
-                </a>
+
                 <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
                     <span class="material-symbols-outlined">receipt_long</span>
                     <p class="text-sm font-medium leading-normal">Billing</p>
@@ -84,7 +85,7 @@
                     <span class="truncate">Request New Service</span>
                 </button>
                 <div class="flex flex-col gap-1">
-                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
+                    <a href="index.php" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors">
                         <span class="material-symbols-outlined">logout</span>
                         <p class="text-sm font-medium leading-normal">Logout</p>
                     </a>
@@ -144,44 +145,44 @@
                             </div>
                         </div>
                         <a name="service_history">
-                        <div class="rounded-xl border border-border-light dark:border-border-dark p-6 bg-card-light dark:bg-card-dark">
-                            <div class="flex justify-between items-center mb-4">
-                                <h2 class="text-lg font-bold leading-normal">Service History</h2>
-                                <a class="text-sm font-bold text-primary hover:underline" href="#">View All</a>
+                            <div class="rounded-xl border border-border-light dark:border-border-dark p-6 bg-card-light dark:bg-card-dark">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h2 class="text-lg font-bold leading-normal">Service History</h2>
+                                    <a class="text-sm font-bold text-primary hover:underline" href="#">View All</a>
+                                </div>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-left">
+                                        <thead class="text-xs text-text-secondary-light dark:text-text-secondary-dark uppercase">
+                                            <tr>
+                                                <th class="py-3 pr-6" scope="col">Date</th>
+                                                <th class="py-3 px-6" scope="col">Service</th>
+                                                <th class="py-3 px-6" scope="col">Vehicle</th>
+                                                <th class="py-3 pl-6 text-right" scope="col">Cost</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="border-b border-border-light dark:border-border-dark">
+                                                <td class="py-4 pr-6 font-medium">Jun 15, 2023</td>
+                                                <td class="py-4 px-6">Brake Pad Replacement</td>
+                                                <td class="py-4 px-6 text-text-secondary-light dark:text-text-secondary-dark">2022 Toyota Highlander</td>
+                                                <td class="py-4 pl-6 text-right font-medium">$345.00</td>
+                                            </tr>
+                                            <tr class="border-b border-border-light dark:border-border-dark">
+                                                <td class="py-4 pr-6 font-medium">Jan 10, 2023</td>
+                                                <td class="py-4 px-6">Annual Inspection</td>
+                                                <td class="py-4 px-6 text-text-secondary-light dark:text-text-secondary-dark">2022 Toyota Highlander</td>
+                                                <td class="py-4 pl-6 text-right font-medium">$120.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="py-4 pr-6 font-medium">Jul 05, 2022</td>
+                                                <td class="py-4 px-6">Oil Change</td>
+                                                <td class="py-4 px-6 text-text-secondary-light dark:text-text-secondary-dark">2022 Toyota Highlander</td>
+                                                <td class="py-4 pl-6 text-right font-medium">$85.50</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                            <div class="overflow-x-auto">
-                                <table class="w-full text-left">
-                                    <thead class="text-xs text-text-secondary-light dark:text-text-secondary-dark uppercase">
-                                        <tr>
-                                            <th class="py-3 pr-6" scope="col">Date</th>
-                                            <th class="py-3 px-6" scope="col">Service</th>
-                                            <th class="py-3 px-6" scope="col">Vehicle</th>
-                                            <th class="py-3 pl-6 text-right" scope="col">Cost</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="border-b border-border-light dark:border-border-dark">
-                                            <td class="py-4 pr-6 font-medium">Jun 15, 2023</td>
-                                            <td class="py-4 px-6">Brake Pad Replacement</td>
-                                            <td class="py-4 px-6 text-text-secondary-light dark:text-text-secondary-dark">2022 Toyota Highlander</td>
-                                            <td class="py-4 pl-6 text-right font-medium">$345.00</td>
-                                        </tr>
-                                        <tr class="border-b border-border-light dark:border-border-dark">
-                                            <td class="py-4 pr-6 font-medium">Jan 10, 2023</td>
-                                            <td class="py-4 px-6">Annual Inspection</td>
-                                            <td class="py-4 px-6 text-text-secondary-light dark:text-text-secondary-dark">2022 Toyota Highlander</td>
-                                            <td class="py-4 pl-6 text-right font-medium">$120.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="py-4 pr-6 font-medium">Jul 05, 2022</td>
-                                            <td class="py-4 px-6">Oil Change</td>
-                                            <td class="py-4 px-6 text-text-secondary-light dark:text-text-secondary-dark">2022 Toyota Highlander</td>
-                                            <td class="py-4 pl-6 text-right font-medium">$85.50</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
                         </a>
                     </div>
                     <div class="flex flex-col gap-6">
@@ -209,7 +210,9 @@
                             <div class="flex flex-col gap-2">
                                 <p class="font-bold text-base">2022 Toyota Highlander</p>
                                 <p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">VIN: ************5432</p>
-                                <button class="w-full text-center mt-2 py-2 text-sm font-bold text-primary hover:bg-primary/10 rounded-lg transition-colors">Manage Vehicles</button>
+                                <a href="userVehicleManager.php">
+                                    <button class="w-full text-center mt-2 py-2 text-sm font-bold text-primary hover:bg-primary/10 rounded-lg transition-colors">Manage Vehicles</button>
+                                </a>
                             </div>
                         </div>
                     </div>

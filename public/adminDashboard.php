@@ -76,15 +76,15 @@
                     <span class="material-symbols-outlined">group</span>
                     <p class="text-sm font-medium leading-normal">Clients</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="employeeManager.php">
                     <span class="material-symbols-outlined">badge</span>
                     <p class="text-sm font-medium leading-normal">Employees</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="serviceManager.php">
                     <span class="material-symbols-outlined">build</span>
                     <p class="text-sm font-medium leading-normal">Services</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="inventoryManager.php">
                     <span class="material-symbols-outlined">inventory_2</span>
                     <p class="text-sm font-medium leading-normal">Inventory</p>
                 </a>
@@ -98,13 +98,9 @@
                     <span class="truncate">Create New Order</span>
                 </button>
                 <div class="flex flex-col gap-1">
-                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
-                        <span class="material-symbols-outlined">settings</span>
-                        <p class="text-sm font-medium leading-normal">Settings</p>
-                    </a>
-                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
-                        <span class="material-symbols-outlined">help</span>
-                        <p class="text-sm font-medium leading-normal">Support</p>
+                    <a href="index.php" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors">
+                        <span class="material-symbols-outlined">logout</span>
+                        <p class="text-sm font-medium leading-normal">Logout</p>
                     </a>
                 </div>
             </div>
@@ -113,16 +109,6 @@
         <div class="flex-1 flex flex-col">
             <!-- TopNavBar -->
             <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-border-light dark:border-border-dark px-10 py-3 bg-card-light dark:bg-card-dark">
-                <div class="flex items-center gap-8 w-full max-w-md">
-                    <label class="flex flex-col w-full">
-                        <div class="flex w-full flex-1 items-stretch rounded-lg h-10">
-                            <div class="text-text-secondary-light dark:text-text-secondary-dark flex bg-background-light dark:bg-background-dark items-center justify-center pl-4 rounded-l-lg">
-                                <span class="material-symbols-outlined">search</span>
-                            </div>
-                            <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary/50 border-none bg-background-light dark:bg-background-dark h-full placeholder:text-text-secondary-light dark:placeholder:text-text-secondary-dark px-4 pl-2 text-base font-normal leading-normal" placeholder="Search orders, clients, VIN..." value="" />
-                        </div>
-                    </label>
-                </div>
                 <div class="flex flex-1 justify-end gap-4 items-center">
                     <button class="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark hover:bg-primary/10 transition-colors">
                         <span class="material-symbols-outlined">notifications</span>

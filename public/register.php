@@ -45,10 +45,10 @@
         <div class="w-full max-w-md space-y-8">
             <!-- Header Section -->
             <div class="text-center">
-                <div class="flex justify-center items-center gap-3 mb-4">
+                <a href="index.php" class="flex justify-center items-center gap-3 mb-4">
                     <span class="material-symbols-outlined text-primary text-4xl">directions_car</span>
                     <h1 class="text-2xl font-bold text-[#111418] dark:text-white">AutoManager Pro</h1>
-                </div>
+                </a>
                 <div class="flex flex-col gap-3">
                     <p class="text-[#111418] dark:text-gray-200 text-4xl font-black leading-tight tracking-[-0.033em]">Create an Account</p>
                     <p class="text-[#617589] dark:text-gray-400 text-base font-normal leading-normal">Manage your car service operations seamlessly.</p>
