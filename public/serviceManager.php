@@ -124,7 +124,7 @@
                     <!-- PageHeading -->
                     <div class="flex flex-wrap justify-between gap-4 items-center mb-6">
                         <div class="flex flex-col gap-1">
-                            <p class="text-[#111418] dark:text-white text-3xl font-bold tracking-tight">Service Management</p>
+                            <h1 class="text-[#111418] dark:text-white text-3xl font-bold tracking-tight">Service Management</h1>
                             <p class="text-[#617589] dark:text-gray-400 text-base font-normal leading-normal">Manage the types of services offered by the car service.</p>
                         </div>
                         <button class="flex min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">

@@ -123,7 +123,10 @@
                 <div class="mx-auto max-w-7xl">
                     <!-- PageHeading -->
                     <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
-                        <h1 class="text-3xl font-bold leading-tight tracking-tight">Inventory Management</h1>
+                        <div class="flex flex-col gap-1">
+                            <h1 class="text-3xl font-bold leading-tight tracking-tight">Inventory Management</h1>
+                            <p class="text-[#617589] dark:text-gray-400 text-base font-normal leading-normal">Manage material availability and stock levels</p>
+                        </div>
                         <!-- Modified ToolBar Button -->
                         <button class="flex min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
                             <span class="material-symbols-outlined text-xl">add</span>
