@@ -47,7 +47,7 @@
 </head>
 
 <body class="font-display bg-background-light dark:bg-background-dark text-[#333333] dark:text-gray-200">
-    <div class="flex min-h-screen">
+    <div class="flex h-screen">
         <!-- SideNavBar -->
         <aside class="flex flex-col w-64 bg-card-light dark:bg-card-dark border-r border-border-light dark:border-border-dark p-4 shrink-0">
             <a href="userDashboard.php" class="flex items-center gap-3 mb-8">
@@ -83,9 +83,11 @@
                 </a>
             </nav>
             <div class="flex flex-col gap-4">
+                <a href="requestService.php">
                 <button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
                     <span class="truncate">Request New Service</span>
                 </button>
+                </a>
                 <div class="flex flex-col gap-1">
                     <a href="index.php" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors">
                         <span class="material-symbols-outlined">logout</span>
@@ -137,6 +139,54 @@
                                 </div>
                             </div>
                             <!-- Card 2 -->
+                            <div class="flex flex-col md:flex-row items-stretch justify-between gap-4 rounded-lg bg-white dark:bg-gray-800 p-4 shadow-[0_0_4px_rgba(0,0,0,0.1)] dark:shadow-none border border-transparent dark:border-gray-700">
+                                <div class="flex flex-1 flex-col justify-between gap-4">
+                                    <div class="flex flex-col gap-1">
+                                        <p class="text-base font-bold leading-tight text-[#111418] dark:text-white">Ford F-150</p>
+                                        <p class="text-sm font-normal leading-normal text-[#617589] dark:text-gray-400">2019 • VIN: ************5432</p>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-700 px-4 text-sm font-medium leading-normal text-[#111418] dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                                            <span class="truncate">Edit</span>
+                                        </button>
+                                        <button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-transparent px-4 text-sm font-medium leading-normal text-destructive hover:bg-destructive/10 transition-colors">
+                                            <span class="truncate">Remove</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col md:flex-row items-stretch justify-between gap-4 rounded-lg bg-white dark:bg-gray-800 p-4 shadow-[0_0_4px_rgba(0,0,0,0.1)] dark:shadow-none border border-transparent dark:border-gray-700">
+                                <div class="flex flex-1 flex-col justify-between gap-4">
+                                    <div class="flex flex-col gap-1">
+                                        <p class="text-base font-bold leading-tight text-[#111418] dark:text-white">Ford F-150</p>
+                                        <p class="text-sm font-normal leading-normal text-[#617589] dark:text-gray-400">2019 • VIN: ************5432</p>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-700 px-4 text-sm font-medium leading-normal text-[#111418] dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                                            <span class="truncate">Edit</span>
+                                        </button>
+                                        <button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-transparent px-4 text-sm font-medium leading-normal text-destructive hover:bg-destructive/10 transition-colors">
+                                            <span class="truncate">Remove</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col md:flex-row items-stretch justify-between gap-4 rounded-lg bg-white dark:bg-gray-800 p-4 shadow-[0_0_4px_rgba(0,0,0,0.1)] dark:shadow-none border border-transparent dark:border-gray-700">
+                                <div class="flex flex-1 flex-col justify-between gap-4">
+                                    <div class="flex flex-col gap-1">
+                                        <p class="text-base font-bold leading-tight text-[#111418] dark:text-white">Ford F-150</p>
+                                        <p class="text-sm font-normal leading-normal text-[#617589] dark:text-gray-400">2019 • VIN: ************5432</p>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-700 px-4 text-sm font-medium leading-normal text-[#111418] dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                                            <span class="truncate">Edit</span>
+                                        </button>
+                                        <button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-transparent px-4 text-sm font-medium leading-normal text-destructive hover:bg-destructive/10 transition-colors">
+                                            <span class="truncate">Remove</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="flex flex-col md:flex-row items-stretch justify-between gap-4 rounded-lg bg-white dark:bg-gray-800 p-4 shadow-[0_0_4px_rgba(0,0,0,0.1)] dark:shadow-none border border-transparent dark:border-gray-700">
                                 <div class="flex flex-1 flex-col justify-between gap-4">
                                     <div class="flex flex-col gap-1">

@@ -46,7 +46,7 @@
 </head>
 
 <body class="font-display bg-background-light dark:bg-background-dark text-[#333333] dark:text-gray-200">
-    <div class="relative flex min-h-screen w-full">
+    <div class="flex h-screen">
         <aside class="flex flex-col w-64 bg-card-light dark:bg-card-dark border-r border-border-light dark:border-border-dark p-4 shrink-0">
             <a href="#" class="flex items-center gap-3 mb-8">
                 <div class="bg-primary/20 rounded-lg p-2 flex items-center justify-center">
@@ -81,9 +81,11 @@
                 </a>
             </nav>
             <div class="flex flex-col gap-4">
+                <a href="requestService.php">
                 <button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
                     <span class="truncate">Request New Service</span>
                 </button>
+                </a>
                 <div class="flex flex-col gap-1">
                     <a href="index.php" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors">
                         <span class="material-symbols-outlined">logout</span>
@@ -172,6 +174,24 @@
                                                 <td class="py-4 px-6">Annual Inspection</td>
                                                 <td class="py-4 px-6 text-text-secondary-light dark:text-text-secondary-dark">2022 Toyota Highlander</td>
                                                 <td class="py-4 pl-6 text-right font-medium">$120.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="py-4 pr-6 font-medium">Jul 05, 2022</td>
+                                                <td class="py-4 px-6">Oil Change</td>
+                                                <td class="py-4 px-6 text-text-secondary-light dark:text-text-secondary-dark">2022 Toyota Highlander</td>
+                                                <td class="py-4 pl-6 text-right font-medium">$85.50</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="py-4 pr-6 font-medium">Jul 05, 2022</td>
+                                                <td class="py-4 px-6">Oil Change</td>
+                                                <td class="py-4 px-6 text-text-secondary-light dark:text-text-secondary-dark">2022 Toyota Highlander</td>
+                                                <td class="py-4 pl-6 text-right font-medium">$85.50</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="py-4 pr-6 font-medium">Jul 05, 2022</td>
+                                                <td class="py-4 px-6">Oil Change</td>
+                                                <td class="py-4 px-6 text-text-secondary-light dark:text-text-secondary-dark">2022 Toyota Highlander</td>
+                                                <td class="py-4 pl-6 text-right font-medium">$85.50</td>
                                             </tr>
                                             <tr>
                                                 <td class="py-4 pr-6 font-medium">Jul 05, 2022</td>
