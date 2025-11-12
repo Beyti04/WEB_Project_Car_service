@@ -1,5 +1,5 @@
 <?php
-use Configing\Database;
+use Config\Database;
 use PDO;
 
 class Materials_manager {
