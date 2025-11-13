@@ -1,18 +1,22 @@
 <?php
+
 namespace App\Controllers;
 
 use App\Models\Client;
 
-class AuthController {
+class AuthController
+{
 
     // --- РЕГИСТРАЦИЯ ---
 
-    public function showRegister(): void {
+    public function showRegister(): void
+    {
         // Зареждаме вашето View за регистрация
-        require __DIR__ . '/../Views/register.php';
+        require __DIR__ . '/../views/register.php';
     }
 
-    public function register(): void {
+    public function register(): void
+    {
         // 1. Взимаме данните от POST заявката
         $fname = trim($_POST['first_name'] ?? '');
         $lname = trim($_POST['last_name'] ?? '');
@@ -56,16 +60,18 @@ class AuthController {
 
     // --- ВХОД ---
 
-    public function showLogin(): void {
-        require __DIR__ . '/../Views/login.php';
+    public function showLogin(): void
+    {
+        require __DIR__ . '/../views/login.php';
     }
 
-    public function login(): void {
+    public function login(): void
+    {
         $email = trim($_POST['email'] ?? '');
         $pass  = $_POST['password'] ?? '';
 
         // 1. Намираме потребителя
-       /* $client = Client::findByEmail($email);
+        /* $client = Client::findByEmail($email);
 
         // 2. Проверяваме паролата
         if ($client && password_verify($pass, $client->password)) {
@@ -82,9 +88,12 @@ class AuthController {
         }*/
     }
 
+
+
     // --- ИЗХОД ---
-    
-    public function logout(): void {
+
+    public function logout(): void
+    {
         session_destroy();
         header("Location: index.php?action=login");
         exit;

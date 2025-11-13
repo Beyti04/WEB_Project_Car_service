@@ -9,7 +9,7 @@ $action = $_GET['action'] ?? 'home'; // По подразбиране home
 switch ($action) {
     case 'home':
         // Зареждаме началната страница (бившото index.php с картинките)
-        require __DIR__ . '/userDashboard.php';
+        require __DIR__ . '/../views/home.php';
         break;
 
     // АУТЕНТИКАЦИЯ
@@ -37,12 +37,12 @@ switch ($action) {
             exit;
         }
         // Зареждаме клиентското табло
-        require __DIR__ . '/userDashboard.php';
+        require __DIR__ . '/../views/userDashboard.php';
         break;
     
     case 'admin':
          // Тук по-късно ще сложим проверка за роля 'admin'
-         require __DIR__ . '/adminDashboard.php';
+         require __DIR__ . '/../views/adminDashboard.php';
          break;
 
     default:
