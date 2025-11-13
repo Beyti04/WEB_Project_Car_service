@@ -70,10 +70,10 @@
                             <a class="text-sm font-medium leading-normal hover:text-primary dark:hover:text-secondary" href="#">Contact</a>
                         </div>
                         <div class="flex gap-2">
-                            <a class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-transparent border border-primary text-primary dark:border-white dark:text-white dark:hover:bg-white/10 text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/10 transition-colors" href="../views/login.php">
+                            <a class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-transparent border border-primary text-primary dark:border-white dark:text-white dark:hover:bg-white/10 text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/10 transition-colors" href="../src/views/login.php">
                                 <span class="truncate">Log In</span>
                             </a>
-                            <a class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white dark:bg-secondary dark:text-primary text-sm font-bold leading-normal tracking-[0.015em] hover:opacity-90 transition-opacity" href="../views/register.php">
+                            <a class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white dark:bg-secondary dark:text-primary text-sm font-bold leading-normal tracking-[0.015em] hover:opacity-90 transition-opacity" href="../src/views/register.php">
                                 <span class="truncate">Sign Up</span>
                             </a>
                         </div>

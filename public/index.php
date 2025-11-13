@@ -1,7 +1,35 @@
 <?php
 session_start();
 
-use Controllers\AuthController;
+spl_autoload_register(function ($class) {
+    // Масив, описващ връзката Namespace => Папка
+    $prefixes = [
+        'App\\'    => __DIR__ . '/../src/',
+        'Config\\' => __DIR__ . '/../config/' // Или където сте сложили Database.php
+    ];
+
+    foreach ($prefixes as $prefix => $base_dir) {
+        // Проверява дали класът използва този prefix
+        $len = strlen($prefix);
+        if (strncmp($prefix, $class, $len) !== 0) {
+            continue;
+        }
+
+        // Взима името на класа без prefix-а
+        $relative_class = substr($class, $len);
+
+        // Превръща namespace пътя във файлов път (напр. Controllers\AuthController -> Controllers/AuthController.php)
+        $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+
+        // Ако файлът съществува, го зарежда
+        if (file_exists($file)) {
+            require $file;
+            return;
+        }
+    }
+});
+
+use App\Controllers\AuthController;
 
 $action = $_GET['action'] ?? 'home'; // По подразбиране home
 
@@ -9,12 +37,12 @@ $action = $_GET['action'] ?? 'home'; // По подразбиране home
 switch ($action) {
     case 'home':
         // Зареждаме началната страница (бившото index.php с картинките)
-        require __DIR__ . '/../views/home.php';
+        require __DIR__ . '../../src/views/home.php';
         break;
 
     // АУТЕНТИКАЦИЯ
     case 'login':
-        (new AuthController())->showLoginForm();
+        (new AuthController())->showLogin();
         break;
         
     case 'loginSubmit':
@@ -22,7 +50,11 @@ switch ($action) {
         break;
         
     case 'register':
-        (new AuthController())->showRegisterForm();
+        (new AuthController())->showRegister();
+        break;
+
+    case 'registerSubmit':
+        (new AuthController())->register();
         break;
 
     case 'logout':

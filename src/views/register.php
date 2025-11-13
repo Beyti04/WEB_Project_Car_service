@@ -56,7 +56,7 @@
             </div>
             <!-- Form Container -->
             <div class="bg-white dark:bg-background-dark dark:border dark:border-gray-700/50 p-8 rounded-xl shadow-sm space-y-6">
-                <form class="space-y-6" action="register.php" method="POST">
+                <form class="space-y-6" action="../../public/index.php?action=registerSubmit" method="POST">
                     <div class="flex flex-col sm:flex-row sm:gap-4 space-y-6 sm:space-y-0">
                         <!-- First Name -->
                         <label class="flex flex-col min-w-40 flex-1">
