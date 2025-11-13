@@ -61,30 +61,30 @@
                         <!-- First Name -->
                         <label class="flex flex-col min-w-40 flex-1">
                             <p class="text-[#111418] dark:text-gray-300 text-base font-medium leading-normal pb-2">First Name</p>
-                            <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white dark:bg-gray-800 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dbe0e6] dark:border-gray-700 bg-white focus:border-primary h-14 placeholder:text-[#617589] dark:placeholder:text-gray-500 p-[15px] text-base font-normal leading-normal" placeholder="Enter your first name" value="" />
+                            <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white dark:bg-gray-800 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dbe0e6] dark:border-gray-700 bg-white focus:border-primary h-14 placeholder:text-[#617589] dark:placeholder:text-gray-500 p-[15px] text-base font-normal leading-normal" placeholder="Enter your first name" name="first_name" value="" />
                         </label>
                         <!-- Last Name -->
                         <label class="flex flex-col min-w-40 flex-1">
                             <p class="text-[#111418] dark:text-gray-300 text-base font-medium leading-normal pb-2">Last Name</p>
-                            <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white dark:bg-gray-800 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dbe0e6] dark:border-gray-700 bg-white focus:border-primary h-14 placeholder:text-[#617589] dark:placeholder:text-gray-500 p-[15px] text-base font-normal leading-normal" placeholder="Enter your last name" value="" />
+                            <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white dark:bg-gray-800 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dbe0e6] dark:border-gray-700 bg-white focus:border-primary h-14 placeholder:text-[#617589] dark:placeholder:text-gray-500 p-[15px] text-base font-normal leading-normal" placeholder="Enter your last name" name="last_name" value="" />
                         </label>
                     </div>
                     <!-- Phone -->
                     <label class="flex flex-col min-w-40 flex-1">
                         <p class="text-[#111418] dark:text-gray-300 text-base font-medium leading-normal pb-2">Phone</p>
-                        <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white dark:bg-gray-800 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dbe0e6] dark:border-gray-700 bg-white focus:border-primary h-14 placeholder:text-[#617589] dark:placeholder:text-gray-500 p-[15px] text-base font-normal leading-normal" placeholder="Enter your phone number" value="" />
+                        <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white dark:bg-gray-800 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dbe0e6] dark:border-gray-700 bg-white focus:border-primary h-14 placeholder:text-[#617589] dark:placeholder:text-gray-500 p-[15px] text-base font-normal leading-normal" placeholder="Enter your phone number" name="phone" value="" />
                     </label>
                     <!-- Email -->
                     <label class="flex flex-col min-w-40 flex-1">
                         <p class="text-[#111418] dark:text-gray-300 text-base font-medium leading-normal pb-2">Email</p>
-                        <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white dark:bg-gray-800 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-validation-error bg-white focus:border-primary h-14 placeholder:text-[#617589] dark:placeholder:text-gray-500 p-[15px] text-base font-normal leading-normal" placeholder="Enter your email" value="" />
+                        <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white dark:bg-gray-800 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-validation-error bg-white focus:border-primary h-14 placeholder:text-[#617589] dark:placeholder:text-gray-500 p-[15px] text-base font-normal leading-normal" placeholder="Enter your email" name="email" value="" />
                         <p class="text-validation-error text-sm mt-1">Email is invalid</p>
                     </label>
                     <!-- Password -->
                     <label class="flex flex-col min-w-40 flex-1">
                         <p class="text-[#111418] dark:text-gray-300 text-base font-medium leading-normal pb-2">Password</p>
                         <div class="relative flex w-full flex-1 items-center">
-                            <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white dark:bg-gray-800 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dbe0e6] dark:border-gray-700 bg-white focus:border-primary h-14 placeholder:text-[#617589] dark:placeholder:text-gray-500 p-[15px] pr-12 text-base font-normal leading-normal" placeholder="Create a strong password" type="password" value="" />
+                            <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white dark:bg-gray-800 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dbe0e6] dark:border-gray-700 bg-white focus:border-primary h-14 placeholder:text-[#617589] dark:placeholder:text-gray-500 p-[15px] pr-12 text-base font-normal leading-normal" placeholder="Create a strong password" name="password" type="password" value="" />
                             <button class="absolute right-0 mr-4 text-[#617589] dark:text-gray-400" type="button">
                                 <span class="material-symbols-outlined">visibility_off</span>
                             </button>
@@ -98,7 +98,7 @@
                     <label class="flex flex-col min-w-40 flex-1">
                         <p class="text-[#111418] dark:text-gray-300 text-base font-medium leading-normal pb-2">Confirm Password</p>
                         <div class="relative flex w-full flex-1 items-center">
-                            <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white dark:bg-gray-800 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-validation-error bg-white focus:border-primary h-14 placeholder:text-[#617589] dark:placeholder:text-gray-500 p-[15px] pr-12 text-base font-normal leading-normal" placeholder="Confirm your password" type="password" value="" />
+                            <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white dark:bg-gray-800 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-validation-error bg-white focus:border-primary h-14 placeholder:text-[#617589] dark:placeholder:text-gray-500 p-[15px] pr-12 text-base font-normal leading-normal" placeholder="Confirm your password" name="confirm_password" type="password" value="" />
                             <button class="absolute right-0 mr-4 text-[#617589] dark:text-gray-400" type="button">
                                 <span class="material-symbols-outlined">visibility_off</span>
                             </button>
@@ -114,7 +114,7 @@
             <!-- Login Link -->
             <p class="text-center text-sm text-[#617589] dark:text-gray-400">
                 Already have an account?
-                <a class="font-medium text-primary hover:underline" href="login.php">Log in</a>
+                <a class="font-medium text-primary hover:underline" href="../views/login.php">Log in</a>
             </p>
         </div>
     </div>

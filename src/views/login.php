@@ -74,6 +74,8 @@
                                 <p class="mt-2 text-base text-gray-600 dark:text-gray-400">Sign in to manage your services</p>
                             </div>
                             <!-- Form Container -->
+                            <div class="bg-white dark:bg-background-dark dark:border dark:border-gray-700/50 p-8 rounded-xl shadow-sm space-y-6">
+                                <form class="space-y-6" action="../../public/index.php?action=loginSubmit" method="POST">
                             <div class="flex flex-col gap-y-6">
                                 <!-- Username or Email Field -->
                                 <div class="flex flex-col">
@@ -110,8 +112,9 @@
                             </div>
                             <p class="text-center text-sm text-[#617589] dark:text-gray-400">
                                 Don't have an account?
-                                <a class="font-medium text-primary hover:underline" href="register.php">Sign up</a>
+                                <a class="font-medium text-primary hover:underline" href="../views/register.php">Sign up</a>
                             </p>
+                        </form>
                             <!-- Footer -->
                             <div class="text-center">
                                 <p class="text-sm text-gray-500 dark:text-gray-400">© 2024 AutoManager Pro. All rights reserved.</p>

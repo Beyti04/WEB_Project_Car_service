@@ -19,8 +19,7 @@ class Client {
         $this->db = Database::getInstance();
     }
 
-    public function registerUser(string $password): bool {
-        // Хеширане на паролата преди запис!
+    public function registerUser(): bool {
         $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
 
         $sql = "INSERT INTO clients (first_name, last_name, phone_number, email, password) 
@@ -71,6 +70,24 @@ class Client {
 
     public function getUserFromDB(string $email): ?Client {
         $stmt = $this->db->prepare("SELECT * FROM clients WHERE email = ?");
+        $stmt->execute([$email]);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($data) {
+            return new Client(
+                id: $data['id'],
+                first_name: $data['first_name'],
+                last_name: $data['last_name'],
+                phone_number: $data['phone_number'],
+                email: $data['email'],
+                password: $data['password']
+            );
+        }
+        return null;
+    }
+    
+    public static function findByEmail(string $email): ?Client {
+        $db = Database::getInstance();
+        $stmt = $db->prepare("SELECT * FROM clients WHERE email = ?");
         $stmt->execute([$email]);
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($data) {

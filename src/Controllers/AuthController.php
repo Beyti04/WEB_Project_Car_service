@@ -30,32 +30,31 @@ class AuthController
         $confirm = $_POST['confirm_password'] ?? '';
         
         // 2. Валидация (Опростена)
-       /* if (empty($fname) || empty($email) || empty($pass)) {
+        if (empty($fname) || empty($email) || empty($pass)) {
             $error = "Моля, попълнете всички задължителни полета!";
-            require __DIR__ . '/../Views/register.php'; // Връщаме грешката във View-то
+            require __DIR__ . '/../../src/views/register.php'; // Връщаме грешката във View-то
             return;
         }
 
         if ($pass !== $confirm) {
             $error = "Паролите не съвпадат!";
-            require __DIR__ . '/../Views/register.php';
+            require __DIR__ . '/../../src/views/register.php';
             return;
         }
 
         // 3. Проверка дали имейлът вече съществува
         if (Client::findByEmail($email)) {
             $error = "Този имейл вече е регистриран!";
-            require __DIR__ . '/../Views/register.php';
+            require __DIR__ . '/../../src/views/register.php';
             return;
-        }*/
+        }
 
         // 4. Създаване на обекта и запис
         $client = new Client(null, $fname, $lname, $phone, $email, $pass);
 
-        if ($client->registerUser($pass)) {
+        if ($client->registerUser()) {
             // Успех! Пренасочваме към вход
-            header("Location: index.php?action=login&success=created");
-            exit;
+            require __DIR__ . '/../../src/views/login.php';
         } else {
             $error = "Възникна грешка при записа. Опитайте отново.";
             require __DIR__ . '/../../src/views/register.php';
@@ -75,7 +74,7 @@ class AuthController
         $pass  = $_POST['password'] ?? '';
 
         // 1. Намираме потребителя
-        /* $client = Client::findByEmail($email);
+        $client = Client::findByEmail($email);
 
         // 2. Проверяваме паролата
         if ($client && password_verify($pass, $client->password)) {
@@ -84,12 +83,11 @@ class AuthController
             $_SESSION['user_role'] = 'client';
             $_SESSION['user_name'] = $client->first_name;
 
-            header("Location: index.php?action=dashboard");
-            exit;
+            require __DIR__ . '/../../src/views/userDashboard.php';
         } else {
             $error = "Грешен имейл или парола.";
-            require __DIR__ . '/../Views/login.php';
-        }*/
+            require __DIR__ . '/../../src/views/login.php';
+        }
     }
 
 
