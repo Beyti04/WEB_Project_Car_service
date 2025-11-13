@@ -10,7 +10,9 @@ class Employee {
         public ?int $id = null,
         public string $first_name,
         public string $last_name,
-        public int $role_id_FK
+        public int $role_id_FK,
+        public string $email,
+        public string $password
     ) {
         $this->db = Database::getInstance();
     }

@@ -108,6 +108,10 @@
                                     </button>
                                 </div>
                             </div>
+                            <p class="text-center text-sm text-[#617589] dark:text-gray-400">
+                                Don't have an account?
+                                <a class="font-medium text-primary hover:underline" href="register.php">Sign up</a>
+                            </p>
                             <!-- Footer -->
                             <div class="text-center">
                                 <p class="text-sm text-gray-500 dark:text-gray-400">© 2024 AutoManager Pro. All rights reserved.</p>

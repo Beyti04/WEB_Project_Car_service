@@ -56,7 +56,7 @@
             </div>
             <!-- Form Container -->
             <div class="bg-white dark:bg-background-dark dark:border dark:border-gray-700/50 p-8 rounded-xl shadow-sm space-y-6">
-                <form class="space-y-6">
+                <form class="space-y-6" action="register.php" method="POST">
                     <div class="flex flex-col sm:flex-row sm:gap-4 space-y-6 sm:space-y-0">
                         <!-- First Name -->
                         <label class="flex flex-col min-w-40 flex-1">
@@ -114,7 +114,7 @@
             <!-- Login Link -->
             <p class="text-center text-sm text-[#617589] dark:text-gray-400">
                 Already have an account?
-                <a class="font-medium text-primary hover:underline" href="#">Log in</a>
+                <a class="font-medium text-primary hover:underline" href="login.php">Log in</a>
             </p>
         </div>
     </div>
