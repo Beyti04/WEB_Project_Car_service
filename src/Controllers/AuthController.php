@@ -54,7 +54,7 @@ class AuthController
 
         if ($client->registerUser()) {
             // Успех! Пренасочваме към вход
-            require __DIR__ . '/../../src/views/login.php';
+            require __DIR__ . '/../../src/views/userDashboard.php';
         } else {
             $error = "Възникна грешка при записа. Опитайте отново.";
             require __DIR__ . '/../../src/views/register.php';
