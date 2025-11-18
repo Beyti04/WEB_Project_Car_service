@@ -114,7 +114,7 @@
             <!-- Login Link -->
             <p class="text-center text-sm text-[#617589] dark:text-gray-400">
                 Already have an account?
-                <a class="font-medium text-primary hover:underline" href="../views/login.php">Log in</a>
+                <a class="font-medium text-primary hover:underline" href="index.php?action=login">Log in</a>
             </p>
         </div>
     </div>

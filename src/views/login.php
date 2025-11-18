@@ -76,52 +76,52 @@
                             <!-- Form Container -->
                             <div class="bg-white dark:bg-background-dark dark:border dark:border-gray-700/50 p-8 rounded-xl shadow-sm space-y-6">
                                 <form class="space-y-6" action="../../public/index.php?action=loginSubmit" method="POST">
-                            <div class="flex flex-col gap-y-6">
-                                <!-- Username or Email Field -->
-                                <div class="flex flex-col">
-                                    <label class="text-text-light dark:text-text-dark pb-2 text-sm font-medium" for="email-address">Username or Email</label>
-                                    <div class="relative">
-                                        <span aria-hidden="true" class="material-symbols-outlined pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400 input-icon">person</span>
-                                        <input autocomplete="email" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-border-light bg-white py-3 pl-12 pr-4 text-base font-normal text-text-light placeholder:text-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary dark:border-border-dark dark:bg-background-dark dark:text-text-dark" id="email-address" name="email" placeholder="Enter your username or email" required="" type="email" />
+                                    <div class="flex flex-col gap-y-6">
+                                        <!-- Username or Email Field -->
+                                        <div class="flex flex-col">
+                                            <label class="text-text-light dark:text-text-dark pb-2 text-sm font-medium" for="email-address">Username or Email</label>
+                                            <div class="relative">
+                                                <span aria-hidden="true" class="material-symbols-outlined pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400 input-icon">person</span>
+                                                <input autocomplete="email" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-border-light bg-white py-3 pl-12 pr-4 text-base font-normal text-text-light placeholder:text-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary dark:border-border-dark dark:bg-background-dark dark:text-text-dark" id="email-address" name="email" placeholder="Enter your username or email" required="" type="email" />
+                                            </div>
+                                        </div>
+                                        <!-- Password Field -->
+                                        <div class="flex flex-col">
+                                            <label class="text-text-light dark:text-text-dark pb-2 text-sm font-medium" for="password">Password</label>
+                                            <div class="relative">
+                                                <span aria-hidden="true" class="material-symbols-outlined pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400 input-icon">lock</span>
+                                                <input autocomplete="current-password" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-border-light bg-white py-3 pl-12 pr-4 text-base font-normal text-text-light placeholder:text-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary dark:border-border-dark dark:bg-background-dark dark:text-text-dark" id="password" name="password" placeholder="Enter your password" required="" type="password" />
+                                            </div>
+                                        </div>
+                                        <!-- Remember Me & Forgot Password -->
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center">
+                                                <input class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-background-dark" id="remember-me" name="remember-me" type="checkbox" />
+                                                <label class="ml-2 block text-sm text-gray-900 dark:text-gray-300" for="remember-me">Remember me</label>
+                                            </div>
+                                            <div class="text-sm">
+                                                <a class="font-medium text-primary hover:text-primary/80" href="#">Forgot Password?</a>
+                                            </div>
+                                        </div>
+                                        <!-- Login Button -->
+                                        <div>
+                                            <button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary px-5 py-3 text-base font-bold leading-normal text-white transition hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-background-dark" type="submit">
+                                                <span class="truncate">Sign In</span>
+                                            </button>
+                                        </div>
                                     </div>
+                                    <p class="text-center text-sm text-[#617589] dark:text-gray-400">
+                                        Don't have an account?
+                                        <a class="font-medium text-primary hover:underline" href="../views/register.php">Sign up</a>
+                                    </p>
+                                </form>
+                                <!-- Footer -->
+                                <div class="text-center">
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">© 2024 AutoManager Pro. All rights reserved.</p>
                                 </div>
-                                <!-- Password Field -->
-                                <div class="flex flex-col">
-                                    <label class="text-text-light dark:text-text-dark pb-2 text-sm font-medium" for="password">Password</label>
-                                    <div class="relative">
-                                        <span aria-hidden="true" class="material-symbols-outlined pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400 input-icon">lock</span>
-                                        <input autocomplete="current-password" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-border-light bg-white py-3 pl-12 pr-4 text-base font-normal text-text-light placeholder:text-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary dark:border-border-dark dark:bg-background-dark dark:text-text-dark" id="password" name="password" placeholder="Enter your password" required="" type="password" />
-                                    </div>
-                                </div>
-                                <!-- Remember Me & Forgot Password -->
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center">
-                                        <input class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-background-dark" id="remember-me" name="remember-me" type="checkbox" />
-                                        <label class="ml-2 block text-sm text-gray-900 dark:text-gray-300" for="remember-me">Remember me</label>
-                                    </div>
-                                    <div class="text-sm">
-                                        <a class="font-medium text-primary hover:text-primary/80" href="#">Forgot Password?</a>
-                                    </div>
-                                </div>
-                                <!-- Login Button -->
-                                <div>
-                                    <button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary px-5 py-3 text-base font-bold leading-normal text-white transition hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-background-dark" type="submit">
-                                        <span class="truncate">Sign In</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <p class="text-center text-sm text-[#617589] dark:text-gray-400">
-                                Don't have an account?
-                                <a class="font-medium text-primary hover:underline" href="../views/register.php">Sign up</a>
-                            </p>
-                        </form>
-                            <!-- Footer -->
-                            <div class="text-center">
-                                <p class="text-sm text-gray-500 dark:text-gray-400">© 2024 AutoManager Pro. All rights reserved.</p>
                             </div>
                         </div>
                     </div>
-                </div>
             </main>
         </div>
     </div>
