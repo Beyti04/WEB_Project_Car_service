@@ -79,6 +79,7 @@ CREATE TABLE materials (
 CREATE TABLE car (
     id INT AUTO_INCREMENT PRIMARY KEY,
     model_id INT NOT NULL,
+    year INT NOT NULL,
     vin VARCHAR(17) NOT NULL UNIQUE,
     owner INT NOT NULL,
     FOREIGN KEY (model_id) REFERENCES car_model(id),
