@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 
 <html class="light" lang="en">
-<?php
-use App\Models\CarBrand;
-?>
+
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -222,19 +220,29 @@ use App\Models\CarBrand;
                             <form class="space-y-4">
                                 <div>
                                     <label class="block text-sm font-medium text-[#333333] dark:text-gray-300 mb-1" for="make">Make</label>
-                                 <select class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[#333333] dark:text-white focus:border-primary focus:ring-primary" id="year" name="year">
+                                 <select class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[#333333] dark:text-white focus:border-primary focus:ring-primary" id="brands" name="brand">
                                         <?php
-                                        foreach (CarBrand::getAllBrands() as $row) {
-                                            echo "<option value=" . htmlspecialchars($row['id']) . ">" . htmlspecialchars($row['brand_name']) . "</option>";
+                                        // Fetch all car brands from the database
+                                        use App\Models\CarBrand;
+                                        $brands = CarBrand::getAllBrands();
+                                        echo "<option disabled selected>Select a brand</option>";
+                                        foreach ($brands as $brand) {
+                                            echo "<option value='" . htmlspecialchars($brand['id']) . "'>" . htmlspecialchars($brand['brand_name']) . "</option>";
                                         }
                                         ?>
                                     </select>    
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-[#333333] dark:text-gray-300 mb-1" for="model">Model</label>
-                                    <select class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[#333333] dark:text-white focus:border-primary focus:ring-primary" id="year" name="year">
+                                    <select class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[#333333] dark:text-white focus:border-primary focus:ring-primary" id="model" name="model">
                                         <?php
-                                        
+                                        use App\Models\CarModel;
+                                        // Fetch all car models from the database
+                                        $models = CarModel::getModelsByBrand($brand_id ?? 0);
+                                        echo "<option disabled selected>Select a model</option>";
+                                        foreach ($models as $model) {
+                                            echo "<option value='" . htmlspecialchars($model['id']) . "'>" . htmlspecialchars($model['model_name']) . "</option>";
+                                        }
                                         ?>
                                     </select>
                                 </div>

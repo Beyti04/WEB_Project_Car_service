@@ -232,7 +232,7 @@
                             <div class="flex flex-col gap-2">
                                 <p class="font-bold text-base">2022 Toyota Highlander</p>
                                 <p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">VIN: ************5432</p>
-                                <a href="userVehicleManager.php">
+                                <a href="index.php?action=myVehicles">
                                     <button class="w-full text-center mt-2 py-2 text-sm font-bold text-primary hover:bg-primary/10 rounded-lg transition-colors">Manage Vehicles</button>
                                 </a>
                             </div>

@@ -60,6 +60,16 @@ switch ($action) {
     case 'logout':
         (new AuthController())->logout();
         break;
+    
+    case 'myVehicles':
+        // Проверяваме дали е логнат
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        // Зареждаме страницата за управление на превозни средства
+        require __DIR__ . '/../src/views/userVehicleManager.php';
+        break;
 
     // ТАБЛА (DASHBOARDS)
     case 'dashboard':
