@@ -81,7 +81,7 @@
                     </button>
                 </a>
                 <div class="flex flex-col gap-1">
-                    <a href="index.php" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors">
+                    <a href="index.php?action=logout" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors">
                         <span class="material-symbols-outlined">logout</span>
                         <p class="text-sm font-medium leading-normal">Logout</p>
                     </a>
@@ -97,7 +97,7 @@
                     <div class="flex items-center gap-3">
                         <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuADijiRLLPR2eRQXqbVqSmI5KeUFyXAg8F2zmY2mwfb1Pgm6eF-NmHWlSRm0xVvnz3wcPCkB7pflS81XhFJqdUyEEk4srBqEw81WqNgyxpAXWyBF4WXayX_79fjNwvjFvRP2mygTB8JtFtvmgwCmXAkWO1vUyZ6xTjfEnPmwsZD1QhwGVWu-iSAwpmnxmU_NGK7U5sH-U54t-zfth88S-uqzwxhC_4dJgAlM1nGXJJ3Wb2EztyredxX5Mc4g-N4vxPoQmZFTCyPxOs");'></div>
                         <div class="flex flex-col text-sm">
-                            <p class="font-bold">Sarah Connor</p>
+                            <p class="font-bold"><?php echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?></p>
                             <p class="text-text-secondary-light dark:text-text-secondary-dark">Client</p>
                         </div>
                     </div>

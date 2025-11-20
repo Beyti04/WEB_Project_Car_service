@@ -87,7 +87,7 @@
                     </button>
                 </a>
                 <div class="flex flex-col gap-1">
-                    <a href="index.php" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors">
+                    <a href="index.php?action=logout" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors">
                         <span class="material-symbols-outlined">logout</span>
                         <p class="text-sm font-medium leading-normal">Logout</p>
                     </a>

@@ -28,7 +28,7 @@ class AuthController
         $email = trim($_POST['email'] ?? '');
         $pass  = $_POST['password'] ?? '';
         $confirm = $_POST['confirm_password'] ?? '';
-        
+
         // 2. Валидация (Опростена)
         if (empty($fname) || empty($email) || empty($pass)) {
             $error = "Моля, попълнете всички задължителни полета!";
@@ -83,10 +83,10 @@ class AuthController
             $_SESSION['user_role'] = 'client';
             $_SESSION['user_name'] = $client->first_name;
 
-            require __DIR__ . '/../../src/views/userDashboard.php';
+            header("Location: index.php?action=userDashboard");
         } else {
             $error = "Грешен имейл или парола.";
-            require __DIR__ . '/../../src/views/login.php';
+            header("Location: index.php?action=login");
         }
     }
 
@@ -97,7 +97,7 @@ class AuthController
     public function logout(): void
     {
         session_destroy();
-        header("Location: index.php?action=login");
+        header("Location: index.php?action=home");
         exit;
     }
 }

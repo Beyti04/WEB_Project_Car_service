@@ -89,7 +89,7 @@
                     </button>
                 </a>
                 <div class="flex flex-col gap-1">
-                    <a href="index.php" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors">
+                    <a href="index.php?action=logout" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors">
                         <span class="material-symbols-outlined">logout</span>
                         <p class="text-sm font-medium leading-normal">Logout</p>
                     </a>
@@ -105,7 +105,13 @@
                     <div class="flex items-center gap-3">
                         <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuADijiRLLPR2eRQXqbVqSmI5KeUFyXAg8F2zmY2mwfb1Pgm6eF-NmHWlSRm0xVvnz3wcPCkB7pflS81XhFJqdUyEEk4srBqEw81WqNgyxpAXWyBF4WXayX_79fjNwvjFvRP2mygTB8JtFtvmgwCmXAkWO1vUyZ6xTjfEnPmwsZD1QhwGVWu-iSAwpmnxmU_NGK7U5sH-U54t-zfth88S-uqzwxhC_4dJgAlM1nGXJJ3Wb2EztyredxX5Mc4g-N4vxPoQmZFTCyPxOs");'></div>
                         <div class="flex flex-col text-sm">
-                            <p class="font-bold"> <?php echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?></p>
+                            <p class="font-bold"> <?php
+
+                                                    use App\Models\Car;
+                                                    use App\Models\CarBrand;
+                                                    use App\Models\CarModel;
+
+                                                    echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?></p>
                             <p class="text-text-secondary-light dark:text-text-secondary-dark">Client</p>
                         </div>
                     </div>
@@ -121,96 +127,45 @@
                         </div>
                         <!-- Vehicle Cards -->
                         <div class="space-y-4">
-                            <!-- Card 1 -->
-                            <div class="flex flex-col md:flex-row items-stretch justify-between gap-4 rounded-lg bg-white dark:bg-gray-800 p-4 shadow-[0_0_4px_rgba(0,0,0,0.1)] dark:shadow-none border border-transparent dark:border-gray-700">
-                                <div class="flex flex-1 flex-col justify-between gap-4">
-                                    <div class="flex flex-col gap-1">
-                                        <p class="text-base font-bold leading-tight text-[#111418] dark:text-white">Honda Civic</p>
-                                        <p class="text-sm font-normal leading-normal text-[#617589] dark:text-gray-400">2021 • VIN: ************5432</p>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-700 px-4 text-sm font-medium leading-normal text-[#111418] dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-                                            <span class="truncate">Edit</span>
-                                        </button>
-                                        <button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-transparent px-4 text-sm font-medium leading-normal text-destructive hover:bg-destructive/10 transition-colors">
-                                            <span class="truncate">Remove</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Card 2 -->
-                            <div class="flex flex-col md:flex-row items-stretch justify-between gap-4 rounded-lg bg-white dark:bg-gray-800 p-4 shadow-[0_0_4px_rgba(0,0,0,0.1)] dark:shadow-none border border-transparent dark:border-gray-700">
-                                <div class="flex flex-1 flex-col justify-between gap-4">
-                                    <div class="flex flex-col gap-1">
-                                        <p class="text-base font-bold leading-tight text-[#111418] dark:text-white">Ford F-150</p>
-                                        <p class="text-sm font-normal leading-normal text-[#617589] dark:text-gray-400">2019 • VIN: ************5432</p>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-700 px-4 text-sm font-medium leading-normal text-[#111418] dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-                                            <span class="truncate">Edit</span>
-                                        </button>
-                                        <button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-transparent px-4 text-sm font-medium leading-normal text-destructive hover:bg-destructive/10 transition-colors">
-                                            <span class="truncate">Remove</span>
-                                        </button>
+                            <?php
+                            $userCars = Car::getCarsByOwner((int)($_SESSION['user_id']));
+                            foreach ($userCars as $car) {
+                                $vin = $car->vin;
+                                $year = $car->year;
+                                $carModel = CarModel::getModelById($car->model_id);
+                                $brand = CarBrand::getBrandById($carModel->brand_id);
+                            ?>
+                                <div class="flex flex-col md:flex-row items-stretch justify-between gap-4 rounded-lg bg-white dark:bg-gray-800 p-4 shadow-[0_0_4px_rgba(0,0,0,0.1)] dark:shadow-none border border-transparent dark:border-gray-700">
+                                    <div class="flex flex-1 flex-col justify-between gap-4">
+                                        <div class="flex flex-col gap-1">
+                                            <p class="text-base font-bold leading-tight text-[#111418] dark:text-white"><?php echo htmlspecialchars($brand->make . ' ' . $carModel->model_name); ?></p>
+                                            <p class="text-sm font-normal leading-normal text-[#617589] dark:text-gray-400"><?php echo htmlspecialchars($year); ?> • <?php echo htmlspecialchars($vin); ?></p>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-700 px-4 text-sm font-medium leading-normal text-[#111418] dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                                                <span class="truncate">Edit</span>
+                                            </button>
+                                            <button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-transparent px-4 text-sm font-medium leading-normal text-destructive hover:bg-destructive/10 transition-colors">
+                                                <span class="truncate">Remove</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="flex flex-col md:flex-row items-stretch justify-between gap-4 rounded-lg bg-white dark:bg-gray-800 p-4 shadow-[0_0_4px_rgba(0,0,0,0.1)] dark:shadow-none border border-transparent dark:border-gray-700">
-                                <div class="flex flex-1 flex-col justify-between gap-4">
-                                    <div class="flex flex-col gap-1">
-                                        <p class="text-base font-bold leading-tight text-[#111418] dark:text-white">Ford F-150</p>
-                                        <p class="text-sm font-normal leading-normal text-[#617589] dark:text-gray-400">2019 • VIN: ************5432</p>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-700 px-4 text-sm font-medium leading-normal text-[#111418] dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-                                            <span class="truncate">Edit</span>
-                                        </button>
-                                        <button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-transparent px-4 text-sm font-medium leading-normal text-destructive hover:bg-destructive/10 transition-colors">
-                                            <span class="truncate">Remove</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex flex-col md:flex-row items-stretch justify-between gap-4 rounded-lg bg-white dark:bg-gray-800 p-4 shadow-[0_0_4px_rgba(0,0,0,0.1)] dark:shadow-none border border-transparent dark:border-gray-700">
-                                <div class="flex flex-1 flex-col justify-between gap-4">
-                                    <div class="flex flex-col gap-1">
-                                        <p class="text-base font-bold leading-tight text-[#111418] dark:text-white">Ford F-150</p>
-                                        <p class="text-sm font-normal leading-normal text-[#617589] dark:text-gray-400">2019 • VIN: ************5432</p>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-700 px-4 text-sm font-medium leading-normal text-[#111418] dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-                                            <span class="truncate">Edit</span>
-                                        </button>
-                                        <button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-transparent px-4 text-sm font-medium leading-normal text-destructive hover:bg-destructive/10 transition-colors">
-                                            <span class="truncate">Remove</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex flex-col md:flex-row items-stretch justify-between gap-4 rounded-lg bg-white dark:bg-gray-800 p-4 shadow-[0_0_4px_rgba(0,0,0,0.1)] dark:shadow-none border border-transparent dark:border-gray-700">
-                                <div class="flex flex-1 flex-col justify-between gap-4">
-                                    <div class="flex flex-col gap-1">
-                                        <p class="text-base font-bold leading-tight text-[#111418] dark:text-white">Ford F-150</p>
-                                        <p class="text-sm font-normal leading-normal text-[#617589] dark:text-gray-400">2019 • VIN: ************5432</p>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-700 px-4 text-sm font-medium leading-normal text-[#111418] dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-                                            <span class="truncate">Edit</span>
-                                        </button>
-                                        <button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-transparent px-4 text-sm font-medium leading-normal text-destructive hover:bg-destructive/10 transition-colors">
-                                            <span class="truncate">Remove</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                            <?php
+                            }
+                            ?>
                             <!-- Empty State Example (can be shown conditionally) -->
-                            <!-- 
-                        <div class="flex flex-col items-center justify-center text-center p-12 bg-white dark:bg-gray-800 rounded-lg border border-dashed border-gray-300 dark:border-gray-600">
-                           <span class="material-symbols-outlined text-6xl text-gray-400 dark:text-gray-500">add_circle</span>
-                           <h3 class="mt-4 text-lg font-medium text-[#111418] dark:text-white">No vehicles added yet</h3>
-                           <p class="mt-1 text-sm text-[#617589] dark:text-gray-400">Click 'Add New Vehicle' to get started.</p>
-                        </div>
-                        -->
+                            <?php
+                            if ($userCars == null) {
+                            ?>
+                                <div class="flex flex-col items-center justify-center text-center p-12 bg-white dark:bg-gray-800 rounded-lg border border-dashed border-gray-300 dark:border-gray-600">
+                                    <span class="material-symbols-outlined text-6xl text-gray-400 dark:text-gray-500">add_circle</span>
+                                    <h3 class="mt-4 text-lg font-medium text-[#111418] dark:text-white">No vehicles added yet</h3>
+                                    <p class="mt-1 text-sm text-[#617589] dark:text-gray-400">Click 'Add New Vehicle' to get started.</p>
+                                </div>
+                            <?php
+                            }
+                            ?>
                         </div>
                     </div>
                     <!-- Right Column: Add/Edit Form Panel -->
@@ -223,7 +178,6 @@
                                     <select class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[#333333] dark:text-white focus:border-primary focus:ring-primary" id="brands" name="brand" onchange="loadModels(this.value)" required>
                                         <?php
                                         // Fetch all car brands from the database
-                                        use App\Models\CarBrand;
 
                                         $brands = CarBrand::getAllBrands();
                                         echo "<option disabled selected>Select a brand</option>";
