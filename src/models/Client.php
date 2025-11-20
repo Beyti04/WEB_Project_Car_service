@@ -102,4 +102,18 @@ class Client {
         }
         return null;
     }
+
+    public function getVehicles(): array {
+        $sql="SELECT c.id , b.brand_name, m.model_name, c.year, c.vin FROM car c
+              JOIN brands b ON c.brand_id = b.id
+              JOIN models m ON c.model_id = m.id
+              WHERE c.owner = $this->id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$this->id]);
+        $vehicles = [];
+        while ($data = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $vehicles[] = $data;
+        }
+        return $vehicles;
+    }
 }

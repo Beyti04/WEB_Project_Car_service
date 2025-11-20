@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 
 <html class="light" lang="en">
-
+<?php
+use App\Models\CarBrand;
+?>
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -220,11 +222,21 @@
                             <form class="space-y-4">
                                 <div>
                                     <label class="block text-sm font-medium text-[#333333] dark:text-gray-300 mb-1" for="make">Make</label>
-                                    <input class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[#333333] dark:text-white focus:border-primary focus:ring-primary" id="make" name="make" placeholder="e.g., Honda" type="text" />
+                                 <select class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[#333333] dark:text-white focus:border-primary focus:ring-primary" id="year" name="year">
+                                        <?php
+                                        foreach (CarBrand::getAllBrands() as $row) {
+                                            echo "<option value=" . htmlspecialchars($row['id']) . ">" . htmlspecialchars($row['brand_name']) . "</option>";
+                                        }
+                                        ?>
+                                    </select>    
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-[#333333] dark:text-gray-300 mb-1" for="model">Model</label>
-                                    <input class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[#333333] dark:text-white focus:border-primary focus:ring-primary" id="model" name="model" placeholder="e.g., Civic" type="text" />
+                                    <select class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[#333333] dark:text-white focus:border-primary focus:ring-primary" id="year" name="year">
+                                        <?php
+                                        
+                                        ?>
+                                    </select>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-[#333333] dark:text-gray-300 mb-1" for="year">Year</label>

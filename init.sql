@@ -154,8 +154,40 @@ CREATE TABLE full_order_listing (
     FOREIGN KEY (service_order_id) REFERENCES order_service(id)
 );
 
-
+-- Марки автомобили
+INSERT INTO car_brand (brand_name) VALUES
+('BMW'),
+('Mercedes-Benz'),
+('Audi'),
+('Volkswagen'),
+('Ford'),
+('Toyota'),
+('Honda'),
+('Hyundai'),
+('Kia'),
+('Renault'),
+('Peugeot'),
+('Citroen'),
+('Opel'),
+('Volvo'),
+('Skoda');
 /* 6. Начални данни (Seed Data) */
+
+INSERT INTO car_model (brand_id, model_name) SELECT id, '3 Series' FROM car_brand WHERE brand_name = 'BMW';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'C-Class' FROM car_brand WHERE brand_name = 'Mercedes-Benz';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'A4' FROM car_brand WHERE brand_name = 'Audi';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Passat' FROM car_brand WHERE brand_name = 'Volkswagen';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Focus' FROM car_brand WHERE brand_name = 'Ford';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Corolla' FROM car_brand WHERE brand_name = 'Toyota';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Civic' FROM car_brand WHERE brand_name = 'Honda';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'i30' FROM car_brand WHERE brand_name = 'Hyundai';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Ceed' FROM car_brand WHERE brand_name = 'Kia';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Megane' FROM car_brand WHERE brand_name = 'Renault';
+INSERT INTO car_model (brand_id, model_name) SELECT id, '308' FROM car_brand WHERE brand_name = 'Peugeot';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'C4' FROM car_brand WHERE brand_name = 'Citroen';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Astra' FROM car_brand WHERE brand_name = 'Opel';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'V60' FROM car_brand WHERE brand_name = 'Volvo';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Octavia' FROM car_brand WHERE brand_name = 'Skoda';
 
 -- Роли
 INSERT INTO role (role_name) VALUES ('Admin'), ('Specialist');
