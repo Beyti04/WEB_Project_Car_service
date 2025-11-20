@@ -81,6 +81,17 @@ switch ($action) {
         // Зареждаме клиентското табло
         require __DIR__ . '/../views/userDashboard.php';
         break;
+
+        case 'getModels':
+        $brandId = (int)($_GET['brand_id'] ?? 0);
+        
+        $models = \App\Models\CarModel::getModelsByBrand($brandId);
+        
+        // Връщаме данните като JSON (формат, който JavaScript разбира)
+        header('Content-Type: application/json');
+        echo json_encode($models);
+        exit;
+        break;
     
     case 'admin':
          // Тук по-късно ще сложим проверка за роля 'admin'

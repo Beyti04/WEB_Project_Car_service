@@ -84,9 +84,9 @@
             </nav>
             <div class="flex flex-col gap-4">
                 <a href="requestService.php">
-                <button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
-                    <span class="truncate">Request New Service</span>
-                </button>
+                    <button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
+                        <span class="truncate">Request New Service</span>
+                    </button>
                 </a>
                 <div class="flex flex-col gap-1">
                     <a href="index.php" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors">
@@ -220,30 +220,23 @@
                             <form class="space-y-4">
                                 <div>
                                     <label class="block text-sm font-medium text-[#333333] dark:text-gray-300 mb-1" for="make">Make</label>
-                                 <select class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[#333333] dark:text-white focus:border-primary focus:ring-primary" id="brands" name="brand">
+                                    <select class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[#333333] dark:text-white focus:border-primary focus:ring-primary" id="brands" name="brand" onchange="loadModels(this.value)" required>
                                         <?php
                                         // Fetch all car brands from the database
                                         use App\Models\CarBrand;
+
                                         $brands = CarBrand::getAllBrands();
                                         echo "<option disabled selected>Select a brand</option>";
                                         foreach ($brands as $brand) {
                                             echo "<option value='" . htmlspecialchars($brand['id']) . "'>" . htmlspecialchars($brand['brand_name']) . "</option>";
                                         }
                                         ?>
-                                    </select>    
+                                    </select>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-[#333333] dark:text-gray-300 mb-1" for="model">Model</label>
                                     <select class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[#333333] dark:text-white focus:border-primary focus:ring-primary" id="model" name="model">
-                                        <?php
-                                        use App\Models\CarModel;
-                                        // Fetch all car models from the database
-                                        $models = CarModel::getModelsByBrand($brand_id ?? 0);
-                                        echo "<option disabled selected>Select a model</option>";
-                                        foreach ($models as $model) {
-                                            echo "<option value='" . htmlspecialchars($model['id']) . "'>" . htmlspecialchars($model['model_name']) . "</option>";
-                                        }
-                                        ?>
+                                    <option value="" disabled selected>Select a brand first</option>
                                     </select>
                                 </div>
                                 <div>
@@ -295,6 +288,41 @@
             </main>
         </div>
     </div>
+
+    <script>
+        function loadModels(brandId) {
+            const modelSelect = document.getElementById('model');
+
+            modelSelect.innerHTML = '<option disabled selected>Loading...</option>';
+            modelSelect.disabled = true;
+
+            fetch('index.php?action=getModels&brand_id=' + brandId)
+                .then(response => response.json())
+                .then(data => {
+                    modelSelect.innerHTML = '<option value="" disabled selected>Select a model</option>';
+                    modelSelect.disabled = false;
+
+                    if (data.length > 0) {
+                        data.forEach(model => {
+                            const option = document.createElement('option');
+                            option.value = model.id;
+                            option.textContent = model.model_name;
+                            modelSelect.appendChild(option);
+                        });
+                    } else {
+                        const option = document.createElement('option');
+                        option.disabled = true;
+                        option.selected = true;
+                        option.textContent = 'No models found';
+                        modelSelect.appendChild(option);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    modelSelect.innerHTML = '<option disabled selected>Error loading models</option>';
+                });
+        }
+    </script>
 </body>
 
 </html>
