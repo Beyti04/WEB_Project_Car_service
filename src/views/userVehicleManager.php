@@ -50,7 +50,7 @@
     <div class="flex h-screen">
         <!-- SideNavBar -->
         <aside class="flex flex-col w-64 bg-card-light dark:bg-card-dark border-r border-border-light dark:border-border-dark p-4 shrink-0">
-            <a href="userDashboard.php" class="flex items-center gap-3 mb-8">
+            <a href="index.php?action=userDashboard" class="flex items-center gap-3 mb-8">
                 <div class="bg-primary/20 rounded-lg p-2 flex items-center justify-center">
                     <span class="material-symbols-outlined text-primary text-2xl">directions_car</span>
                 </div>
@@ -60,19 +60,19 @@
                 </div>
             </a>
             <nav class="flex flex-col gap-2 flex-1">
-                <a href="userDashboard.php" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors">
-                    <span class="material-symbols-outlined">dashboard</span>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=userDashboard">
+                    <span class="material-symbols-outlined ">dashboard</span>
                     <p class="text-sm font-bold leading-normal">Dashboard</p>
                 </a>
-                <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary">
-                    <span class="material-symbols-outlined">directions_car</span>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="index.php?action=myVehicles">
+                    <span class="material-symbols-outlined text-primary">directions_car</span>
                     <p class="text-sm font-medium leading-normal">My Vehicles</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=userAppointmentManager">
                     <span class="material-symbols-outlined">calendar_month</span>
                     <p class="text-sm font-medium leading-normal">My Appointments</p>
                 </a>
-                <a href="userDashboard.php#service_history" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=userDashboard#service_history">
                     <span class="material-symbols-outlined">history</span>
                     <p class="text-sm font-medium leading-normal">Service History</p>
                 </a>
@@ -105,7 +105,7 @@
                     <div class="flex items-center gap-3">
                         <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuADijiRLLPR2eRQXqbVqSmI5KeUFyXAg8F2zmY2mwfb1Pgm6eF-NmHWlSRm0xVvnz3wcPCkB7pflS81XhFJqdUyEEk4srBqEw81WqNgyxpAXWyBF4WXayX_79fjNwvjFvRP2mygTB8JtFtvmgwCmXAkWO1vUyZ6xTjfEnPmwsZD1QhwGVWu-iSAwpmnxmU_NGK7U5sH-U54t-zfth88S-uqzwxhC_4dJgAlM1nGXJJ3Wb2EztyredxX5Mc4g-N4vxPoQmZFTCyPxOs");'></div>
                         <div class="flex flex-col text-sm">
-                            <p class="font-bold">Sarah Connor</p>
+                            <p class="font-bold"> <?php echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?></p>
                             <p class="text-text-secondary-light dark:text-text-secondary-dark">Client</p>
                         </div>
                     </div>
@@ -217,7 +217,7 @@
                     <div class="xl:col-span-1">
                         <div class="sticky top-8 bg-white dark:bg-gray-800 rounded-lg shadow-[0_0_4px_rgba(0,0,0,0.1)] dark:shadow-none border border-transparent dark:border-gray-700 p-6">
                             <h2 class="text-xl font-bold text-[#111418] dark:text-white mb-6">Add a New Vehicle</h2>
-                            <form class="space-y-4">
+                            <form class="space-y-4" action="index.php?action=addVehicle" method="POST">
                                 <div>
                                     <label class="block text-sm font-medium text-[#333333] dark:text-gray-300 mb-1" for="make">Make</label>
                                     <select class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[#333333] dark:text-white focus:border-primary focus:ring-primary" id="brands" name="brand" onchange="loadModels(this.value)" required>
@@ -236,7 +236,7 @@
                                 <div>
                                     <label class="block text-sm font-medium text-[#333333] dark:text-gray-300 mb-1" for="model">Model</label>
                                     <select class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[#333333] dark:text-white focus:border-primary focus:ring-primary" id="model" name="model">
-                                    <option value="" disabled selected>Select a brand first</option>
+                                        <option value="" disabled selected>Select a brand first</option>
                                     </select>
                                 </div>
                                 <div>
@@ -256,7 +256,6 @@
                                     <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Usually found on your dashboard or driver-side door jamb.</p>
                                 </div>
                                 <div class="flex items-center justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
-                                    <button class="flex h-10 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-700 px-4 text-sm font-medium text-[#111418] dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors" type="button">Cancel</button>
                                     <button class="flex h-10 min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary px-4 text-sm font-bold text-white hover:bg-primary/90 transition-colors" type="submit">Save Vehicle</button>
                                 </div>
                             </form>

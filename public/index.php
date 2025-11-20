@@ -1,4 +1,8 @@
 <?php
+
+use App\Controllers\AuthController;
+use App\Controllers\VehicleController;
+
 session_start();
 
 spl_autoload_register(function ($class) {
@@ -29,8 +33,6 @@ spl_autoload_register(function ($class) {
     }
 });
 
-use App\Controllers\AuthController;
-
 $action = $_GET['action'] ?? 'home'; // По подразбиране home
 
 // Рутиране
@@ -44,11 +46,11 @@ switch ($action) {
     case 'login':
         (new AuthController())->showLogin();
         break;
-        
+
     case 'loginSubmit':
         (new AuthController())->login();
         break;
-        
+
     case 'register':
         (new AuthController())->showRegister();
         break;
@@ -60,7 +62,7 @@ switch ($action) {
     case 'logout':
         (new AuthController())->logout();
         break;
-    
+
     case 'myVehicles':
         // Проверяваме дали е логнат
         if (!isset($_SESSION['user_id'])) {
@@ -71,32 +73,53 @@ switch ($action) {
         require __DIR__ . '/../src/views/userVehicleManager.php';
         break;
 
+    case 'addVehicle':
+        // Проверяваме дали е логнат
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        (new VehicleController())->addVehicle();
+        // Зареждаме страницата за добавяне на превозно средство
+        require __DIR__ . '/../src/views/userVehicleManager.php';
+        break;
+
     // ТАБЛА (DASHBOARDS)
-    case 'dashboard':
+    case 'userDashboard':
         // Проверяваме дали е логнат
         if (!isset($_SESSION['user_id'])) {
             header("Location: index.php?action=login");
             exit;
         }
         // Зареждаме клиентското табло
-        require __DIR__ . '/../views/userDashboard.php';
+        require __DIR__ . '/../src/views/userDashboard.php';
         break;
 
-        case 'getModels':
+    case 'userAppointmentManager':
+        // Проверяваме дали е логнат
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        // Зареждаме страницата за управление на срещи
+        require __DIR__ . '/../src/views/userAppointmentManager.php';
+        break;
+        
+    case 'getModels':
         $brandId = (int)($_GET['brand_id'] ?? 0);
-        
+
         $models = \App\Models\CarModel::getModelsByBrand($brandId);
-        
+
         // Връщаме данните като JSON (формат, който JavaScript разбира)
         header('Content-Type: application/json');
         echo json_encode($models);
         exit;
         break;
-    
+
     case 'admin':
-         // Тук по-късно ще сложим проверка за роля 'admin'
-         require __DIR__ . '/../views/adminDashboard.php';
-         break;
+        // Тук по-късно ще сложим проверка за роля 'admin'
+        require __DIR__ . '/../views/adminDashboard.php';
+        break;
 
     default:
         echo "404 Not Found";

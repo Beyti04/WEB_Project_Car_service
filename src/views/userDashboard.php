@@ -48,7 +48,7 @@
 <body class="font-display bg-background-light dark:bg-background-dark text-[#333333] dark:text-gray-200">
     <div class="flex h-screen">
         <aside class="flex flex-col w-64 bg-card-light dark:bg-card-dark border-r border-border-light dark:border-border-dark p-4 shrink-0">
-            <a href="#" class="flex items-center gap-3 mb-8">
+            <a href="index.php?action=userDashboard" class="flex items-center gap-3 mb-8">
                 <div class="bg-primary/20 rounded-lg p-2 flex items-center justify-center">
                     <span class="material-symbols-outlined text-primary text-2xl">directions_car</span>
                 </div>
@@ -58,19 +58,19 @@
                 </div>
             </a>
             <nav class="flex flex-col gap-2 flex-1">
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="#">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="index.php?action=userDashboard">
                     <span class="material-symbols-outlined text-primary">dashboard</span>
                     <p class="text-sm font-bold leading-normal">Dashboard</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="userVehicleManager.php">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=myVehicles">
                     <span class="material-symbols-outlined">directions_car</span>
                     <p class="text-sm font-medium leading-normal">My Vehicles</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="userAppointmentManager.php">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=userAppointmentManager">
                     <span class="material-symbols-outlined">calendar_month</span>
                     <p class="text-sm font-medium leading-normal">My Appointments</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#service_history">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=userDashboard#service_history">
                     <span class="material-symbols-outlined">history</span>
                     <p class="text-sm font-medium leading-normal">Service History</p>
                 </a>
@@ -82,9 +82,9 @@
             </nav>
             <div class="flex flex-col gap-4">
                 <a href="requestService.php">
-                <button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
-                    <span class="truncate">Request New Service</span>
-                </button>
+                    <button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
+                        <span class="truncate">Request New Service</span>
+                    </button>
                 </a>
                 <div class="flex flex-col gap-1">
                     <a href="index.php" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors">
