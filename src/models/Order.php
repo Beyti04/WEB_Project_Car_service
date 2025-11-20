@@ -27,23 +27,6 @@ class Order
     public function getOrderByCarId(int $car_id): array{
         try {
             $sql = "
-                SELECT
-                    o.id AS order_id,
-                    o.opened_at,
-                    o.full_price,
-                    c.id AS car_id,
-                    c.make AS car_make,
-                    c.model AS car_model,
-                    c.plate AS car_plate,
-                    e.id AS emp_id,
-                    e.first_name AS emp_first,
-                    e.last_name AS emp_last
-                FROM orders o
-                LEFT JOIN cars c ON o.car_id = c.id
-                LEFT JOIN employees e ON o.employee_id = e.id
-                WHERE o.client_id = :client_id
-                ORDER BY o.opened_at DESC
-
                 SELECT o.id AS order_id, o.opened_at, o.full_price, c.id AS car_id, c.make, c.model FROM orders o
                 JOIN car c ON o.car_id=c.id
                 JOIN employees e ON o.employee_id=e.id
