@@ -86,7 +86,7 @@ class AuthController
             header("Location: index.php?action=userDashboard");
         } else {
             $error = "Грешен имейл или парола.";
-            header("Location: index.php?action=login");
+            header("Location: ../../web_project_car_service/src/views/login.php");
         }
     }
 
