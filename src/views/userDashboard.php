@@ -222,7 +222,6 @@
                             </div>
                         </div>
                         <?php
-                        use App\Models\Car;
                         use App\Models\CarModel;
                         use App\Models\CarBrand;
                         $selectedCarHtml = "<p class='text-sm text-text-secondary-light dark:text-text-secondary-dark'>No vehicle selected</p>";

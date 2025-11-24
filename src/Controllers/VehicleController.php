@@ -60,6 +60,9 @@ class VehicleController
         if ($car && $car->owner === ($_SESSION['user_id'] ?? 0)) {
             $car->delete();
         }
+        if(isset($_SESSION['selected_car_id']) && $_SESSION['selected_car_id'] === $carId) {
+            unset($_SESSION['selected_car_id'], $_SESSION['selected_car_vin'], $_SESSION['selected_car_model_id'], $_SESSION['selected_car_year']);
+        }
         header("Location: index.php?action=myVehicles");
         exit;
     }
