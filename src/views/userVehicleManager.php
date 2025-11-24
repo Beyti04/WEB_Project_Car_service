@@ -148,10 +148,11 @@
                                                     <span class="truncate">Edit</span>
                                                 </button>
                                             </a>
-                                            <form action="index.php?action=removeVehicle&car_id=<?php echo htmlspecialchars($car->id); ?>" method="POST"></form>
+                                            <form action="index.php?action=removeVehicle&car_id=<?php echo htmlspecialchars($car->id); ?>" method="POST">
                                             <button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-transparent px-4 text-sm font-medium leading-normal text-destructive hover:bg-destructive/10 transition-colors" type="submit">
                                                 <span class="truncate">Remove</span>
                                             </button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
