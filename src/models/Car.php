@@ -176,4 +176,21 @@ class Car
             return false;
         }
     }
+
+    public function update(): bool {
+        $sql = "UPDATE car SET model_id = ?, year = ?, vin = ? WHERE id = ?";
+
+        try {
+            $stmt = $this->db->prepare($sql);
+            return $stmt->execute([
+                $this->model_id,
+                $this->year,
+                $this->vin,
+                $this->id
+            ]);
+        } catch (PDOException $e) {
+            error_log("Car Update Error: " . $e->getMessage());
+            return false;
+        }
+    }
 }

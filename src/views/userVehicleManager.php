@@ -135,23 +135,26 @@
                                 $carModel = CarModel::getModelById($car->model_id);
                                 $brand = CarBrand::getBrandById($carModel->brand_id);
                             ?>
-                                <form action="index.php?action=removeVehicle&car_id=<?php echo htmlspecialchars($car->id); ?>" method="POST">
-                                    <div class="flex flex-col md:flex-row items-stretch justify-between gap-4 rounded-lg bg-white dark:bg-gray-800 p-4 shadow-[0_0_4px_rgba(0,0,0,0.1)] dark:shadow-none border border-transparent dark:border-gray-700">
-                                        <div class="flex flex-1 flex-col justify-between gap-4">
-                                            <div class="flex flex-col gap-1">
-                                                <p class="text-base font-bold leading-tight text-[#111418] dark:text-white"><?php echo htmlspecialchars($brand->make . ' ' . $carModel->model_name); ?></p>
-                                                <p class="text-sm font-normal leading-normal text-[#617589] dark:text-gray-400"><?php echo htmlspecialchars($year); ?> • <?php echo htmlspecialchars($vin); ?></p>
-                                            </div>
-                                            <div class="flex items-center gap-2">
+
+                                <div class="flex flex-col md:flex-row items-stretch justify-between gap-4 rounded-lg bg-white dark:bg-gray-800 p-4 shadow-[0_0_4px_rgba(0,0,0,0.1)] dark:shadow-none border border-transparent dark:border-gray-700">
+                                    <div class="flex flex-1 flex-col justify-between gap-4">
+                                        <div class="flex flex-col gap-1">
+                                            <p class="text-base font-bold leading-tight text-[#111418] dark:text-white"><?php echo htmlspecialchars($brand->make . ' ' . $carModel->model_name); ?></p>
+                                            <p class="text-sm font-normal leading-normal text-[#617589] dark:text-gray-400"><?php echo htmlspecialchars($year); ?> • <?php echo htmlspecialchars($vin); ?></p>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <a href="index.php?action=editVehicle&car_id=<?php echo htmlspecialchars($car->id); ?>">
                                                 <button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-700 px-4 text-sm font-medium leading-normal text-[#111418] dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
                                                     <span class="truncate">Edit</span>
                                                 </button>
-                                                <button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-transparent px-4 text-sm font-medium leading-normal text-destructive hover:bg-destructive/10 transition-colors" type="submit">
-                                                    <span class="truncate">Remove</span>
-                                                </button>
-                                            </div>
+                                            </a>
+                                            <form action="index.php?action=removeVehicle&car_id=<?php echo htmlspecialchars($car->id); ?>" method="POST"></form>
+                                            <button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-transparent px-4 text-sm font-medium leading-normal text-destructive hover:bg-destructive/10 transition-colors" type="submit">
+                                                <span class="truncate">Remove</span>
+                                            </button>
                                         </div>
                                     </div>
+                                </div>
                                 </form>
                             <?php
                             }

@@ -94,6 +94,26 @@ switch ($action) {
         (new VehicleController())->removeVehicle($carId);
         break;
 
+    case 'editVehicle':
+        // Проверяваме дали е логнат
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        // Зареждаме страницата за редактиране на превозно средство
+        require __DIR__ . '/../src/views/editVehicle.php';
+        break;
+
+    case 'updateVehicle':
+        // Проверяваме дали е логнат
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        $carId = (int)($_GET['car_id'] ?? 0);
+        (new VehicleController())->updateVehicle($carId, (int)($_POST['model'] ?? 0), (int)($_POST['year'] ?? 0), trim($_POST['vin'] ?? ''));
+        break;
+
     // ТАБЛА (DASHBOARDS)
     case 'userDashboard':
         // Проверяваме дали е логнат

@@ -63,4 +63,17 @@ class VehicleController
         header("Location: index.php?action=myVehicles");
         exit;
     }
+
+    public function updateVehicle(int $carId, int $modelId, int $year, string $vin): void
+    {
+        $car = Car::getCarById($carId);
+        if ($car && $car->owner === ($_SESSION['user_id'] ?? 0)) {
+            $car->model_id = $modelId;
+            $car->year = $year;
+            $car->vin = $vin;
+            $car->update();
+        }
+        header("Location: index.php?action=myVehicles");
+        exit;
+    }
 }
