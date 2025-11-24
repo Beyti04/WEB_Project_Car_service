@@ -83,7 +83,7 @@
                 </a>
             </nav>
             <div class="flex flex-col gap-4">
-                <a href="requestService.php">
+                <a href="index.php?action=requestService">
                     <button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
                         <span class="truncate">Request New Service</span>
                     </button>
@@ -149,9 +149,9 @@
                                                 </button>
                                             </a>
                                             <form action="index.php?action=removeVehicle&car_id=<?php echo htmlspecialchars($car->id); ?>" method="POST">
-                                            <button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-transparent px-4 text-sm font-medium leading-normal text-destructive hover:bg-destructive/10 transition-colors" type="submit">
-                                                <span class="truncate">Remove</span>
-                                            </button>
+                                                <button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-transparent px-4 text-sm font-medium leading-normal text-destructive hover:bg-destructive/10 transition-colors" type="submit">
+                                                    <span class="truncate">Remove</span>
+                                                </button>
                                             </form>
                                         </div>
                                     </div>

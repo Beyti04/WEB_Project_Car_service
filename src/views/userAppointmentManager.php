@@ -75,7 +75,7 @@
                 </a>
             </nav>
             <div class="flex flex-col gap-4">
-                <a href="requestService.php">
+                <a href="index.php?action=requestService">
                     <button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
                         <span class="truncate">Request New Service</span>
                     </button>

@@ -81,7 +81,7 @@
                 </a>
             </nav>
             <div class="flex flex-col gap-4">
-                <a href="requestService.php">
+                <a href="index.php?action=requestService">
                     <button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
                         <span class="truncate">Request New Service</span>
                     </button>
@@ -116,12 +116,6 @@
                     <div class="flex flex-col gap-1">
                         <p class="text-3xl font-bold leading-tight tracking-tight">Welcome back, <?php echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?>!</p>
                         <p class="text-text-secondary-light dark:text-text-secondary-dark text-base font-normal leading-normal">Here's a summary of your vehicle's status.</p>
-                    </div>
-                    <div class="flex gap-2">
-                        <button class="flex min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
-                            <span class="material-symbols-outlined text-base">add</span>
-                            <span class="truncate">Book Appointment</span>
-                        </button>
                     </div>
                 </div>
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">

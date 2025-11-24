@@ -1,8 +1,4 @@
 <?php
-
-use App\Controllers\AuthController;
-use App\Controllers\VehicleController;
-
 session_start();
 
 spl_autoload_register(function ($class) {
@@ -11,6 +7,8 @@ spl_autoload_register(function ($class) {
         'App\\'    => __DIR__ . '/../src/',
         'Config\\' => __DIR__ . '/../config/' // Или където сте сложили Database.php
     ];
+
+
 
     foreach ($prefixes as $prefix => $base_dir) {
         // Проверява дали класът използва този prefix
@@ -32,6 +30,12 @@ spl_autoload_register(function ($class) {
         }
     }
 });
+
+    use App\Controllers\AuthController;
+    use App\Controllers\VehicleController;
+    use Config\Database;
+
+Database::getInstance();
 
 $action = $_GET['action'] ?? 'home'; // По подразбиране home
 
@@ -83,7 +87,7 @@ switch ($action) {
         // Зареждаме страницата за добавяне на превозно средство
         require __DIR__ . '/../src/views/userVehicleManager.php';
         break;
-    
+
     case 'removeVehicle':
         // Проверяваме дали е логнат
         if (!isset($_SESSION['user_id'])) {
@@ -122,11 +126,10 @@ switch ($action) {
             exit;
         }
         // Зареждаме клиентското табло
-        if($_SESSION['user_role'] === 'Client' || $_SESSION['user_role'] === '') {
+        if ($_SESSION['user_role'] === 'Client' || $_SESSION['user_role'] === '') {
             require __DIR__ . '/../src/views/userDashboard.php';
             break;
-        }
-        elseif($_SESSION['user_role'] === 'Employee'){
+        } elseif ($_SESSION['user_role'] === 'Employee') {
             require __DIR__ . '/../src/views/employeeDashboard.php';
             break;
         }
@@ -153,6 +156,16 @@ switch ($action) {
         }
         // Зареждаме страницата за управление на срещи
         require __DIR__ . '/../src/views/userAppointmentManager.php';
+        break;
+
+    case 'requestService':
+        // Проверяваме дали е логнат
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        // Зареждаме страницата за управление на срещи
+        require __DIR__ . '/../src/views/requestService.php';
         break;
 
     case 'getModels':
