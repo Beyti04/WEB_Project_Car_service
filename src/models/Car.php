@@ -139,4 +139,41 @@ class Car
             return null;
         }
     }
+
+    public static function getCarById(int $id): ?Car {
+        $db = Database::getInstance();
+        $sql = "SELECT * FROM car WHERE id = ? LIMIT 1";
+
+        try {
+            $stmt = $db->prepare($sql);
+            $stmt->execute([$id]);
+            $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($data) {
+                return new Car(
+                    id: (int)$data['id'],
+                    model_id: (int)$data['model_id'],
+                    year: (int)$data['year'],
+                    vin: $data['vin'],
+                    owner: (int)$data['owner']
+                );
+            }
+            return null;
+        } catch (PDOException $e) {
+            error_log("Car Fetch By ID Error: " . $e->getMessage());
+            return null;
+        }
+    }
+
+    public function delete(): bool {
+        $sql = "DELETE FROM car WHERE id = ?";
+
+        try {
+            $stmt = $this->db->prepare($sql);
+            return $stmt->execute([$this->id]);
+        } catch (PDOException $e) {
+            error_log("Car Delete Error: " . $e->getMessage());
+            return false;
+        }
+    }
 }

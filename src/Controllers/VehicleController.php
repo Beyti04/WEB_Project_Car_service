@@ -53,4 +53,14 @@ class VehicleController
         // Зареждаме вашето View за добавяне на превозно средство
         require __DIR__ . '/../../src/views/userVehicleManager.php';
     }
+
+    public function removeVehicle(int $carId): void
+    {
+        $car = Car::getCarById($carId);
+        if ($car && $car->owner === ($_SESSION['user_id'] ?? 0)) {
+            $car->delete();
+        }
+        header("Location: index.php?action=myVehicles");
+        exit;
+    }
 }

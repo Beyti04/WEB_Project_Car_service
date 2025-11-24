@@ -83,6 +83,16 @@ switch ($action) {
         // Зареждаме страницата за добавяне на превозно средство
         require __DIR__ . '/../src/views/userVehicleManager.php';
         break;
+    
+    case 'removeVehicle':
+        // Проверяваме дали е логнат
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        $carId = (int)($_GET['car_id'] ?? 0);
+        (new VehicleController())->removeVehicle($carId);
+        break;
 
     // ТАБЛА (DASHBOARDS)
     case 'userDashboard':
@@ -124,7 +134,7 @@ switch ($action) {
         // Зареждаме страницата за управление на срещи
         require __DIR__ . '/../src/views/userAppointmentManager.php';
         break;
-        
+
     case 'getModels':
         $brandId = (int)($_GET['brand_id'] ?? 0);
 
