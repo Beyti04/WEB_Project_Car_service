@@ -92,7 +92,27 @@ switch ($action) {
             exit;
         }
         // Зареждаме клиентското табло
-        require __DIR__ . '/../src/views/userDashboard.php';
+        if($_SESSION['user_role'] === 'Client' || $_SESSION['user_role'] === '') {
+            require __DIR__ . '/../src/views/userDashboard.php';
+            break;
+        }
+        elseif($_SESSION['user_role'] === 'Employee'){
+            require __DIR__ . '/../src/views/employeeDashboard.php';
+            break;
+        }
+        break;
+
+
+    case 'employeeManager':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        require __DIR__ . '/../src/views/employeeManager.php';
+        break;
+
+    case 'adminDashboard':
+        require __DIR__ . '/../src/views/adminDashboard.php';
         break;
 
     case 'userAppointmentManager':

@@ -114,7 +114,7 @@
             <main class="flex-1 overflow-y-auto p-10">
                 <div class="flex flex-wrap justify-between gap-4 mb-8 items-center">
                     <div class="flex flex-col gap-1">
-                        <p class="text-3xl font-bold leading-tight tracking-tight">Welcome back, Sarah!</p>
+                        <p class="text-3xl font-bold leading-tight tracking-tight">Welcome back, <?php echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?>!</p>
                         <p class="text-text-secondary-light dark:text-text-secondary-dark text-base font-normal leading-normal">Here's a summary of your vehicle's status.</p>
                     </div>
                     <div class="flex gap-2">

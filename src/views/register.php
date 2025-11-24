@@ -1,3 +1,11 @@
+<?php
+
+//use App\Models\Role;
+
+use App\Models\Role;
+
+?>
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -56,7 +64,7 @@
             </div>
             <!-- Form Container -->
             <div class="bg-white dark:bg-background-dark dark:border dark:border-gray-700/50 p-8 rounded-xl shadow-sm space-y-6">
-                <form class="space-y-6" action="../../public/index.php?action=registerSubmit" method="POST">
+                <form class="space-y-6" action="index.php?action=registerSubmit" method="POST">
                     <div class="flex flex-col sm:flex-row sm:gap-4 space-y-6 sm:space-y-0">
                         <!-- First Name -->
                         <label class="flex flex-col min-w-40 flex-1">
@@ -73,6 +81,21 @@
                     <label class="flex flex-col min-w-40 flex-1">
                         <p class="text-[#111418] dark:text-gray-300 text-base font-medium leading-normal pb-2">Phone</p>
                         <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white dark:bg-gray-800 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dbe0e6] dark:border-gray-700 bg-white focus:border-primary h-14 placeholder:text-[#617589] dark:placeholder:text-gray-500 p-[15px] text-base font-normal leading-normal" placeholder="Enter your phone number" name="phone" value="" />
+                    </label>
+                    <!-- Role Selection -->
+                    <label class="flex flex-col min-w-40 flex-1">
+                        <p class="text-[#111418] dark:text-gray-300 text-base font-medium leading-normal pb-2">Role</p>
+                        <select name="role_id_FK" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white dark:bg-gray-800 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dbe0e6] dark:border-gray-700 bg-white focus:border-primary h-14 p-[15px] text-base font-normal leading-normal">
+                            <?php
+                            $roles = Role::getAllRoles();
+                            foreach ($roles as $role) {
+                                if ($role->role_name === 'admin') {
+                                    continue;
+                                }
+                                echo "<option value=\"" . htmlspecialchars($role['id']) . "\">" . htmlspecialchars($role['role_name']) . "</option>";
+                            }
+                            ?>
+                        </select>
                     </label>
                     <!-- Email -->
                     <label class="flex flex-col min-w-40 flex-1">
