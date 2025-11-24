@@ -143,6 +143,11 @@
                                             <p class="text-sm font-normal leading-normal text-[#617589] dark:text-gray-400"><?php echo htmlspecialchars($year); ?> • <?php echo htmlspecialchars($vin); ?></p>
                                         </div>
                                         <div class="flex items-center gap-2">
+                                            <a href="index.php?action=selectVehicle&car_id=<?php echo htmlspecialchars($car->id); ?>">
+                                                <button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-700 px-4 text-sm font-medium leading-normal text-[#111418] dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                                                    <span class="truncate">Select</span>
+                                                </button>
+                                            </a>
                                             <a href="index.php?action=editVehicle&car_id=<?php echo htmlspecialchars($car->id); ?>">
                                                 <button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-700 px-4 text-sm font-medium leading-normal text-[#111418] dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
                                                     <span class="truncate">Edit</span>

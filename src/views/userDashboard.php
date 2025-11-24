@@ -221,13 +221,31 @@
                                 </div>
                             </div>
                         </div>
+                        <?php
+                        use App\Models\Car;
+                        use App\Models\CarModel;
+                        use App\Models\CarBrand;
+                        $selectedCarHtml = "<p class='text-sm text-text-secondary-light dark:text-text-secondary-dark'>No vehicle selected</p>";
+
+                        if (isset($_SESSION['selected_car_id'], $_SESSION['selected_car_model_id'], $_SESSION['selected_car_year'], $_SESSION['selected_car_vin'])) {
+                        $carModel = CarModel::getModelById((int)$_SESSION['selected_car_model_id']);
+                        $carBrand = CarBrand::getBrandById($carModel->brand_id);
+
+                        $selectedCarHtml = "
+                        <p class='font-bold text-base'>{$_SESSION['selected_car_year']} {$carBrand->make} {$carModel->model_name}</p>
+                        <p class='text-sm text-text-secondary-light dark:text-text-secondary-dark'>VIN: " . $_SESSION['selected_car_vin'] . "</p>
+                        ";
+                        }
+                        ?>
+
                         <div class="flex flex-col gap-4 rounded-xl border border-border-light dark:border-border-dark p-6 bg-card-light dark:bg-card-dark">
                             <h2 class="text-lg font-bold leading-normal">Selected Vehicle</h2>
                             <div class="flex flex-col gap-2">
-                                <p class="font-bold text-base">2022 Toyota Highlander</p>
-                                <p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">VIN: ************5432</p>
+                                <?php echo $selectedCarHtml; ?>
                                 <a href="index.php?action=myVehicles">
-                                    <button class="w-full text-center mt-2 py-2 text-sm font-bold text-primary hover:bg-primary/10 rounded-lg transition-colors">Manage Vehicles</button>
+                                    <button class="w-full text-center mt-2 py-2 text-sm font-bold text-primary hover:bg-primary/10 rounded-lg transition-colors">
+                                        Manage Vehicles
+                                    </button>
                                 </a>
                             </div>
                         </div>

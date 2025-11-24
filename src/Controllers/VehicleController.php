@@ -76,4 +76,17 @@ class VehicleController
         header("Location: index.php?action=myVehicles");
         exit;
     }
+
+    public function selectVehicle(int $carId): void
+    {
+        $car = Car::getCarById($carId);
+        if ($car && $car->owner === ($_SESSION['user_id'] ?? 0)) {
+            $_SESSION['selected_car_id'] = $carId;
+            $_SESSION['selected_car_vin'] = $car->vin;
+            $_SESSION['selected_car_model_id'] = $car->model_id;
+            $_SESSION['selected_car_year'] = $car->year;
+        }
+        header("Location: index.php?action=userDashboard");
+        exit;
+    }
 }
