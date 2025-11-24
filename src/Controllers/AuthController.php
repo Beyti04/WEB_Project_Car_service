@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\Client;
+use App\Models\Employee;
+use App\Models\Role;
 
 class AuthController
 {
@@ -25,6 +27,7 @@ class AuthController
         $fname = trim($_POST['first_name'] ?? '');
         $lname = trim($_POST['last_name'] ?? '');
         $phone = trim($_POST['phone'] ?? '');
+        $role_id = $_POST['role_id_FK'] ?? '';
         $email = trim($_POST['email'] ?? '');
         $pass  = $_POST['password'] ?? '';
         $confirm = $_POST['confirm_password'] ?? '';
@@ -32,32 +35,64 @@ class AuthController
         // 2. Валидация (Опростена)
         if (empty($fname) || empty($email) || empty($pass)) {
             $error = "Моля, попълнете всички задължителни полета!";
-            require __DIR__ . '/../../src/views/register.php'; // Връщаме грешката във View-то
+            header("Location: index.php?action=register");
             return;
         }
 
         if ($pass !== $confirm) {
             $error = "Паролите не съвпадат!";
-            require __DIR__ . '/../../src/views/register.php';
+            header("Location: index.php?action=register");
             return;
         }
 
         // 3. Проверка дали имейлът вече съществува
         if (Client::findByEmail($email)) {
             $error = "Този имейл вече е регистриран!";
-            require __DIR__ . '/../../src/views/register.php';
+            header("Location: index.php?action=register");
             return;
         }
 
-        // 4. Създаване на обекта и запис
-        $client = new Client(null, $fname, $lname, $phone, $email, $pass);
+        if (Employee::findByEmail($email)) {
+            $error = "Този имейл вече е регистриран!";
+            header("Location: index.php?action=register");
+            return;
+        }
 
-        if ($client->registerUser()) {
-            // Успех! Пренасочваме към вход
-            require __DIR__ . '/../../src/views/userDashboard.php';
+        // 4. Създаваме нов потребител
+        $roles = Role::getAllRoles();
+        $roleName = '';
+        foreach ($roles as $role) {
+            if ($role['id'] === (int)$role_id) {
+                $roleName = $role['role_name'];
+                break;
+            }
+        }
+        if ($roleName === 'Client') {
+            $user = new Client(
+                id: null,
+                first_name: $fname,
+                last_name: $lname,
+                phone_number: $phone,
+                email: $email,
+                password: $pass
+            );
         } else {
-            $error = "Възникна грешка при записа. Опитайте отново.";
-            require __DIR__ . '/../../src/views/register.php';
+            $user = new Employee(
+                id: null,
+                first_name: $fname,
+                last_name: $lname,
+                phone_number: $phone,
+                role_id: (int)$role_id,
+                email: $email,
+                password: $pass
+            );
+        }
+        $success = $user->registerUser();
+        if ($success) {
+            header("Location: index.php?action=userDashboard");
+        } else {
+            $error = "Грешка при регистрацията. Моля, опитайте отново.";
+            header("Location: index.php?action=home");
         }
     }
 
@@ -73,21 +108,37 @@ class AuthController
         $email = trim($_POST['email'] ?? '');
         $pass  = $_POST['password'] ?? '';
 
-        // 1. Намираме потребителя
-        $client = Client::findByEmail($email);
+        if (empty($email) || empty($pass)) {
+            header("Location: index.php?action=login&error=empty");
+            exit;
+        }
 
-        // 2. Проверяваме паролата
+        $client = Client::findByEmail($email) ?: null;
+
         if ($client && password_verify($pass, $client->password)) {
-            // Успешен вход! Записваме в сесията.
             $_SESSION['user_id'] = $client->id;
-            $_SESSION['user_role'] = 'client';
+            $_SESSION['user_role'] = 'Client';
             $_SESSION['user_name'] = $client->first_name;
 
             header("Location: index.php?action=userDashboard");
-        } else {
-            $error = "Грешен имейл или парола.";
-            header("Location: ../../web_project_car_service/src/views/login.php");
+            exit;
         }
+
+
+        $employee = Employee::findByEmail($email) ?: null;
+
+        if ($employee && password_verify($pass, $employee->password)) {
+            // Успешен вход за служител! Записваме в сесията.
+            $_SESSION['user_id'] = $employee->id;
+            $_SESSION['user_role'] = 'Employee';
+            $_SESSION['user_name'] = $employee->first_name;
+
+            header("Location: index.php?action=employeeManager");
+            exit;
+        }
+
+        header("Location: index.php?action=login");
+        exit;
     }
 
 
