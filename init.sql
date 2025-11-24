@@ -60,7 +60,7 @@ CREATE TABLE car_model (
 
 CREATE TABLE services (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(30) NOT NULL,
+    name VARCHAR(50) NOT NULL,
     base_price DECIMAL(10, 2) NOT NULL, /* Поправено от bigint */
     group_id INT NOT NULL,
     FOREIGN KEY (group_id) REFERENCES service_groups(id)

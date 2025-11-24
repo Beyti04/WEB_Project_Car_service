@@ -188,6 +188,16 @@ switch ($action) {
         exit;
         break;
 
+    case 'getServices':
+        $serviceGroupId = (int)($_GET['service_group_id'] ?? 0);
+        $services = \App\Models\Service::getServicesByGroupId($serviceGroupId);
+
+        // Връщаме данните като JSON (формат, който JavaScript разбира)
+        header('Content-Type: application/json');
+        echo json_encode($services);
+        exit;
+        break;
+
     case 'admin':
         // Тук по-късно ще сложим проверка за роля 'admin'
         require __DIR__ . '/../views/adminDashboard.php';

@@ -85,157 +85,176 @@
                 </a>
             </div>
         </aside>
-
-        <main class="flex-1 flex flex-col overflow-y-auto">
-            <header class="flex items-center justify-end border-b border-border-light px-10 py-3 bg-card-light">
+        <div class="flex-1 flex flex-col">
+            <header class="flex items-center justify-end whitespace-nowrap border-b border-solid border-border-light dark:border-border-dark px-10 py-3 bg-card-light dark:bg-card-dark">
                 <div class="flex flex-1 justify-end gap-4 items-center">
-                    <button class="flex items-center justify-center h-10 w-10 bg-background-light text-text-light rounded-lg hover:bg-primary/10 transition-colors">
+                    <button class="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark hover:bg-primary/10 transition-colors">
                         <span class="material-symbols-outlined">notifications</span>
                     </button>
                     <div class="flex items-center gap-3">
-                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10 h-10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuADijiRLLPR2eRQXqbVqSmI5KeUFyXAg8F2zmY2mwfb1Pgm6eF-NmHWlSRm0xVvnz3wcPCkB7pflS81XhFJqdUyEEk4srBqEw81WqNgyxpAXWyBF4WXayX_79fjNwvjFvRP2mygTB8JtFtvmgwCmXAkWO1vUyZ6xTjfEnPmwsZD1QhwGVWu-iSAwpmnxmU_NGK7U5sH-U54t-zfth88S-uqzwxhC_4dJgAlM1nGXJJ3Wb2EztyredxX5Mc4g-N4vxPoQmZFTCyPxOs");'></div>
+                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuADijiRLLPR2eRQXqbVqSmI5KeUFyXAg8F2zmY2mwfb1Pgm6eF-NmHWlSRm0xVvnz3wcPCkB7pflS81XhFJqdUyEEk4srBqEw81WqNgyxpAXWyBF4WXayX_79fjNwvjFvRP2mygTB8JtFtvmgwCmXAkWO1vUyZ6xTjfEnPmwsZD1QhwGVWu-iSAwpmnxmU_NGK7U5sH-U54t-zfth88S-uqzwxhC_4dJgAlM1nGXJJ3Wb2EztyredxX5Mc4g-N4vxPoQmZFTCyPxOs");'></div>
                         <div class="flex flex-col text-sm">
-                            <p class="font-bold"><?php echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?></p>
-                            <p class="text-text-secondary-light text-sm">Client</p>
+                            <p class="font-bold">
+                                <?php echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?>
+                            </p>
+                            <p class="text-text-secondary-light dark:text-text-secondary-dark">Client</p>
                         </div>
                     </div>
                 </div>
             </header>
 
-            <div class="p-8 flex-1">
-                <div class="max-w-4xl mx-auto">
-                    <div class="mb-8">
-                        <h1 class="text-3xl font-bold text-text-light">Request New Service</h1>
-                        <p class="text-text-secondary-light mt-1">Fill out the form below to book a new appointment for your vehicle.</p>
-                    </div>
-
-                    <div class="bg-card-light p-8 rounded-lg shadow-sm border border-border-light">
-                        <form action="#" method="POST" class="space-y-8">
-                            <!-- Vehicle selection -->
-                            <div>
-                                <label class="block text-sm font-medium text-text-light mb-2" for="vehicle">Select Vehicle</label>
-                                <div class="relative">
-                                    <select id="vehicle" name="vehicle" class="w-full pl-10 pr-4 py-2.5 rounded border border-border-light bg-card-light focus:ring-primary focus:border-primary">
-                                        <?php
-
-                                        use App\Models\Car;
-                                        use App\Models\CarModel;
-                                        use App\Models\CarBrand;
-
-                                        $userCars = Car::getCarsByOwner((int)($_SESSION['user_id']));
-                                        foreach ($userCars as $car) {
-                                            $vin = $car->vin;
-                                            $year = $car->year;
-                                            $carModel = CarModel::getModelById($car->model_id);
-                                            $brand = CarBrand::getBrandById($carModel->brand_id);
-                                        ?>
-                                            <option value="<?php echo htmlspecialchars($car->id); ?>">
-                                                <?php echo htmlspecialchars("{$year} {$brand->make} {$carModel->model_name} (VIN: {$vin})"); ?>
-                                            </option>
-                                        <?php } ?>
-                                    </select>
-                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <span class="material-symbols-outlined text-text-secondary-light">directions_car</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Service Type selection -->
-                            <div>
-                                <label class="block text-sm font-medium text-text-light mb-2" for="serviceType">Choose Service Type</label>
-                                <div class="relative">
-                                    <select id="serviceType" name="serviceType" class="w-full pl-4 pr-4 py-2.5 rounded border border-border-light bg-card-light focus:ring-primary focus:border-primary">
-                                        <option value="" disabled selected>Select a service type</option>
-                                        <option value="maintenance">Maintenance</option>
-                                        <option value="diagnostics">Diagnostics</option>
-                                        <option value="climate-control">Climate Control</option>
-                                        <option value="engine-repair">Engine Repair</option>
-                                        <option value="transmission">Transmission</option>
-                                        <option value="suspension">Suspension</option>
-                                        <option value="brakes">Brakes</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <!-- Multiple Services selection -->
-                            <div>
-                                <label class="block text-sm font-medium text-text-light mb-2">Choose Services</label>
-                                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                                    <label class="flex items-center space-x-3 p-4 border border-border-light rounded-lg cursor-pointer hover:border-primary">
-                                        <input type="checkbox" name="services[]" value="oil-change" class="form-checkbox text-primary focus:ring-primary" />
-                                        <span class="text-sm font-medium">Oil Change</span>
-                                    </label>
-                                    <label class="flex items-center space-x-3 p-4 border border-border-light rounded-lg cursor-pointer hover:border-primary">
-                                        <input type="checkbox" name="services[]" value="tire-rotation" class="form-checkbox text-primary focus:ring-primary" />
-                                        <span class="text-sm font-medium">Tire Rotation</span>
-                                    </label>
-                                    <label class="flex items-center space-x-3 p-4 border border-border-light rounded-lg cursor-pointer hover:border-primary">
-                                        <input type="checkbox" name="services[]" value="brake-inspection" class="form-checkbox text-primary focus:ring-primary" />
-                                        <span class="text-sm font-medium">Brake Inspection</span>
-                                    </label>
-                                    <label class="flex items-center space-x-3 p-4 border border-border-light rounded-lg cursor-pointer hover:border-primary">
-                                        <input type="checkbox" name="services[]" value="state-inspection" class="form-checkbox text-primary focus:ring-primary" />
-                                        <span class="text-sm font-medium">State Inspection</span>
-                                    </label>
-                                    <label class="flex items-center space-x-3 p-4 border border-border-light rounded-lg cursor-pointer hover:border-primary">
-                                        <input type="checkbox" name="services[]" value="battery-check" class="form-checkbox text-primary focus:ring-primary" />
-                                        <span class="text-sm font-medium">Battery Check</span>
-                                    </label>
-                                    <label class="flex items-center space-x-3 p-4 border border-border-light rounded-lg cursor-pointer hover:border-primary">
-                                        <input type="checkbox" name="services[]" value="other" class="form-checkbox text-primary focus:ring-primary" />
-                                        <span class="text-sm font-medium">Other</span>
-                                    </label>
-                                </div>
-                            </div>
+            <main class="flex-1 flex flex-col overflow-y-auto">
 
 
+                <div class="p-8 flex-1">
+                    <div class="max-w-4xl mx-auto">
+                        <div class="mb-8">
+                            <h1 class="text-3xl font-bold text-text-light">Request New Service</h1>
+                            <p class="text-text-secondary-light mt-1">Fill out the form below to book a new appointment for your vehicle.</p>
+                        </div>
 
-                            <!-- Date & Time -->
-                            <div>
-                                <label class="block text-sm font-medium text-text-light mb-2">Preferred Date & Time</label>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-card-light p-8 rounded-lg shadow-sm border border-border-light">
+                            <form action="#" method="POST" class="space-y-8">
+                                <!-- Vehicle selection -->
+                                <div>
+                                    <label class="block text-sm font-medium text-text-light mb-2" for="vehicle">Select Vehicle</label>
                                     <div class="relative">
-                                        <input type="date" id="date" name="date" class="w-full pl-10 pr-4 py-2.5 rounded border border-border-light bg-card-light focus:ring-primary focus:border-primary" />
-                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                            <span class="material-symbols-outlined text-text-secondary-light">calendar_today</span>
-                                        </div>
-                                    </div>
-                                    <div class="relative">
-                                        <select id="time" name="time" class="w-full pl-10 pr-4 py-2.5 rounded border border-border-light bg-card-light focus:ring-primary focus:border-primary">
-                                            <option>9:00 AM</option>
-                                            <option>10:00 AM</option>
-                                            <option>11:00 AM</option>
-                                            <option>1:00 PM</option>
-                                            <option>2:00 PM</option>
-                                            <option>3:00 PM</option>
-                                            <option>4:00 PM</option>
+                                        <select id="vehicle" name="vehicle" class="w-full pl-10 pr-4 py-2.5 rounded border border-border-light bg-card-light focus:ring-primary focus:border-primary">
+                                            <?php
+
+                                            use App\Models\Car;
+                                            use App\Models\CarModel;
+                                            use App\Models\CarBrand;
+
+                                            $userCars = Car::getCarsByOwner((int)($_SESSION['user_id']));
+                                            foreach ($userCars as $car) {
+                                                $vin = $car->vin;
+                                                $year = $car->year;
+                                                $carModel = CarModel::getModelById($car->model_id);
+                                                $brand = CarBrand::getBrandById($carModel->brand_id);
+                                            ?>
+                                                <option value="<?php echo htmlspecialchars($car->id); ?>">
+                                                    <?php echo htmlspecialchars("{$year} {$brand->make} {$carModel->model_name} (VIN: {$vin})"); ?>
+                                                </option>
+                                            <?php } ?>
                                         </select>
                                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                            <span class="material-symbols-outlined text-text-secondary-light">schedule</span>
+                                            <span class="material-symbols-outlined text-text-secondary-light">directions_car</span>
                                         </div>
                                     </div>
                                 </div>
-                                <p class="text-xs text-text-secondary-light mt-2">We will confirm the final appointment time via email.</p>
-                            </div>
 
-                            <!-- Notes -->
-                            <div>
-                                <label class="block text-sm font-medium text-text-light mb-2" for="notes">Additional Notes (Optional)</label>
-                                <textarea id="notes" name="notes" rows="4" placeholder="e.g. I hear a strange noise when turning right..." class="w-full rounded border border-border-light bg-card-light focus:ring-primary focus:border-primary"></textarea>
-                            </div>
+                                <!-- Service Type selection -->
+                                <div>
+                                    <label class="block text-sm font-medium text-text-light mb-2" for="serviceType">Choose Service Type</label>
+                                    <div class="relative">
+                                        <select id="serviceType" name="serviceType" class="w-full pl-4 pr-4 py-2.5 rounded border border-border-light bg-card-light focus:ring-primary focus:border-primary" onchange="loadServices(this.value)">
+                                            <option value="" disabled selected>Select a service group</option>
+                                            <?php
 
-                            <div class="pt-4 border-t border-border-light flex justify-end">
-                                <button type="submit" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors">
-                                    Submit Request
-                                </button>
-                            </div>
-                        </form>
+                                            use App\Models\ServiceGroup;
+
+                                            $service_groups = ServiceGroup::getAllServiceGroups();
+                                            foreach ($service_groups as $group) {
+                                            ?>
+                                                
+                                                <option value="<?php echo htmlspecialchars($group->id); ?>"><?php echo htmlspecialchars($group->name); ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Multiple Services selection -->
+                                <div>
+                                    <label class="block text-sm font-medium text-text-light mb-2">Choose Service</label>
+                                    <select id="service" name="service" class="w-full pl-4 pr-4 py-2.5 rounded border border-border-light bg-card-light focus:ring-primary focus:border-primary">
+                                        <option value="" disabled selected>Select a service</option>
+                                    </select>
+                                </div>
+
+
+
+                                <!-- Date & Time -->
+                                <div>
+                                    <label class="block text-sm font-medium text-text-light mb-2">Preferred Date & Time</label>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div class="relative">
+                                            <input type="date" id="date" name="date" class="w-full pl-10 pr-4 py-2.5 rounded border border-border-light bg-card-light focus:ring-primary focus:border-primary" />
+                                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                <span class="material-symbols-outlined text-text-secondary-light">calendar_today</span>
+                                            </div>
+                                        </div>
+                                        <div class="relative">
+                                            <select id="time" name="time" class="w-full pl-10 pr-4 py-2.5 rounded border border-border-light bg-card-light focus:ring-primary focus:border-primary">
+                                                <option>9:00 AM</option>
+                                                <option>10:00 AM</option>
+                                                <option>11:00 AM</option>
+                                                <option>1:00 PM</option>
+                                                <option>2:00 PM</option>
+                                                <option>3:00 PM</option>
+                                                <option>4:00 PM</option>
+                                            </select>
+                                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                <span class="material-symbols-outlined text-text-secondary-light">schedule</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="text-xs text-text-secondary-light mt-2">We will confirm the final appointment time via email.</p>
+                                </div>
+
+                                <!-- Notes -->
+                                <div>
+                                    <label class="block text-sm font-medium text-text-light mb-2" for="notes">Additional Notes (Optional)</label>
+                                    <textarea id="notes" name="notes" rows="4" placeholder="e.g. I hear a strange noise when turning right..." class="w-full rounded border border-border-light bg-card-light focus:ring-primary focus:border-primary"></textarea>
+                                </div>
+
+                                <div class="pt-4 border-t border-border-light flex justify-end">
+                                    <button type="submit" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors">
+                                        Submit Request
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
                     </div>
-
                 </div>
-            </div>
-        </main>
-    </div>
+            </main>
+        </div>
+        <script>
+            function loadServices(serviceGroupId) {
+                const serviceSelect = document.getElementById('service');
+
+                serviceSelect.innerHTML = '<option disabled selected>Loading...</option>';
+                serviceSelect.disabled = true;
+
+                fetch('index.php?action=getServices&service_group_id=' + serviceGroupId)
+                    .then(response => response.json())
+                    .then(data => {
+                        serviceSelect.innerHTML = '<option value="" disabled selected>Select a service</option>';
+                        serviceSelect.disabled = false;
+
+                        if (data.length > 0) {
+                            data.forEach(service => {
+                                const option = document.createElement('option');
+                                option.value = service.id;
+                                option.textContent = service.name;
+                                serviceSelect.appendChild(option);
+                            });
+                        } else {
+                            const option = document.createElement('option');
+                            option.disabled = true;
+                            option.selected = true;
+                            option.textContent = 'No services found';
+                            serviceSelect.appendChild(option);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        serviceSelect.innerHTML = '<option disabled selected>Error loading services</option>';
+                    });
+            }
+        </script>
+
 </body>
 
 </html>
