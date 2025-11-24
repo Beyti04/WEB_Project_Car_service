@@ -126,17 +126,26 @@ class AuthController
 
 
         $employee = Employee::findByEmail($email) ?: null;
+        $roles = Role::getAllRoles();
+        $roleName = '';
+        foreach ($roles as $role) {
+            if ($role['id'] === $employee->role_id) {
+                $roleName = $role['role_name'];
+                break;
+            }
+        }
 
-        if ($employee && password_verify($pass, $employee->password) && $employee->role_id===2) {
+
+        if ($employee && password_verify($pass, $employee->password) && $roleName === 'Employee') {
             // Успешен вход за служител! Записваме в сесията.
             $_SESSION['user_id'] = $employee->id;
             $_SESSION['user_role'] = 'Employee';
             $_SESSION['user_name'] = $employee->first_name;
 
-            header("Location: index.php?action=employeeDashboard");
+            header("Location: index.php?action=userDashboard");
             exit;
         }
-        elseif ($employee && password_verify($pass, $employee->password) && $employee->role_id===1) {
+        elseif ($employee && password_verify($pass, $employee->password) && $roleName === 'Admin') {
             // Успешен вход за администратор! Записваме в сесията.
             $_SESSION['user_id'] = $employee->id;
             $_SESSION['user_role'] = 'Admin';
