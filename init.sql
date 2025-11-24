@@ -171,27 +171,191 @@ INSERT INTO car_brand (brand_name) VALUES
 ('Citroen'),
 ('Opel'),
 ('Volvo'),
-('Skoda');
+('Skoda'),
+('Dacia');
 /* 6. Начални данни (Seed Data) */
-
+INSERT INTO car_model (brand_id, model_name) SELECT id, '1 Series' FROM car_brand WHERE brand_name = 'BMW';
+INSERT INTO car_model (brand_id, model_name) SELECT id, '2 Series' FROM car_brand WHERE brand_name = 'BMW';
 INSERT INTO car_model (brand_id, model_name) SELECT id, '3 Series' FROM car_brand WHERE brand_name = 'BMW';
+INSERT INTO car_model (brand_id, model_name) SELECT id, '4 Series' FROM car_brand WHERE brand_name = 'BMW';
+INSERT INTO car_model (brand_id, model_name) SELECT id, '5 Series' FROM car_brand WHERE brand_name = 'BMW';
+INSERT INTO car_model (brand_id, model_name) SELECT id, '6 Series' FROM car_brand WHERE brand_name = 'BMW';
+INSERT INTO car_model (brand_id, model_name) SELECT id, '7 Series' FROM car_brand WHERE brand_name = 'BMW';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'X1 Series' FROM car_brand WHERE brand_name = 'BMW';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'X2 Series' FROM car_brand WHERE brand_name = 'BMW';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'X3 Series' FROM car_brand WHERE brand_name = 'BMW';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'X4 Series' FROM car_brand WHERE brand_name = 'BMW';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'X5 Series' FROM car_brand WHERE brand_name = 'BMW';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'X6 Series' FROM car_brand WHERE brand_name = 'BMW';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'X7 Series' FROM car_brand WHERE brand_name = 'BMW';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'XM Series' FROM car_brand WHERE brand_name = 'BMW';
+
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'A-Class' FROM car_brand WHERE brand_name = 'Mercedes-Benz';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'B-Class' FROM car_brand WHERE brand_name = 'Mercedes-Benz';
 INSERT INTO car_model (brand_id, model_name) SELECT id, 'C-Class' FROM car_brand WHERE brand_name = 'Mercedes-Benz';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'E-Class' FROM car_brand WHERE brand_name = 'Mercedes-Benz';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'S-Class' FROM car_brand WHERE brand_name = 'Mercedes-Benz';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'CLA-Class' FROM car_brand WHERE brand_name = 'Mercedes-Benz';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'CLE-Class' FROM car_brand WHERE brand_name = 'Mercedes-Benz';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'CLS-Class' FROM car_brand WHERE brand_name = 'Mercedes-Benz';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'GLA-Class' FROM car_brand WHERE brand_name = 'Mercedes-Benz';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'GLB-Class' FROM car_brand WHERE brand_name = 'Mercedes-Benz';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'GLC-Class' FROM car_brand WHERE brand_name = 'Mercedes-Benz';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'GLE-Class' FROM car_brand WHERE brand_name = 'Mercedes-Benz';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'GLS-Class' FROM car_brand WHERE brand_name = 'Mercedes-Benz';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'GLK-Class' FROM car_brand WHERE brand_name = 'Mercedes-Benz';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'GL-Class' FROM car_brand WHERE brand_name = 'Mercedes-Benz';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'GT' FROM car_brand WHERE brand_name = 'Mercedes-Benz';
+
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'A1' FROM car_brand WHERE brand_name = 'Audi';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'A2' FROM car_brand WHERE brand_name = 'Audi';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'A3' FROM car_brand WHERE brand_name = 'Audi';
 INSERT INTO car_model (brand_id, model_name) SELECT id, 'A4' FROM car_brand WHERE brand_name = 'Audi';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'A5' FROM car_brand WHERE brand_name = 'Audi';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'A6' FROM car_brand WHERE brand_name = 'Audi';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'A7' FROM car_brand WHERE brand_name = 'Audi';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'A8' FROM car_brand WHERE brand_name = 'Audi';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Q2' FROM car_brand WHERE brand_name = 'Audi';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Q3' FROM car_brand WHERE brand_name = 'Audi';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Q5' FROM car_brand WHERE brand_name = 'Audi';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Q7' FROM car_brand WHERE brand_name = 'Audi';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Q8' FROM car_brand WHERE brand_name = 'Audi';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'TT' FROM car_brand WHERE brand_name = 'Audi';
+
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Golf' FROM car_brand WHERE brand_name = 'Volkswagen';
 INSERT INTO car_model (brand_id, model_name) SELECT id, 'Passat' FROM car_brand WHERE brand_name = 'Volkswagen';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Polo' FROM car_brand WHERE brand_name = 'Volkswagen';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Tiguan' FROM car_brand WHERE brand_name = 'Volkswagen';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Touareg' FROM car_brand WHERE brand_name = 'Volkswagen';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Arteon' FROM car_brand WHERE brand_name = 'Volkswagen';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'T-Roc' FROM car_brand WHERE brand_name = 'Volkswagen';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'T-Cross' FROM car_brand WHERE brand_name = 'Volkswagen';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Caddy' FROM car_brand WHERE brand_name = 'Volkswagen';
+
 INSERT INTO car_model (brand_id, model_name) SELECT id, 'Focus' FROM car_brand WHERE brand_name = 'Ford';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Fiesta' FROM car_brand WHERE brand_name = 'Ford';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Mustang' FROM car_brand WHERE brand_name = 'Ford';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Explorer' FROM car_brand WHERE brand_name = 'Ford';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Escape' FROM car_brand WHERE brand_name = 'Ford';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Edge' FROM car_brand WHERE brand_name = 'Ford';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'F-150' FROM car_brand WHERE brand_name = 'Ford';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'F-250' FROM car_brand WHERE brand_name = 'Ford';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'F-350' FROM car_brand WHERE brand_name = 'Ford';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Ranger' FROM car_brand WHERE brand_name = 'Ford';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Raptor' FROM car_brand WHERE brand_name = 'Ford';
+
 INSERT INTO car_model (brand_id, model_name) SELECT id, 'Corolla' FROM car_brand WHERE brand_name = 'Toyota';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Camry' FROM car_brand WHERE brand_name = 'Toyota';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'RAV4' FROM car_brand WHERE brand_name = 'Toyota';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Highlander' FROM car_brand WHERE brand_name = 'Toyota';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Hilux' FROM car_brand WHERE brand_name = 'Toyota';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Yaris' FROM car_brand WHERE brand_name = 'Toyota';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Supra' FROM car_brand WHERE brand_name = 'Toyota';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Land Cruiser' FROM car_brand WHERE brand_name = 'Toyota';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Prius' FROM car_brand WHERE brand_name = 'Toyota';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Avalon' FROM car_brand WHERE brand_name = 'Toyota';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'CHR' FROM car_brand WHERE brand_name = 'Toyota';
+
 INSERT INTO car_model (brand_id, model_name) SELECT id, 'Civic' FROM car_brand WHERE brand_name = 'Honda';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Accord' FROM car_brand WHERE brand_name = 'Honda';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'CR-V' FROM car_brand WHERE brand_name = 'Honda';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'HR-V' FROM car_brand WHERE brand_name = 'Honda';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Pilot' FROM car_brand WHERE brand_name = 'Honda';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Fit' FROM car_brand WHERE brand_name = 'Honda';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Odyssey' FROM car_brand WHERE brand_name = 'Honda';
+
 INSERT INTO car_model (brand_id, model_name) SELECT id, 'i30' FROM car_brand WHERE brand_name = 'Hyundai';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Tucson' FROM car_brand WHERE brand_name = 'Hyundai';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Santa Fe' FROM car_brand WHERE brand_name = 'Hyundai';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Elantra' FROM car_brand WHERE brand_name = 'Hyundai';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Kona' FROM car_brand WHERE brand_name = 'Hyundai';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Palisade' FROM car_brand WHERE brand_name = 'Hyundai';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Venue' FROM car_brand WHERE brand_name = 'Hyundai';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Sonata' FROM car_brand WHERE brand_name = 'Hyundai';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Accent' FROM car_brand WHERE brand_name = 'Hyundai';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Santa Cruz' FROM car_brand WHERE brand_name = 'Hyundai';
+
 INSERT INTO car_model (brand_id, model_name) SELECT id, 'Ceed' FROM car_brand WHERE brand_name = 'Kia';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Sportage' FROM car_brand WHERE brand_name = 'Kia';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Sorento' FROM car_brand WHERE brand_name = 'Kia';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Stinger' FROM car_brand WHERE brand_name = 'Kia';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Rio' FROM car_brand WHERE brand_name = 'Kia';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Seltos' FROM car_brand WHERE brand_name = 'Kia';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Carnival' FROM car_brand WHERE brand_name = 'Kia';
+
 INSERT INTO car_model (brand_id, model_name) SELECT id, 'Megane' FROM car_brand WHERE brand_name = 'Renault';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Clio' FROM car_brand WHERE brand_name = 'Renault';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Captur' FROM car_brand WHERE brand_name = 'Renault';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Kadjar' FROM car_brand WHERE brand_name = 'Renault';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Talisman' FROM car_brand WHERE brand_name = 'Renault';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Zoe' FROM car_brand WHERE brand_name = 'Renault';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Scenic' FROM car_brand WHERE brand_name = 'Renault';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Kangoo' FROM car_brand WHERE brand_name = 'Renault';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Master' FROM car_brand WHERE brand_name = 'Renault';
+
+INSERT INTO car_model (brand_id, model_name) SELECT id, '206' FROM car_brand WHERE brand_name = 'Peugeot';
+INSERT INTO car_model (brand_id, model_name) SELECT id, '207' FROM car_brand WHERE brand_name = 'Peugeot';
+INSERT INTO car_model (brand_id, model_name) SELECT id, '307' FROM car_brand WHERE brand_name = 'Peugeot';
 INSERT INTO car_model (brand_id, model_name) SELECT id, '308' FROM car_brand WHERE brand_name = 'Peugeot';
+INSERT INTO car_model (brand_id, model_name) SELECT id, '407' FROM car_brand WHERE brand_name = 'Peugeot';
+INSERT INTO car_model (brand_id, model_name) SELECT id, '508' FROM car_brand WHERE brand_name = 'Peugeot';
+INSERT INTO car_model (brand_id, model_name) SELECT id, '2008' FROM car_brand WHERE brand_name = 'Peugeot';
+INSERT INTO car_model (brand_id, model_name) SELECT id, '3008' FROM car_brand WHERE brand_name = 'Peugeot';
+INSERT INTO car_model (brand_id, model_name) SELECT id, '5008' FROM car_brand WHERE brand_name = 'Peugeot';
+
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'C1' FROM car_brand WHERE brand_name = 'Citroen';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'C2' FROM car_brand WHERE brand_name = 'Citroen';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'C3' FROM car_brand WHERE brand_name = 'Citroen';
 INSERT INTO car_model (brand_id, model_name) SELECT id, 'C4' FROM car_brand WHERE brand_name = 'Citroen';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'C5' FROM car_brand WHERE brand_name = 'Citroen';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'C6' FROM car_brand WHERE brand_name = 'Citroen';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'C3 Aircross' FROM car_brand WHERE brand_name = 'Citroen';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'C4 Cactus' FROM car_brand WHERE brand_name = 'Citroen';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Ami' FROM car_brand WHERE brand_name = 'Citroen';
+
 INSERT INTO car_model (brand_id, model_name) SELECT id, 'Astra' FROM car_brand WHERE brand_name = 'Opel';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Corsa' FROM car_brand WHERE brand_name = 'Opel';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Insignia' FROM car_brand WHERE brand_name = 'Opel';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Mokka' FROM car_brand WHERE brand_name = 'Opel';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Crossland' FROM car_brand WHERE brand_name = 'Opel';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Grandland' FROM car_brand WHERE brand_name = 'Opel';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Zafira' FROM car_brand WHERE brand_name = 'Opel';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Vivaro' FROM car_brand WHERE brand_name = 'Opel';
+
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'C30' FROM car_brand WHERE brand_name = 'Volvo';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'V40' FROM car_brand WHERE brand_name = 'Volvo';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'V50' FROM car_brand WHERE brand_name = 'Volvo';
 INSERT INTO car_model (brand_id, model_name) SELECT id, 'V60' FROM car_brand WHERE brand_name = 'Volvo';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'V70' FROM car_brand WHERE brand_name = 'Volvo';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'XC40' FROM car_brand WHERE brand_name = 'Volvo';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'XC60' FROM car_brand WHERE brand_name = 'Volvo';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'XC90' FROM car_brand WHERE brand_name = 'Volvo';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'S60' FROM car_brand WHERE brand_name = 'Volvo';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'S70' FROM car_brand WHERE brand_name = 'Volvo';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'S80' FROM car_brand WHERE brand_name = 'Volvo';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'S90' FROM car_brand WHERE brand_name = 'Volvo';
+
 INSERT INTO car_model (brand_id, model_name) SELECT id, 'Octavia' FROM car_brand WHERE brand_name = 'Skoda';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Fabia' FROM car_brand WHERE brand_name = 'Skoda';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Superb' FROM car_brand WHERE brand_name = 'Skoda';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Kodiaq' FROM car_brand WHERE brand_name = 'Skoda';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Karoq' FROM car_brand WHERE brand_name = 'Skoda';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Scala' FROM car_brand WHERE brand_name = 'Skoda';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Enyaq' FROM car_brand WHERE brand_name = 'Skoda';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Citigo' FROM car_brand WHERE brand_name = 'Skoda';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Rapid' FROM car_brand WHERE brand_name = 'Skoda';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Yeti' FROM car_brand WHERE brand_name = 'Skoda';
+
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Duster' FROM car_brand WHERE brand_name = 'Dacia';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Logan' FROM car_brand WHERE brand_name = 'Dacia';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Sandero' FROM car_brand WHERE brand_name = 'Dacia';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Lodgy' FROM car_brand WHERE brand_name = 'Dacia';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Dokker' FROM car_brand WHERE brand_name = 'Dacia';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Spring' FROM car_brand WHERE brand_name = 'Dacia';
+INSERT INTO car_model (brand_id, model_name) SELECT id, 'Jogger' FROM car_brand WHERE brand_name = 'Dacia';
 
 -- Роли
-INSERT INTO role (role_name) VALUES ('Admin'), ('Specialist');
+INSERT INTO role (role_name) VALUES ('Client'),('Admin'), ('Specialist');
 
 -- Статуси на поръчки
 INSERT INTO status (status) VALUES ('Приета'), ('Диагностика'), ('Ремонт'), ('Тестване'), ('Готова');
