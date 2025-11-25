@@ -54,4 +54,12 @@ class ClientController
             $client->updateClient();
         }
     }
+
+    public static function removeClient(int $clientId): void
+    {
+        $client = Client::getClientById($clientId);
+        if ($client) {
+            $client->deleteClient();
+        }
+    }
 }

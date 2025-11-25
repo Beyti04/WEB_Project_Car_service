@@ -162,4 +162,16 @@ class Client {
             return false;
         }
     }
+
+    public function deleteClient(): bool {
+        $sql = "DELETE FROM clients WHERE id = ?";
+        
+        try {
+            $stmt = $this->db->prepare($sql);
+            return $stmt->execute([$this->id]);
+        } catch (PDOException $e) {
+            error_log("Client Delete Error: " . $e->getMessage());
+            return false;
+        }
+    }
 }

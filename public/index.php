@@ -247,6 +247,17 @@ switch ($action) {
         exit;
         break;
 
+    case 'removeClient':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        $clientId = (int)($_GET['client_id'] ?? 0);
+        ClientController::removeClient($clientId);
+        header("Location: index.php?action=clientManager");
+        exit;
+        break;  
+
     case 'serviceManager':
         if (!isset($_SESSION['user_id'])) {
             header("Location: index.php?action=login");

@@ -129,10 +129,10 @@
                         </div>
                         <div class="flex gap-2">
                             <a href="index.php?action=newClient">
-                            <button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-primary text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-4 hover:bg-blue-700 dark:hover:bg-blue-600">
-                                <span class="material-symbols-outlined text-xl">add</span>
-                                <span class="truncate">Add New Client</span>
-                            </button>
+                                <button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-primary text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-4 hover:bg-blue-700 dark:hover:bg-blue-600">
+                                    <span class="material-symbols-outlined text-xl">add</span>
+                                    <span class="truncate">Add New Client</span>
+                                </button>
                             </a>
                         </div>
                     </div>
@@ -159,9 +159,11 @@
                                     ?>
                                         <div class="flex gap-2 text-[#617589] dark:text-gray-400">
                                             <a href="index.php?action=editClient&client_id=<?php echo htmlspecialchars($client['id']); ?>">
-                                            <button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-primary dark:hover:text-primary"><span class="material-symbols-outlined text-xl">edit</span></button>
+                                                <button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-primary dark:hover:text-primary"><span class="material-symbols-outlined text-xl">edit</span></button>
                                             </a>
-                                            <button class="p-2 rounded-md hover:bg-red-100 dark:hover:bg-red-900/50 hover:text-red-600 dark:hover:text-red-500"><span class="material-symbols-outlined text-xl">delete</span></button>
+                                            <a href="index.php?action=removeClient&client_id=<?php echo htmlspecialchars($client['id']); ?>">
+                                                <button class="p-2 rounded-md hover:bg-red-100 dark:hover:bg-red-900/50 hover:text-red-600 dark:hover:text-red-500"><span class="material-symbols-outlined text-xl">delete</span></button>
+                                            </a>
                                         </div>
                                         </td>
                                         </tr>
