@@ -144,4 +144,22 @@ class Client {
         }
         return $clients;
     }
+
+    public function updateClient(): bool {
+        $sql = "UPDATE clients SET first_name = ?, last_name = ?, phone_number = ?, email = ? WHERE id = ?";
+        
+        try {
+            $stmt = $this->db->prepare($sql);
+            return $stmt->execute([
+                $this->first_name,
+                $this->last_name,
+                $this->phone_number,
+                $this->email,
+                $this->id
+            ]);
+        } catch (PDOException $e) {
+            error_log("Client Update Error: " . $e->getMessage());
+            return false;
+        }
+    }
 }

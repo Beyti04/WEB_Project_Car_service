@@ -42,4 +42,16 @@ class ClientController
             require __DIR__ . '/../../src/views/addClient.php';
         }
     }
+
+    public static function updateClient(int $clientId, $first_name, $last_name, $email, $phone_number): void
+    {
+        $client = Client::getClientById($clientId);
+        if ($client) {
+            $client->first_name = $first_name;
+            $client->last_name = $last_name;
+            $client->email = $email;
+            $client->phone_number = $phone_number;
+            $client->updateClient();
+        }
+    }
 }

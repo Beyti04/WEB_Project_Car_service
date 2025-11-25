@@ -66,9 +66,9 @@
                     <span class="material-symbols-outlined">dashboard</span>
                     <p class="text-sm font-bold leading-normal">Dashboard</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="index.php?action=employees">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="index.php?action=clientManager">
                     <span class="material-symbols-outlined text-primary">group</span>
-                    <p class="text-sm font-medium leading-normal">Employees</p>
+                    <p class="text-sm font-medium leading-normal">Clients</p>
                 </a>
                 <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=appointments">
                     <span class="material-symbols-outlined">calendar_month</span>

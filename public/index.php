@@ -236,6 +236,17 @@ switch ($action) {
         require __DIR__ . '/../src/views/editClient.php';
         break;
 
+    case 'updateClient':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        } 
+        $clientId = (int)($_GET['client_id'] ?? 0);
+        ClientController::updateClient($clientId, trim($_POST['first_name'] ?? ''), trim($_POST['last_name'] ?? ''), trim($_POST['email'] ?? ''), trim($_POST['phone'] ?? ''));
+        header("Location: index.php?action=clientManager");
+        exit;
+        break;
+
     case 'serviceManager':
         if (!isset($_SESSION['user_id'])) {
             header("Location: index.php?action=login");
