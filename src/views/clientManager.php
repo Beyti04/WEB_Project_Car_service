@@ -128,10 +128,12 @@
                             <input class="w-full h-10 pl-10 pr-4 rounded-lg border border-[#dbe0e6] dark:border-gray-700 bg-white dark:bg-background-dark text-sm focus:ring-2 focus:ring-primary focus:border-primary dark:text-white" placeholder="Search by name, email, or phone..." type="text" />
                         </div>
                         <div class="flex gap-2">
+                            <a href="index.php?action=newClient">
                             <button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-primary text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-4 hover:bg-blue-700 dark:hover:bg-blue-600">
                                 <span class="material-symbols-outlined text-xl">add</span>
                                 <span class="truncate">Add New Client</span>
                             </button>
+                            </a>
                         </div>
                     </div>
                     <div class="px-4 py-3 @container">

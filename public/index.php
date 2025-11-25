@@ -31,10 +31,11 @@ spl_autoload_register(function ($class) {
     }
 });
 
-    use App\Controllers\AuthController;
-    use App\Controllers\VehicleController;
-    use App\Controllers\EmployeeController;
-    use Config\Database;
+use App\Controllers\AuthController;
+use App\Controllers\VehicleController;
+use App\Controllers\EmployeeController;
+use App\Controllers\ClientController;
+use Config\Database;
 
 
 Database::getInstance();
@@ -186,7 +187,7 @@ switch ($action) {
             exit;
         }
         $employeeId = (int)($_GET['employee_id'] ?? 0);
-        \App\Controllers\EmployeeController::updateEmployee($employeeId, trim($_POST['first_name'] ?? ''), trim($_POST['last_name'] ?? ''), trim($_POST['email'] ?? ''), trim($_POST['phone'] ?? ''), (int)($_POST['role_id'] ?? 0));
+        EmployeeController::updateEmployee($employeeId, trim($_POST['first_name'] ?? ''), trim($_POST['last_name'] ?? ''), trim($_POST['email'] ?? ''), trim($_POST['phone'] ?? ''), (int)($_POST['role_id'] ?? 0));
         header("Location: index.php?action=employeeManager");
         exit;
         break;
@@ -197,7 +198,7 @@ switch ($action) {
             exit;
         }
         $employeeId = (int)($_GET['employee_id'] ?? 0);
-        \App\Controllers\EmployeeController::removeEmployee($employeeId);
+        EmployeeController::removeEmployee($employeeId);
         header("Location: index.php?action=employeeManager");
         exit;
         break;
@@ -207,6 +208,23 @@ switch ($action) {
             header("Location: index.php?action=login");
             exit;
         }
+        require __DIR__ . '/../src/views/clientManager.php';
+        break;
+
+    case 'newClient':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        require __DIR__ . '/../src/views/addClient.php';
+        break;
+
+    case 'addClient':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        (new ClientController())->addClient();
         require __DIR__ . '/../src/views/clientManager.php';
         break;
 
