@@ -33,24 +33,14 @@
 </head>
 
 <body class="font-display bg-background-light dark:bg-background-dark text-[#333333] dark:text-gray-200">
+
     <?php
 
-    use App\Models\Employee;
-    use App\Models\Role;
-
-    $roles = Role::getAllRoles();
-    $roleNames = [];
-    foreach ($roles as $role) {
-        if ($role['role_name'] != 'Client') {
-            $roleNames[$role['id']] = $role['role_name'];
-        }
-    }
-
-    $employeeId = $_GET['id'] ?? null;
-    $employee = Employee::getEmployeeById($employeeId);
-
-    if (!$employee) {
-        echo "<p class='text-red-500 p-10'>Employee not found.</p>";
+    use App\Models\Client;
+    $clientId = $_GET['client_id'] ?? null;
+    $client = Client::getClientById($clientId);
+    if (!$client) {
+        echo "<p class='text-red-500 p-10'>Client not found.</p>";
         exit;
     }
     ?>
@@ -111,51 +101,39 @@
 
             <main class="p-10">
                 <div class="max-w-3xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-lg shadow border dark:border-gray-700">
-                    <h1 class="text-3xl font-bold mb-6">Edit Employee</h1>
+                    <h1 class="text-3xl font-bold mb-6">Edit Client</h1>
 
-                    <form action="index.php?action=updateEmployee&employee_id=<?php echo htmlspecialchars($employee->id); ?>" method="POST" class="space-y-4">
+                    <form action="index.php?action=updateClient&client_id=<?php echo htmlspecialchars($client->id); ?>" method="POST" class="space-y-4">
 
                         <div>
                             <label class="text-sm font-medium mb-1">First Name</label>
                             <input type="text" name="first_name" required
                                 class="w-full rounded-md bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
-                                value="<?php echo htmlspecialchars($employee->first_name); ?>">
+                                value="<?php echo htmlspecialchars($client->first_name); ?>">
                         </div>
 
                         <div>
                             <label class="text-sm font-medium mb-1">Last Name</label>
                             <input type="text" name="last_name" required
                                 class="w-full rounded-md bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
-                                value="<?php echo htmlspecialchars($employee->last_name); ?>">
+                                value="<?php echo htmlspecialchars($client->last_name); ?>">
                         </div>
 
                         <div>
                             <label class="text-sm font-medium mb-1">Email</label>
                             <input type="email" name="email" required
                                 class="w-full rounded-md bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
-                                value="<?php echo htmlspecialchars($employee->email); ?>">
+                                value="<?php echo htmlspecialchars($client->email); ?>">
                         </div>
 
                         <div>
                             <label class="text-sm font-medium mb-1">Phone</label>
                             <input type="text" name="phone"
                                 class="w-full rounded-md bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
-                                value="<?php echo htmlspecialchars($employee->phone_number); ?>">
-                        </div>
-
-                        <div>
-                            <label class="text-sm font-medium mb-1">Position</label>
-                            <select name="role_id"
-                                class="w-full rounded-md bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
-                                <?php foreach ($roleNames as $roleId => $roleName): ?>
-                                    <option value="<?php echo htmlspecialchars($roleId); ?>" <?php if ($employee->role_id == $roleId) echo 'selected'; ?>>
-                                        <?php echo htmlspecialchars($roleName); ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
+                                value="<?php echo htmlspecialchars($client->phone_number); ?>">
                         </div>
                         <div class="flex justify-end gap-3 pt-4 border-t dark:border-gray-700">
-                            <a href="index.php?action=employees"
+                            <a href="index.php?action=clientManager"
                                 class="px-4 h-10 flex items-center rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200">
                                 Cancel
                             </a>

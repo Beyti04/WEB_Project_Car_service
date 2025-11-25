@@ -130,10 +130,12 @@
                             <h1 class="text-3xl font-bold leading-tight tracking-tight">Employee Management</h1>
                             <p class="text-[#617589] dark:text-gray-400 text-base font-normal leading-normal mt-2">View, add, and manage employee records.</p>
                         </div>
+                        <a href="index.php?action=newEmployee">
                         <button class="flex items-center gap-2 min-w-[84px] cursor-pointer justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90">
                             <span class="material-symbols-outlined" style="font-size: 20px;">add</span>
                             <span class="truncate">Add New Employee</span>
                         </button>
+                        </a>
                     </div>
                     <!-- Toolbar and Filters -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
@@ -212,7 +214,9 @@
                                                     <a href="index.php?action=editEmployee&id=<?= htmlspecialchars($employee['id']) ?>">
                                                     <button class="p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"><span class="material-symbols-outlined" style="font-size: 20px;">edit</span></button>
                                                     </a>
+                                                    <a href="index.php?action=removeEmployee&employee_id=<?= htmlspecialchars($employee['id']) ?>">
                                                     <button class="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg"><span class="material-symbols-outlined" style="font-size: 20px;">delete</span></button>
+                                                    </a>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>

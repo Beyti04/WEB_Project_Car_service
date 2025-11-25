@@ -100,19 +100,19 @@
         <div class="flex-1 flex flex-col">
             <!-- TopNavBar -->
             <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-border-light px-10 py-3 bg-white">
-    <div class="flex flex-1 justify-end gap-4 items-center">
-        <button class="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-background-light text-text-light hover:bg-primary/10 transition-colors">
-            <span class="material-symbols-outlined">notifications</span>
-        </button>
-        <div class="flex items-center gap-3">
-            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar image" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuADijiRLLPR2eRQXqbVqSmI5KeUFyXAg8F2zmY2mwfb1Pgm6eF-NmHWlSRm0xVvnz3wcPCkB7pflS81XhFJqdUyEEk4srBqEw81WqNgyxpAXWyBF4WXayX_79fjNwvjFvRP2mygTB8JtFtvmgwCmXAkWO1vUyZ6xTjfEnPmwsZD1QhwGVWu-iSAwpmnxmU_NGK7U5sH-U54t-zfth88S-uqzwxhC_4dJgAlM1nGXJJ3Wb2EztyredxX5Mc4g-N4vxPoQmZFTCyPxOs');"></div>
-            <div class="flex flex-col text-sm">
-                <p class="font-bold"><?php echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?></p>
-                <p class="text-text-secondary-light">Admin</p>
-            </div>
-        </div>
-    </div>
-</header>
+                <div class="flex flex-1 justify-end gap-4 items-center">
+                    <button class="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-background-light text-text-light hover:bg-primary/10 transition-colors">
+                        <span class="material-symbols-outlined">notifications</span>
+                    </button>
+                    <div class="flex items-center gap-3">
+                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar image" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuADijiRLLPR2eRQXqbVqSmI5KeUFyXAg8F2zmY2mwfb1Pgm6eF-NmHWlSRm0xVvnz3wcPCkB7pflS81XhFJqdUyEEk4srBqEw81WqNgyxpAXWyBF4WXayX_79fjNwvjFvRP2mygTB8JtFtvmgwCmXAkWO1vUyZ6xTjfEnPmwsZD1QhwGVWu-iSAwpmnxmU_NGK7U5sH-U54t-zfth88S-uqzwxhC_4dJgAlM1nGXJJ3Wb2EztyredxX5Mc4g-N4vxPoQmZFTCyPxOs');"></div>
+                        <div class="flex flex-col text-sm">
+                            <p class="font-bold"><?php echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?></p>
+                            <p class="text-text-secondary-light">Admin</p>
+                        </div>
+                    </div>
+                </div>
+            </header>
 
             <main class="flex-1 p-8">
                 <div class="w-full max-w-7xl mx-auto">
@@ -154,17 +154,18 @@
                                         echo "<td class='h-[72px] px-4 py-2 text-[#617589] dark:text-gray-400 text-sm font-normal leading-normal'>" . htmlspecialchars($client['email']) . "</td>";
                                         echo "<td class='h-[72px] px-4 py-2 text-[#617589] dark:text-gray-400 text-sm font-normal leading-normal'>" . htmlspecialchars($client['phone_number']) . "</td>";
                                         echo "<td class='h-[72px] px-4 py-2'>";
-                                        ?>
-                                            <div class="flex gap-2 text-[#617589] dark:text-gray-400">
-                                                <button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-primary dark:hover:text-primary"><span class="material-symbols-outlined text-xl">visibility</span></button>
-                                                <button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-primary dark:hover:text-primary"><span class="material-symbols-outlined text-xl">edit</span></button>
-                                                <button class="p-2 rounded-md hover:bg-red-100 dark:hover:bg-red-900/50 hover:text-red-600 dark:hover:text-red-500"><span class="material-symbols-outlined text-xl">delete</span></button>
-                                            </div>
+                                    ?>
+                                        <div class="flex gap-2 text-[#617589] dark:text-gray-400">
+                                            <a href="index.php?action=editClient&client_id=<?php echo htmlspecialchars($client['id']); ?>">
+                                            <button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-primary dark:hover:text-primary"><span class="material-symbols-outlined text-xl">edit</span></button>
+                                            </a>
+                                            <button class="p-2 rounded-md hover:bg-red-100 dark:hover:bg-red-900/50 hover:text-red-600 dark:hover:text-red-500"><span class="material-symbols-outlined text-xl">delete</span></button>
+                                        </div>
                                         </td>
-                                    </tr>
+                                        </tr>
                                     <?php
                                     }
-                                ?>
+                                    ?>
                                 </tbody>
                             </table>
                         </div>

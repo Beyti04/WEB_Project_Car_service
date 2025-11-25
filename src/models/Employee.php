@@ -121,4 +121,37 @@ class Employee
             return null;
         }
     }
+
+    public function updateEmployee(): bool
+    {
+        $sql = "UPDATE employees SET first_name = ?, last_name = ?, phone_number = ?, role_id = ?, email = ? WHERE id = ?";
+
+        try {
+            $stmt = $this->db->prepare($sql);
+            return $stmt->execute([
+                $this->first_name,
+                $this->last_name,
+                $this->phone_number,
+                $this->role_id,
+                $this->email,
+                $this->id
+            ]);
+        } catch (PDOException $e) {
+            error_log("Employee Update Error: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function deleteEmployee(): bool
+    {
+        $sql = "DELETE FROM employees WHERE id = ?";
+
+        try {
+            $stmt = $this->db->prepare($sql);
+            return $stmt->execute([$this->id]);
+        } catch (PDOException $e) {
+            error_log("Employee Delete Error: " . $e->getMessage());
+            return false;
+        }
+    }
 }

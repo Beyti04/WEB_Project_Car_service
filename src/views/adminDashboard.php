@@ -127,19 +127,13 @@
                 <!-- PageHeading -->
                 <div class="flex flex-wrap justify-between gap-4 mb-8 items-center">
                     <div class="flex flex-col gap-1">
-                        <p class="text-3xl font-bold leading-tight tracking-tight">Welcome back, John!</p>
+                        <p class="text-3xl font-bold leading-tight tracking-tight">Welcome back, <?php echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?>!</p>
                         <p class="text-text-secondary-light dark:text-text-secondary-dark text-base font-normal leading-normal">Here's what's happening with your shop today.</p>
                     </div>
-                    <div class="flex gap-2">
-                        <button class="flex min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-10 px-4 bg-background-light dark:bg-card-dark border border-border-light dark:border-border-dark text-text-light dark:text-text-dark text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/10 transition-colors">
-                            <span class="material-symbols-outlined text-base">add_circle</span>
-                            <span class="truncate">Add Client</span>
-                        </button>
-                        <button class="flex min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
-                            <span class="material-symbols-outlined text-base">note_add</span>
-                            <span class="truncate">New Order</span>
-                        </button>
-                    </div>
+                    <button class="flex min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
+                        <span class="material-symbols-outlined text-base">note_add</span>
+                        <span class="truncate">New Order</span>
+                    </button>
                 </div>
                 <!-- Stats -->
                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">

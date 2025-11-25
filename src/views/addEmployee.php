@@ -46,13 +46,7 @@
         }
     }
 
-    $employeeId = $_GET['id'] ?? null;
-    $employee = Employee::getEmployeeById($employeeId);
 
-    if (!$employee) {
-        echo "<p class='text-red-500 p-10'>Employee not found.</p>";
-        exit;
-    }
     ?>
     <div class="flex h-screen">
         <!-- Sidebar -->
@@ -113,34 +107,34 @@
                 <div class="max-w-3xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-lg shadow border dark:border-gray-700">
                     <h1 class="text-3xl font-bold mb-6">Edit Employee</h1>
 
-                    <form action="index.php?action=updateEmployee&employee_id=<?php echo htmlspecialchars($employee->id); ?>" method="POST" class="space-y-4">
+                    <form action="index.php?action=addEmployee" method="POST" class="space-y-4">
 
                         <div>
                             <label class="text-sm font-medium mb-1">First Name</label>
                             <input type="text" name="first_name" required
                                 class="w-full rounded-md bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
-                                value="<?php echo htmlspecialchars($employee->first_name); ?>">
+                                value="">
                         </div>
 
                         <div>
                             <label class="text-sm font-medium mb-1">Last Name</label>
                             <input type="text" name="last_name" required
                                 class="w-full rounded-md bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
-                                value="<?php echo htmlspecialchars($employee->last_name); ?>">
+                                value="">
                         </div>
 
                         <div>
                             <label class="text-sm font-medium mb-1">Email</label>
                             <input type="email" name="email" required
                                 class="w-full rounded-md bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
-                                value="<?php echo htmlspecialchars($employee->email); ?>">
+                                value="">
                         </div>
 
                         <div>
                             <label class="text-sm font-medium mb-1">Phone</label>
                             <input type="text" name="phone"
                                 class="w-full rounded-md bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
-                                value="<?php echo htmlspecialchars($employee->phone_number); ?>">
+                                value="">
                         </div>
 
                         <div>
@@ -148,12 +142,19 @@
                             <select name="role_id"
                                 class="w-full rounded-md bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
                                 <?php foreach ($roleNames as $roleId => $roleName): ?>
-                                    <option value="<?php echo htmlspecialchars($roleId); ?>" <?php if ($employee->role_id == $roleId) echo 'selected'; ?>>
+                                    <option value="<?php echo htmlspecialchars($roleId); ?>">
                                         <?php echo htmlspecialchars($roleName); ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
+                        <div>
+                            <label class="text-sm font-medium mb-1">Password</label>
+                            <input type="password" name="password" required
+                                class="w-full rounded-md bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
+                                value="">
+                        </div>
+
                         <div class="flex justify-end gap-3 pt-4 border-t dark:border-gray-700">
                             <a href="index.php?action=employees"
                                 class="px-4 h-10 flex items-center rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200">

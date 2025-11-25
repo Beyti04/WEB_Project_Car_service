@@ -33,7 +33,9 @@ spl_autoload_register(function ($class) {
 
     use App\Controllers\AuthController;
     use App\Controllers\VehicleController;
+    use App\Controllers\EmployeeController;
     use Config\Database;
+
 
 Database::getInstance();
 
@@ -153,6 +155,23 @@ switch ($action) {
         require __DIR__ . '/../src/views/employeeManager.php';
         break;
 
+    case 'newEmployee':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        require __DIR__ . '/../src/views/addEmployee.php';
+        break;
+
+    case 'addEmployee':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        (new EmployeeController())->addEmployee();
+        require __DIR__ . '/../src/views/employeeManager.php';
+        break;
+
     case 'editEmployee':
         if (!isset($_SESSION['user_id'])) {
             header("Location: index.php?action=login");
@@ -160,12 +179,43 @@ switch ($action) {
         }
         require __DIR__ . '/../src/views/editEmployee.php';
         break;
+
+    case 'updateEmployee':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        $employeeId = (int)($_GET['employee_id'] ?? 0);
+        \App\Controllers\EmployeeController::updateEmployee($employeeId, trim($_POST['first_name'] ?? ''), trim($_POST['last_name'] ?? ''), trim($_POST['email'] ?? ''), trim($_POST['phone'] ?? ''), (int)($_POST['role_id'] ?? 0));
+        header("Location: index.php?action=employeeManager");
+        exit;
+        break;
+
+    case 'removeEmployee':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        $employeeId = (int)($_GET['employee_id'] ?? 0);
+        \App\Controllers\EmployeeController::removeEmployee($employeeId);
+        header("Location: index.php?action=employeeManager");
+        exit;
+        break;
+
     case 'clientManager':
         if (!isset($_SESSION['user_id'])) {
             header("Location: index.php?action=login");
             exit;
         }
         require __DIR__ . '/../src/views/clientManager.php';
+        break;
+
+    case 'editClient':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        require __DIR__ . '/../src/views/editClient.php';
         break;
 
     case 'serviceManager':

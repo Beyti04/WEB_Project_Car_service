@@ -103,6 +103,24 @@ class Client {
         return null;
     }
 
+    public static function getClientById(int $id): ?Client {
+        $db = Database::getInstance();
+        $stmt = $db->prepare("SELECT * FROM clients WHERE id = ?");
+        $stmt->execute([$id]);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($data) {
+            return new Client(
+                id: (int)$data['id'],
+                first_name: $data['first_name'],
+                last_name: $data['last_name'],
+                phone_number: $data['phone_number'],
+                email: $data['email'],
+                password: $data['password']
+            );
+        }
+        return null;
+    }
+
     public function getVehicles(): array {
         $sql="SELECT c.id , b.brand_name, m.model_name, c.year, c.vin FROM car c
               JOIN brands b ON c.brand_id = b.id

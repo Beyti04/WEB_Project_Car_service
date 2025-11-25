@@ -203,7 +203,7 @@
                                                     <span><?php echo htmlspecialchars($material->stock); ?></span>
                                                 </div>
                                             </td>
-                                            <td class="px-6 py-4 text-gray-600 dark:text-gray-300">$<?php echo htmlspecialchars(number_format($material->unit_price, 2)); ?></td>
+                                            <td class="px-6 py-4 text-gray-600 dark:text-gray-300">€<?php echo htmlspecialchars(number_format($material->unit_price, 2)); ?></td>
                                             <td class="px-6 py-4 text-right space-x-2">
                                                 <button class="p-2 text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary rounded-lg hover:bg-primary/10 transition-colors"><span class="material-symbols-outlined text-xl">edit</span></button>
                                                 <button class="p-2 text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-500 rounded-lg hover:bg-red-500/10 transition-colors"><span class="material-symbols-outlined text-xl">delete</span></button>
