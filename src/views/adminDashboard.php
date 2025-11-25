@@ -60,7 +60,7 @@
                 </div>
             </a>
             <nav class="flex flex-col gap-2 flex-1">
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="#">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="index.php?action=adminDashboard">
                     <span class="material-symbols-outlined text-primary">dashboard</span>
                     <p class="text-sm font-bold leading-normal">Dashboard</p>
                 </a>
@@ -68,7 +68,7 @@
                     <span class="material-symbols-outlined">calendar_month</span>
                     <p class="text-sm font-medium leading-normal">Schedule</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=orders">
                     <span class="material-symbols-outlined">receipt_long</span>
                     <p class="text-sm font-medium leading-normal">Orders</p>
                 </a>

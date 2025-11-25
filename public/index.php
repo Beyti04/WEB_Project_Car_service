@@ -153,6 +153,30 @@ switch ($action) {
         require __DIR__ . '/../src/views/employeeManager.php';
         break;
 
+    case 'clientManager':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        require __DIR__ . '/../src/views/clientManager.php';
+        break;
+
+    case 'serviceManager':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        require __DIR__ . '/../src/views/serviceManager.php';
+        break;
+
+    case 'inventoryManager':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        require __DIR__ . '/../src/views/inventoryManager.php';
+        break;
+
     case 'adminDashboard':
         require __DIR__ . '/../src/views/adminDashboard.php';
         break;

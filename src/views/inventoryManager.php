@@ -57,31 +57,31 @@
                 </div>
             </a>
             <nav class="flex flex-col gap-2 flex-1">
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="adminDashboard.php">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=adminDashboard">
                     <span class="material-symbols-outlined">dashboard</span>
                     <p class="text-sm font-bold leading-normal">Dashboard</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=adminDashboard">
                     <span class="material-symbols-outlined">calendar_month</span>
                     <p class="text-sm font-medium leading-normal">Schedule</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=orders">
                     <span class="material-symbols-outlined">receipt_long</span>
                     <p class="text-sm font-medium leading-normal">Orders</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="clientManager.php">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=clientManager">
                     <span class="material-symbols-outlined">group</span>
                     <p class="text-sm font-medium leading-normal">Clients</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="employeeManager.php">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=employeeManager">
                     <span class="material-symbols-outlined">badge</span>
                     <p class="text-sm font-medium leading-normal">Employees</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="serviceManager.php">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=serviceManager">
                     <span class="material-symbols-outlined">build</span>
                     <p class="text-sm font-medium leading-normal">Services</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="#">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="index.php?action=inventoryManager">
                     <span class="material-symbols-outlined text-primary">inventory_2</span>
                     <p class="text-sm font-medium leading-normal">Inventory</p>
                 </a>
@@ -153,12 +153,20 @@
                         <div class="w-full">
                             <div class="relative h-12">
                                 <select class="flex w-full flex-1 items-stretch rounded-lg h-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-200 pl-4 pr-10 text-base font-normal leading-normal focus:outline-0 focus:ring-2 focus:ring-primary/50 appearance-none">
-                                    <option>All Groups</option>
-                                    <option>Oils</option>
-                                    <option>Filters</option>
-                                    <option>Brakes</option>
-                                    <option>Tires</option>
-                                    <option>Fluids</option>
+                                    <option disabled selected>All Groups</option>
+                                    <?php
+
+                                    use App\Models\MaterialGroup;
+
+                                    $groups = MaterialGroup::getAllMaterialGroups();
+                                    $groupNames = [];
+                                    foreach ($groups as $group) {
+                                        $groupNames[$group->id] = $group->name;
+                                    }
+                                    ?>
+                                    <?php foreach ($groups as $group): ?>
+                                        <option value="<?php echo htmlspecialchars($group->id); ?>"><?php echo htmlspecialchars($group->name); ?></option>
+                                    <?php endforeach; ?>
                                 </select>
 
                             </div>
@@ -179,81 +187,30 @@
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30">
-                                        <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">Synthetic Engine Oil 5W-30</td>
-                                        <td class="px-6 py-4 text-gray-600 dark:text-gray-300">Oils</td>
-                                        <td class="px-6 py-4 text-gray-600 dark:text-gray-300">
-                                            <div class="flex items-center gap-2">
-                                                <div class="w-2 h-2 rounded-full bg-green-500"></div>
-                                                <span>120</span>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 text-gray-600 dark:text-gray-300">$8.50</td>
-                                        <td class="px-6 py-4 text-right space-x-2">
-                                            <button class="p-2 text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary rounded-lg hover:bg-primary/10 transition-colors"><span class="material-symbols-outlined text-xl">edit</span></button>
-                                            <button class="p-2 text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-500 rounded-lg hover:bg-red-500/10 transition-colors"><span class="material-symbols-outlined text-xl">delete</span></button>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30">
-                                        <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">Cabin Air Filter CAF-102</td>
-                                        <td class="px-6 py-4 text-gray-600 dark:text-gray-300">Filters</td>
-                                        <td class="px-6 py-4 text-gray-600 dark:text-gray-300">
-                                            <div class="flex items-center gap-2">
-                                                <div class="w-2 h-2 rounded-full bg-green-500"></div>
-                                                <span>75</span>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 text-gray-600 dark:text-gray-300">$15.00</td>
-                                        <td class="px-6 py-4 text-right space-x-2">
-                                            <button class="p-2 text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary rounded-lg hover:bg-primary/10 transition-colors"><span class="material-symbols-outlined text-xl">edit</span></button>
-                                            <button class="p-2 text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-500 rounded-lg hover:bg-red-500/10 transition-colors"><span class="material-symbols-outlined text-xl">delete</span></button>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30">
-                                        <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">Ceramic Brake Pads BP-45</td>
-                                        <td class="px-6 py-4 text-gray-600 dark:text-gray-300">Brakes</td>
-                                        <td class="px-6 py-4 text-gray-600 dark:text-gray-300">
-                                            <div class="flex items-center gap-2 font-semibold text-amber-600 dark:text-amber-400">
-                                                <div class="w-2 h-2 rounded-full bg-amber-500"></div>
-                                                <span>8</span>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 text-gray-600 dark:text-gray-300">$45.75</td>
-                                        <td class="px-6 py-4 text-right space-x-2">
-                                            <button class="p-2 text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary rounded-lg hover:bg-primary/10 transition-colors"><span class="material-symbols-outlined text-xl">edit</span></button>
-                                            <button class="p-2 text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-500 rounded-lg hover:bg-red-500/10 transition-colors"><span class="material-symbols-outlined text-xl">delete</span></button>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30">
-                                        <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">DOT 4 Brake Fluid</td>
-                                        <td class="px-6 py-4 text-gray-600 dark:text-gray-300">Fluids</td>
-                                        <td class="px-6 py-4 text-gray-600 dark:text-gray-300">
-                                            <div class="flex items-center gap-2">
-                                                <div class="w-2 h-2 rounded-full bg-green-500"></div>
-                                                <span>32</span>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 text-gray-600 dark:text-gray-300">$12.20</td>
-                                        <td class="px-6 py-4 text-right space-x-2">
-                                            <button class="p-2 text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary rounded-lg hover:bg-primary/10 transition-colors"><span class="material-symbols-outlined text-xl">edit</span></button>
-                                            <button class="p-2 text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-500 rounded-lg hover:bg-red-500/10 transition-colors"><span class="material-symbols-outlined text-xl">delete</span></button>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30">
-                                        <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">All-Season Tire 225/65R17</td>
-                                        <td class="px-6 py-4 text-gray-600 dark:text-gray-300">Tires</td>
-                                        <td class="px-6 py-4 text-gray-600 dark:text-gray-300">
-                                            <div class="flex items-center gap-2">
-                                                <div class="w-2 h-2 rounded-full bg-green-500"></div>
-                                                <span>48</span>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 text-gray-600 dark:text-gray-300">$120.00</td>
-                                        <td class="px-6 py-4 text-right space-x-2">
-                                            <button class="p-2 text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary rounded-lg hover:bg-primary/10 transition-colors"><span class="material-symbols-outlined text-xl">edit</span></button>
-                                            <button class="p-2 text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-500 rounded-lg hover:bg-red-500/10 transition-colors"><span class="material-symbols-outlined text-xl">delete</span></button>
-                                        </td>
-                                    </tr>
+                                    <?php
+
+                                    use App\Models\Material;
+
+                                    $materials = Material::getAllMaterials();
+
+                                    foreach ($materials as $material): ?>
+                                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30">
+                                            <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"><?php echo htmlspecialchars($material->name); ?></td>
+                                            <td class="px-6 py-4 text-gray-600 dark:text-gray-300"><?php echo htmlspecialchars($groupNames[$material->group_id] ?? ''); ?></td>
+                                            <td class="px-6 py-4 text-gray-600 dark:text-gray-300">
+                                                <div class="flex items-center gap-2">
+                                                    <div class="w-2 h-2 rounded-full -center <?php echo $material->stock > 0 ? 'bg-green-500' : 'bg-red-500'; ?>"></div>
+                                                    <span><?php echo htmlspecialchars($material->stock); ?></span>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 text-gray-600 dark:text-gray-300">$<?php echo htmlspecialchars(number_format($material->unit_price, 2)); ?></td>
+                                            <td class="px-6 py-4 text-right space-x-2">
+                                                <button class="p-2 text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary rounded-lg hover:bg-primary/10 transition-colors"><span class="material-symbols-outlined text-xl">edit</span></button>
+                                                <button class="p-2 text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-500 rounded-lg hover:bg-red-500/10 transition-colors"><span class="material-symbols-outlined text-xl">delete</span></button>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+
                                 </tbody>
                             </table>
                         </div>

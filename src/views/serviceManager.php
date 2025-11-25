@@ -57,31 +57,31 @@
                 </div>
             </a>
             <nav class="flex flex-col gap-2 flex-1">
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="adminDashboard.php">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=adminDashboard">
                     <span class="material-symbols-outlined">dashboard</span>
                     <p class="text-sm font-bold leading-normal">Dashboard</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=adminDashboard">
                     <span class="material-symbols-outlined">calendar_month</span>
                     <p class="text-sm font-medium leading-normal">Schedule</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=orders">
                     <span class="material-symbols-outlined">receipt_long</span>
                     <p class="text-sm font-medium leading-normal">Orders</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="clientManager.php">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=clientManager">
                     <span class="material-symbols-outlined">group</span>
                     <p class="text-sm font-medium leading-normal">Clients</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="employeeManager.php">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=employeeManager">
                     <span class="material-symbols-outlined">badge</span>
                     <p class="text-sm font-medium leading-normal">Employees</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="serviceManager.php">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="index.php?action=serviceManager">
                     <span class="material-symbols-outlined text-primary">build</span>
                     <p class="text-sm font-medium leading-normal">Services</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="inventoryManager.php">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=inventoryManager">
                     <span class="material-symbols-outlined">inventory_2</span>
                     <p class="text-sm font-medium leading-normal">Inventory</p>
                 </a>
@@ -107,19 +107,19 @@
         <div class="flex-1 flex flex-col">
             <!-- TopNavBar -->
             <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-border-light px-10 py-3 bg-white">
-    <div class="flex flex-1 justify-end gap-4 items-center">
-        <button class="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-background-light text-text-light hover:bg-primary/10 transition-colors">
-            <span class="material-symbols-outlined">notifications</span>
-        </button>
-        <div class="flex items-center gap-3">
-            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar image" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuADijiRLLPR2eRQXqbVqSmI5KeUFyXAg8F2zmY2mwfb1Pgm6eF-NmHWlSRm0xVvnz3wcPCkB7pflS81XhFJqdUyEEk4srBqEw81WqNgyxpAXWyBF4WXayX_79fjNwvjFvRP2mygTB8JtFtvmgwCmXAkWO1vUyZ6xTjfEnPmwsZD1QhwGVWu-iSAwpmnxmU_NGK7U5sH-U54t-zfth88S-uqzwxhC_4dJgAlM1nGXJJ3Wb2EztyredxX5Mc4g-N4vxPoQmZFTCyPxOs');"></div>
-            <div class="flex flex-col text-sm">
-                <p class="font-bold">John Doe</p>
-                <p class="text-text-secondary-light">Admin</p>
-            </div>
-        </div>
-    </div>
-</header>
+                <div class="flex flex-1 justify-end gap-4 items-center">
+                    <button class="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-background-light text-text-light hover:bg-primary/10 transition-colors">
+                        <span class="material-symbols-outlined">notifications</span>
+                    </button>
+                    <div class="flex items-center gap-3">
+                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar image" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuADijiRLLPR2eRQXqbVqSmI5KeUFyXAg8F2zmY2mwfb1Pgm6eF-NmHWlSRm0xVvnz3wcPCkB7pflS81XhFJqdUyEEk4srBqEw81WqNgyxpAXWyBF4WXayX_79fjNwvjFvRP2mygTB8JtFtvmgwCmXAkWO1vUyZ6xTjfEnPmwsZD1QhwGVWu-iSAwpmnxmU_NGK7U5sH-U54t-zfth88S-uqzwxhC_4dJgAlM1nGXJJ3Wb2EztyredxX5Mc4g-N4vxPoQmZFTCyPxOs');"></div>
+                        <div class="flex flex-col text-sm">
+                            <p class="font-bold">John Doe</p>
+                            <p class="text-text-secondary-light">Admin</p>
+                        </div>
+                    </div>
+                </div>
+            </header>
 
             <main class="flex-1 p-6 lg:p-8">
                 <div class="mx-auto max-w-7xl">
@@ -154,12 +154,22 @@
                             <div class="w-full">
                                 <div class="relative h-12">
                                     <select class="flex w-full flex-1 items-stretch rounded-lg h-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-200 pl-4 pr-10 text-base font-normal leading-normal focus:outline-0 focus:ring-2 focus:ring-primary/50 appearance-none">
-                                        <option>All Categories</option>
-                                        <option>Oils</option>
-                                        <option>Filters</option>
-                                        <option>Brakes</option>
-                                        <option>Tires</option>
-                                        <option>Fluids</option>
+                                        <option disabled selected>All Categories</option>
+                                        <?php
+
+                                        use App\Models\Service;
+                                        use App\Models\ServiceGroup;
+
+                                        $serviceGroups = ServiceGroup::getAllServiceGroups();
+                                        $groupNames = [];
+                                        foreach ($serviceGroups as $group) {
+                                            $groupNames[$group->id] = $group->name;
+                                        }
+
+                                        foreach ($serviceGroups as $group) {
+                                            echo '<option value="' . htmlspecialchars($group->id) . '">' . htmlspecialchars($group->name) . '</option>';
+                                        }
+                                        ?>
                                     </select>
                                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 dark:text-gray-400">
                                         <span class="material-symbols-outlined">expand_more</span>
@@ -176,7 +186,6 @@
                             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-300">
                                     <tr>
-                                        <th class="p-4" scope="col"><input class="form-checkbox rounded border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 text-primary focus:ring-primary/50" type="checkbox" /></th>
                                         <th class="px-6 py-3" scope="col">
                                             <div class="flex items-center gap-1 cursor-pointer">Service Name <span class="material-symbols-outlined text-base">unfold_more</span></div>
                                         </th>
@@ -190,66 +199,25 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="bg-white dark:bg-[#1C2A36] border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800">
-                                        <td class="w-4 p-4"><input class="form-checkbox rounded border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 text-primary focus:ring-primary/50" type="checkbox" /></td>
-                                        <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" scope="row">Standard Oil Change</th>
-                                        <td class="px-6 py-4">Maintenance</td>
-                                        <td class="px-6 py-4">$49.99</td>
+                                    <?php
+                                    $services = Service::getAllServices();
+                                    foreach ($services as $service) {
+                                        echo '<tr class="bg-white dark:bg-[#1C2A36] border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800">';
+                                        echo '<th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" scope="row">' . htmlspecialchars($service->name) . '</th>';
+                                        echo '<td class="px-6 py-4">' . htmlspecialchars($groupNames[$service->group_id] ?? '') . '</td>';
+                                        echo '<td class="px-6 py-4">$' . htmlspecialchars($service->base_price) . '</td>';
+                                    ?>
                                         <td class="px-6 py-4 text-right">
                                             <div class="flex gap-4 justify-end">
                                                 <button class="text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary"><span class="material-symbols-outlined">edit</span></button>
                                                 <button class="text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-500"><span class="material-symbols-outlined">delete</span></button>
                                             </div>
                                         </td>
-                                    </tr>
-                                    <tr class="bg-white dark:bg-[#1C2A36] border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800">
-                                        <td class="w-4 p-4"><input class="form-checkbox rounded border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 text-primary focus:ring-primary/50" type="checkbox" /></td>
-                                        <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" scope="row">Brake Pad Replacement</th>
-                                        <td class="px-6 py-4">Brakes</td>
-                                        <td class="px-6 py-4">$199.99</td>
-                                        <td class="px-6 py-4 text-right">
-                                            <div class="flex gap-4 justify-end">
-                                                <button class="text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary"><span class="material-symbols-outlined">edit</span></button>
-                                                <button class="text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-500"><span class="material-symbols-outlined">delete</span></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="bg-white dark:bg-[#1C2A36] border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800">
-                                        <td class="w-4 p-4"><input class="form-checkbox rounded border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 text-primary focus:ring-primary/50" type="checkbox" /></td>
-                                        <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" scope="row">Engine Diagnostic</th>
-                                        <td class="px-6 py-4">Diagnostics</td>
-                                        <td class="px-6 py-4">$89.00</td>
-                                        <td class="px-6 py-4 text-right">
-                                            <div class="flex gap-4 justify-end">
-                                                <button class="text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary"><span class="material-symbols-outlined">edit</span></button>
-                                                <button class="text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-500"><span class="material-symbols-outlined">delete</span></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="bg-white dark:bg-[#1C2A36] border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800">
-                                        <td class="w-4 p-4"><input class="form-checkbox rounded border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 text-primary focus:ring-primary/50" type="checkbox" /></td>
-                                        <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" scope="row">Tire Rotation &amp; Balance</th>
-                                        <td class="px-6 py-4">Tires</td>
-                                        <td class="px-6 py-4">$75.50</td>
-                                        <td class="px-6 py-4 text-right">
-                                            <div class="flex gap-4 justify-end">
-                                                <button class="text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary"><span class="material-symbols-outlined">edit</span></button>
-                                                <button class="text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-500"><span class="material-symbols-outlined">delete</span></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="bg-white dark:bg-[#1C2A36] hover:bg-gray-50 dark:hover:bg-gray-800">
-                                        <td class="w-4 p-4"><input class="form-checkbox rounded border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 text-primary focus:ring-primary/50" type="checkbox" /></td>
-                                        <th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" scope="row">Battery Check &amp; Replacement</th>
-                                        <td class="px-6 py-4">Electrical</td>
-                                        <td class="px-6 py-4">$150.00</td>
-                                        <td class="px-6 py-4 text-right">
-                                            <div class="flex gap-4 justify-end">
-                                                <button class="text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary"><span class="material-symbols-outlined">edit</span></button>
-                                                <button class="text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-500"><span class="material-symbols-outlined">delete</span></button>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                        </tr>
+                                    <?php
+                                    }
+                                    ?>
+
                                 </tbody>
                             </table>
                         </div>

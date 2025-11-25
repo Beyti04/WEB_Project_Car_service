@@ -50,7 +50,7 @@
                 </div>
             </a>
             <nav class="flex flex-col gap-2 flex-1">
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="adminDashboard.php">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=adminDashboard">
                     <span class="material-symbols-outlined">dashboard</span>
                     <p class="text-sm font-bold leading-normal">Dashboard</p>
                 </a>
@@ -58,23 +58,23 @@
                     <span class="material-symbols-outlined">calendar_month</span>
                     <p class="text-sm font-medium leading-normal">Schedule</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=orders">
                     <span class="material-symbols-outlined">receipt_long</span>
                     <p class="text-sm font-medium leading-normal">Orders</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="#">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="index.php?action=clientManager">
                     <span class="material-symbols-outlined text-primary">group</span>
                     <p class="text-sm font-medium leading-normal">Clients</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="employeeManager.php">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=employeeManager">
                     <span class="material-symbols-outlined">badge</span>
                     <p class="text-sm font-medium leading-normal">Employees</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="serviceManager.php">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=serviceManager">
                     <span class="material-symbols-outlined">build</span>
                     <p class="text-sm font-medium leading-normal">Services</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="inventoryManager.php">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=inventoryManager">
                     <span class="material-symbols-outlined">inventory_2</span>
                     <p class="text-sm font-medium leading-normal">Inventory</p>
                 </a>
@@ -146,11 +146,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="border-t border-t-[#dbe0e6] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800/50">
-                                        <td class="h-[72px] px-4 py-2 text-[#111418] dark:text-white text-sm font-normal leading-normal">John Doe</td>
-                                        <td class="h-[72px] px-4 py-2 text-[#617589] dark:text-gray-400 text-sm font-normal leading-normal">john.doe@example.com</td>
-                                        <td class="h-[72px] px-4 py-2 text-[#617589] dark:text-gray-400 text-sm font-normal leading-normal">(555) 123-4567</td>
-                                        <td class="h-[72px] px-4 py-2">
+                                    <?php
+                                    $clients = App\Models\Client::getAllClients();
+                                    foreach ($clients as $client) {
+                                        echo "<tr class='border-t border-t-[#dbe0e6] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800/50'>";
+                                        echo "<td class='h-[72px] px-4 py-2 text-[#111418] dark:text-white text-sm font-normal leading-normal'>" . htmlspecialchars($client['first_name'] . ' ' . $client['last_name']) . "</td>";
+                                        echo "<td class='h-[72px] px-4 py-2 text-[#617589] dark:text-gray-400 text-sm font-normal leading-normal'>" . htmlspecialchars($client['email']) . "</td>";
+                                        echo "<td class='h-[72px] px-4 py-2 text-[#617589] dark:text-gray-400 text-sm font-normal leading-normal'>" . htmlspecialchars($client['phone_number']) . "</td>";
+                                        echo "<td class='h-[72px] px-4 py-2'>";
+                                        ?>
                                             <div class="flex gap-2 text-[#617589] dark:text-gray-400">
                                                 <button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-primary dark:hover:text-primary"><span class="material-symbols-outlined text-xl">visibility</span></button>
                                                 <button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-primary dark:hover:text-primary"><span class="material-symbols-outlined text-xl">edit</span></button>
@@ -158,54 +162,9 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr class="border-t border-t-[#dbe0e6] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800/50">
-                                        <td class="h-[72px] px-4 py-2 text-[#111418] dark:text-white text-sm font-normal leading-normal">Jane Smith</td>
-                                        <td class="h-[72px] px-4 py-2 text-[#617589] dark:text-gray-400 text-sm font-normal leading-normal">jane.smith@example.com</td>
-                                        <td class="h-[72px] px-4 py-2 text-[#617589] dark:text-gray-400 text-sm font-normal leading-normal">(555) 987-6543</td>
-                                        <td class="h-[72px] px-4 py-2">
-                                            <div class="flex gap-2 text-[#617589] dark:text-gray-400">
-                                                <button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-primary dark:hover:text-primary"><span class="material-symbols-outlined text-xl">visibility</span></button>
-                                                <button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-primary dark:hover:text-primary"><span class="material-symbols-outlined text-xl">edit</span></button>
-                                                <button class="p-2 rounded-md hover:bg-red-100 dark:hover:bg-red-900/50 hover:text-red-600 dark:hover:text-red-500"><span class="material-symbols-outlined text-xl">delete</span></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="border-t border-t-[#dbe0e6] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800/50">
-                                        <td class="h-[72px] px-4 py-2 text-[#111418] dark:text-white text-sm font-normal leading-normal">Michael Johnson</td>
-                                        <td class="h-[72px] px-4 py-2 text-[#617589] dark:text-gray-400 text-sm font-normal leading-normal">michael.j@example.com</td>
-                                        <td class="h-[72px] px-4 py-2 text-[#617589] dark:text-gray-400 text-sm font-normal leading-normal">(555) 555-1212</td>
-                                        <td class="h-[72px] px-4 py-2">
-                                            <div class="flex gap-2 text-[#617589] dark:text-gray-400">
-                                                <button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-primary dark:hover:text-primary"><span class="material-symbols-outlined text-xl">visibility</span></button>
-                                                <button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-primary dark:hover:text-primary"><span class="material-symbols-outlined text-xl">edit</span></button>
-                                                <button class="p-2 rounded-md hover:bg-red-100 dark:hover:bg-red-900/50 hover:text-red-600 dark:hover:text-red-500"><span class="material-symbols-outlined text-xl">delete</span></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="border-t border-t-[#dbe0e6] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800/50">
-                                        <td class="h-[72px] px-4 py-2 text-[#111418] dark:text-white text-sm font-normal leading-normal">Emily Davis</td>
-                                        <td class="h-[72px] px-4 py-2 text-[#617589] dark:text-gray-400 text-sm font-normal leading-normal">emily.davis@example.com</td>
-                                        <td class="h-[72px] px-4 py-2 text-[#617589] dark:text-gray-400 text-sm font-normal leading-normal">(555) 234-5678</td>
-                                        <td class="h-[72px] px-4 py-2">
-                                            <div class="flex gap-2 text-[#617589] dark:text-gray-400">
-                                                <button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-primary dark:hover:text-primary"><span class="material-symbols-outlined text-xl">visibility</span></button>
-                                                <button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-primary dark:hover:text-primary"><span class="material-symbols-outlined text-xl">edit</span></button>
-                                                <button class="p-2 rounded-md hover:bg-red-100 dark:hover:bg-red-900/50 hover:text-red-600 dark:hover:text-red-500"><span class="material-symbols-outlined text-xl">delete</span></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="border-t border-t-[#dbe0e6] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800/50">
-                                        <td class="h-[72px] px-4 py-2 text-[#111418] dark:text-white text-sm font-normal leading-normal">David Wilson</td>
-                                        <td class="h-[72px] px-4 py-2 text-[#617589] dark:text-gray-400 text-sm font-normal leading-normal">david.wilson@example.com</td>
-                                        <td class="h-[72px] px-4 py-2 text-[#617589] dark:text-gray-400 text-sm font-normal leading-normal">(555) 876-5432</td>
-                                        <td class="h-[72px] px-4 py-2">
-                                            <div class="flex gap-2 text-[#617589] dark:text-gray-400">
-                                                <button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-primary dark:hover:text-primary"><span class="material-symbols-outlined text-xl">visibility</span></button>
-                                                <button class="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-primary dark:hover:text-primary"><span class="material-symbols-outlined text-xl">edit</span></button>
-                                                <button class="p-2 rounded-md hover:bg-red-100 dark:hover:bg-red-900/50 hover:text-red-600 dark:hover:text-red-500"><span class="material-symbols-outlined text-xl">delete</span></button>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    <?php
+                                    }
+                                ?>
                                 </tbody>
                             </table>
                         </div>

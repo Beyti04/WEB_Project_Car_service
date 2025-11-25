@@ -1,12 +1,14 @@
 <?php
+
 namespace App\Models;
 
 use Config\Database;
 use PDO;
 
-class Service {
+class Service
+{
     private PDO $db;
-    
+
     public function __construct(
         public ?int $id = null,
         public string $name,
@@ -32,7 +34,7 @@ class Service {
     {
         $db = Database::getInstance();
         $stmt = $db->query("SELECT * FROM services");
-        return $stmt->fetchAll(PDO::FETCH_CLASS, self::class);
+        return $stmt->fetchAll(PDO::FETCH_CLASS);
     }
 
     public static function getServiceById(int $id): ?self
@@ -52,4 +54,4 @@ class Service {
         $stmt->execute([':group_id' => $groupId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-}       
+}

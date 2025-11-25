@@ -116,4 +116,14 @@ class Client {
         }
         return $vehicles;
     }
+
+    public static function getAllClients(): array {
+        $db = Database::getInstance();
+        $stmt = $db->query("SELECT * FROM clients");
+        $clients = [];
+        while ($data = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $clients[] = $data;
+        }
+        return $clients;
+    }
 }

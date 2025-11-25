@@ -5,9 +5,10 @@ namespace App\Models;
 use Config\Database;
 use PDO, PDOException;
 
-class Employee {
+class Employee
+{
     private PDO $db;
-    
+
     public function __construct(
         public ?int $id = null,
         public string $first_name,
@@ -20,12 +21,13 @@ class Employee {
         $this->db = Database::getInstance();
     }
 
-    public function registerUser(): bool {
+    public function registerUser(): bool
+    {
         $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
 
         $sql = "INSERT INTO employees (first_name, last_name, phone_number, role_id, email, password) 
                 VALUES (?, ?, ?, ?, ?, ?)";
-        
+
         try {
             $stmt = $this->db->prepare($sql);
             $success = $stmt->execute([
@@ -47,7 +49,8 @@ class Employee {
         }
     }
 
-    public static function findByEmail(string $email): ?Employee {
+    public static function findByEmail(string $email): ?Employee
+    {
         $db = Database::getInstance();
         $sql = "SELECT * FROM employees WHERE email = ?";
 
@@ -68,6 +71,23 @@ class Employee {
                 );
             }
             return null;
+        } catch (PDOException $e) {
+            error_log("Employee Find Error: " . $e->getMessage());
+            return null;
+        }
+    }
+
+    public static function getAllEmployees(): ?array
+    {
+        $db = Database::getInstance();
+        $sql = "SELECT * FROM employees";
+
+        try {
+            $stmt = $db->prepare($sql);
+            $stmt->execute();
+            $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $employees ?: null;
         } catch (PDOException $e) {
             error_log("Employee Find Error: " . $e->getMessage());
             return null;

@@ -62,15 +62,15 @@
                     <span class="material-symbols-outlined">dashboard</span>
                     <p class="text-sm font-bold leading-normal">Dashboard</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=adminDashboard">
                     <span class="material-symbols-outlined">calendar_month</span>
                     <p class="text-sm font-medium leading-normal">Schedule</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=orders">
                     <span class="material-symbols-outlined">receipt_long</span>
                     <p class="text-sm font-medium leading-normal">Orders</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="clientManager.php">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=clientManager">
                     <span class="material-symbols-outlined">group</span>
                     <p class="text-sm font-medium leading-normal">Clients</p>
                 </a>
@@ -78,11 +78,11 @@
                     <span class="material-symbols-outlined text-primary">badge</span>
                     <p class="text-sm font-medium leading-normal">Employees</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="serviceManager.php">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=serviceManager">
                     <span class="material-symbols-outlined">build</span>
                     <p class="text-sm font-medium leading-normal">Services</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="inventoryManager.php">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=inventoryManager">
                     <span class="material-symbols-outlined">inventory_2</span>
                     <p class="text-sm font-medium leading-normal">Inventory</p>
                 </a>
@@ -154,11 +154,19 @@
                         <div class="w-full">
                             <div class="relative h-12">
                                 <select class="flex w-full flex-1 items-stretch rounded-lg h-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-200 pl-4 pr-10 text-base font-normal leading-normal focus:outline-0 focus:ring-2 focus:ring-primary/50 appearance-none">
-                                    <option>All Roles</option>
-                                    <option>Admin</option>
-                                    <option>User</option>
-                                    <option>Manager</option>
-                                    <option>Guest</option>
+                                    <option disabled selected>All Roles</option>
+                                    <?php
+
+                                    use App\Models\Role;
+
+                                    $roles = Role::getAllRoles();
+                                    foreach ($roles as $role):
+                                        if ($role['role_name'] === 'Client' || $role['role_name'] === 'Admin') {
+                                            continue;
+                                        }
+                                    ?>
+                                        <option value="<?= htmlspecialchars($role['id']) ?>"><?= htmlspecialchars($role['role_name']) ?></option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
@@ -167,15 +175,17 @@
                     <!-- Employee Data Table -->
                     <div class="mt-6 bg-white dark:bg-[#18212a] rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
                         <div class="overflow-x-auto">
+
+                            <?php
+
+                            use App\Models\Employee;
+
+                            $employees = Employee::getAllEmployees();
+                            ?>
+
                             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                 <thead class="text-xs text-gray-700 dark:text-gray-300 uppercase bg-gray-50 dark:bg-gray-900/50">
                                     <tr>
-                                        <th class="p-4" scope="col">
-                                            <div class="flex items-center">
-                                                <input class="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary dark:focus:ring-primary dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="checkbox-all" type="checkbox" />
-                                                <label class="sr-only" for="checkbox-all">checkbox</label>
-                                            </div>
-                                        </th>
                                         <th class="px-6 py-3" scope="col">Employee Name</th>
                                         <th class="px-6 py-3" scope="col">Role</th>
                                         <th class="px-6 py-3" scope="col">Email Address</th>
@@ -184,70 +194,31 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="bg-white dark:bg-[#18212a] border-b dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900/50">
-                                        <td class="w-4 p-4">
-                                            <div class="flex items-center">
-                                                <input class="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary dark:focus:ring-primary dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="checkbox-table-1" type="checkbox" />
-                                                <label class="sr-only" for="checkbox-table-1">checkbox</label>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">Olivia Rhye</td>
-                                        <td class="px-6 py-4">Mechanic</td>
-                                        <td class="px-6 py-4">olivia.rhye@example.com</td>
-                                        <td class="px-6 py-4">(555) 123-4567</td>
-                                        <td class="px-6 py-4 text-right flex justify-end gap-2">
-                                            <button class="p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"><span class="material-symbols-outlined" style="font-size: 20px;">edit</span></button>
-                                            <button class="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg"><span class="material-symbols-outlined" style="font-size: 20px;">delete</span></button>
-                                        </td>
-                                    </tr>
-                                    <tr class="bg-white dark:bg-[#18212a] border-b dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900/50">
-                                        <td class="w-4 p-4">
-                                            <div class="flex items-center">
-                                                <input class="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary dark:focus:ring-primary dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="checkbox-table-2" type="checkbox" />
-                                                <label class="sr-only" for="checkbox-table-2">checkbox</label>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">Phoenix Baker</td>
-                                        <td class="px-6 py-4">Service Advisor</td>
-                                        <td class="px-6 py-4">phoenix.baker@example.com</td>
-                                        <td class="px-6 py-4">(555) 234-5678</td>
-                                        <td class="px-6 py-4 text-right flex justify-end gap-2">
-                                            <button class="p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"><span class="material-symbols-outlined" style="font-size: 20px;">edit</span></button>
-                                            <button class="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg"><span class="material-symbols-outlined" style="font-size: 20px;">delete</span></button>
-                                        </td>
-                                    </tr>
-                                    <tr class="bg-white dark:bg-[#18212a] border-b dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900/50">
-                                        <td class="w-4 p-4">
-                                            <div class="flex items-center">
-                                                <input class="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary dark:focus:ring-primary dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="checkbox-table-3" type="checkbox" />
-                                                <label class="sr-only" for="checkbox-table-3">checkbox</label>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">Lana Steiner</td>
-                                        <td class="px-6 py-4">Mechanic</td>
-                                        <td class="px-6 py-4">lana.steiner@example.com</td>
-                                        <td class="px-6 py-4">(555) 345-6789</td>
-                                        <td class="px-6 py-4 text-right flex justify-end gap-2">
-                                            <button class="p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"><span class="material-symbols-outlined" style="font-size: 20px;">edit</span></button>
-                                            <button class="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg"><span class="material-symbols-outlined" style="font-size: 20px;">delete</span></button>
-                                        </td>
-                                    </tr>
-                                    <tr class="bg-white dark:bg-[#18212a] border-b dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900/50">
-                                        <td class="w-4 p-4">
-                                            <div class="flex items-center">
-                                                <input class="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary dark:focus:ring-primary dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" id="checkbox-table-4" type="checkbox" />
-                                                <label class="sr-only" for="checkbox-table-4">checkbox</label>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">Demi Wilkinson</td>
-                                        <td class="px-6 py-4">Admin</td>
-                                        <td class="px-6 py-4">demi.wilkinson@example.com</td>
-                                        <td class="px-6 py-4">(555) 456-7890</td>
-                                        <td class="px-6 py-4 text-right flex justify-end gap-2">
-                                            <button class="p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"><span class="material-symbols-outlined" style="font-size: 20px;">edit</span></button>
-                                            <button class="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg"><span class="material-symbols-outlined" style="font-size: 20px;">delete</span></button>
-                                        </td>
-                                    </tr>
+                                    <?php
+                                    $roles = Role::getAllRoles();
+                                    $roleNames = [];
+                                    foreach ($roles as $role) {
+                                        $roleNames[$role['id']] = $role['role_name'];
+                                    }
+                                    ?>
+                                    <?php if ($employees): ?>
+                                        <?php foreach ($employees as $employee): ?>
+                                            <tr class="bg-white dark:bg-[#18212a] border-b dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900/50">
+                                                <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"><?= htmlspecialchars($employee['first_name'] . ' ' . $employee['last_name']) ?></td>
+                                                <td class="px-6 py-4"><?= htmlspecialchars($roleNames[$employee['role_id']] ?? 'Unknown') ?></td>
+                                                <td class="px-6 py-4"><?= htmlspecialchars($employee['email']) ?></td>
+                                                <td class="px-6 py-4"><?= htmlspecialchars($employee['phone_number']) ?></td>
+                                                <td class="px-6 py-4 text-right flex justify-end gap-2">
+                                                    <button class="p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"><span class="material-symbols-outlined" style="font-size: 20px;">edit</span></button>
+                                                    <button class="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg"><span class="material-symbols-outlined" style="font-size: 20px;">delete</span></button>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <tr>
+                                            <td colspan="5" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">No employees found.</td>
+                                        </tr>
+                                    <?php endif; ?>
                                 </tbody>
                             </table>
                         </div>

@@ -355,7 +355,7 @@ INSERT INTO car_model (brand_id, model_name) SELECT id, 'Spring' FROM car_brand 
 INSERT INTO car_model (brand_id, model_name) SELECT id, 'Jogger' FROM car_brand WHERE brand_name = 'Dacia';
 
 -- Роли
-INSERT INTO role (role_name) VALUES ('Admin'), ('Specialist'),('Client');
+INSERT INTO role (role_name) VALUES ('Admin'), ('Employee'),('Client');
 
 -- Статуси на поръчки
 INSERT INTO status (status) VALUES ('Приета'), ('Диагностика'), ('Ремонт'), ('Тестване'), ('Готова');

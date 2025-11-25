@@ -135,8 +135,15 @@ class AuthController
             }
         }
 
+        if ($employee && password_verify($pass, $employee->password) && $roleName === 'Admin') {
+            // Успешен вход за администратор! Записваме в сесията.
+            $_SESSION['user_id'] = $employee->id;
+            $_SESSION['user_role'] = 'Admin';
+            $_SESSION['user_name'] = $employee->first_name;
 
-        if ($employee && password_verify($pass, $employee->password) && $roleName === 'Employee') {
+            header("Location: index.php?action=adminDashboard");
+            exit;
+        } elseif ($employee && password_verify($pass, $employee->password)) {
             // Успешен вход за служител! Записваме в сесията.
             $_SESSION['user_id'] = $employee->id;
             $_SESSION['user_role'] = 'Employee';
@@ -145,15 +152,7 @@ class AuthController
             header("Location: index.php?action=userDashboard");
             exit;
         }
-        elseif ($employee && password_verify($pass, $employee->password) && $roleName === 'Admin') {
-            // Успешен вход за администратор! Записваме в сесията.
-            $_SESSION['user_id'] = $employee->id;
-            $_SESSION['user_role'] = 'Admin';
-            $_SESSION['user_name'] = $employee->first_name;
 
-            header("Location: index.php?action=adminDashboard");
-            exit;
-        }
 
         header("Location: index.php?action=login");
         exit;
