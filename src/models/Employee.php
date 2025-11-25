@@ -93,4 +93,32 @@ class Employee
             return null;
         }
     }
+
+    public static function getEmployeeById(int $id): ?Employee
+    {
+        $db = Database::getInstance();
+        $sql = "SELECT * FROM employees WHERE id = ?";
+
+        try {
+            $stmt = $db->prepare($sql);
+            $stmt->execute([$id]);
+            $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($data) {
+                return new Employee(
+                    id: (int)$data['id'],
+                    first_name: $data['first_name'],
+                    last_name: $data['last_name'],
+                    phone_number: $data['phone_number'],
+                    role_id: (int)$data['role_id'],
+                    email: $data['email'],
+                    password: $data['password']
+                );
+            }
+            return null;
+        } catch (PDOException $e) {
+            error_log("Employee Find Error: " . $e->getMessage());
+            return null;
+        }
+    }
 }

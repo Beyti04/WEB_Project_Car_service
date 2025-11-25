@@ -114,7 +114,7 @@
                     <div class="flex items-center gap-3">
                         <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar image" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuADijiRLLPR2eRQXqbVqSmI5KeUFyXAg8F2zmY2mwfb1Pgm6eF-NmHWlSRm0xVvnz3wcPCkB7pflS81XhFJqdUyEEk4srBqEw81WqNgyxpAXWyBF4WXayX_79fjNwvjFvRP2mygTB8JtFtvmgwCmXAkWO1vUyZ6xTjfEnPmwsZD1QhwGVWu-iSAwpmnxmU_NGK7U5sH-U54t-zfth88S-uqzwxhC_4dJgAlM1nGXJJ3Wb2EztyredxX5Mc4g-N4vxPoQmZFTCyPxOs');"></div>
                         <div class="flex flex-col text-sm">
-                            <p class="font-bold">John Doe</p>
+                            <p class="font-bold"><?php echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?></p>
                             <p class="text-text-secondary-light">Admin</p>
                         </div>
                     </div>
@@ -209,7 +209,9 @@
                                                 <td class="px-6 py-4"><?= htmlspecialchars($employee['email']) ?></td>
                                                 <td class="px-6 py-4"><?= htmlspecialchars($employee['phone_number']) ?></td>
                                                 <td class="px-6 py-4 text-right flex justify-end gap-2">
+                                                    <a href="index.php?action=editEmployee&id=<?= htmlspecialchars($employee['id']) ?>">
                                                     <button class="p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"><span class="material-symbols-outlined" style="font-size: 20px;">edit</span></button>
+                                                    </a>
                                                     <button class="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg"><span class="material-symbols-outlined" style="font-size: 20px;">delete</span></button>
                                                 </td>
                                             </tr>
