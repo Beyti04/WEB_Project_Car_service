@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+
 use App\Models\Service;
 
 class ServiceController
@@ -13,7 +14,7 @@ class ServiceController
         }
 
         $name = trim($_POST['service_name'] ?? '');
-        $price = floatval($_POST['service_price'] ?? 0);
+        $price = floatval($_POST['price'] ?? 0);
         $groupId = (int)($_POST['service_group_id'] ?? 0);
 
         if (empty($name) || empty($groupId) || $price <= 0) {
@@ -26,7 +27,7 @@ class ServiceController
             id: null,
             name: $name,
             price: $price,
-            group_id_FK: $groupId 
+            group_id_FK: $groupId
         );
 
         if ($service->save()) {

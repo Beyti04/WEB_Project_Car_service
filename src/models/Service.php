@@ -21,7 +21,7 @@ class Service
 
     public function save(): void
     {
-        $stmt = $this->db->prepare("INSERT INTO services (name, price, group_id_FK) VALUES (:name, :price, :group_id_FK)");
+        $stmt = $this->db->prepare("INSERT INTO services (name, base_price, group_id) VALUES (:name, :price, :group_id_FK)");
         $stmt->execute([
             ':name' => $this->name,
             ':price' => $this->price,

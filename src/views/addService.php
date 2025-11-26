@@ -135,7 +135,7 @@
 
                             <button type="submit"
                                 class="px-4 h-10 rounded-lg bg-primary text-white font-bold hover:bg-primary/90">
-                                Save Changes
+                                Add Service
                             </button>
                         </div>
 
