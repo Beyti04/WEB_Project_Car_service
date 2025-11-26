@@ -51,14 +51,30 @@ class Material
         }
     }
 
-    public static function getMaterialById(int $id): ?self
+    public static function getMaterialById(int $id): ?Material
     {
         $db = Database::getInstance();
-        $stmt = $db->prepare("SELECT * FROM materials WHERE id = :id");
-        $stmt->execute([':id' => $id]);
-        $stmt->setFetchMode(PDO::FETCH_CLASS, self::class);
-        $material = $stmt->fetch();
-        return $material ?: null;
+        $sql = "SELECT * FROM materials WHERE id = ? LIMIT 1";
+        try {
+            $stmt = $db->prepare($sql);
+            $stmt->execute([$id]);
+
+            $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($data) {
+                return new Material(
+                    id: (int)$data['id'],
+                    name: $data['name'],
+                    stock: (int)$data['stock'],
+                    unit_price: (float)$data['unit_price'],
+                    group_id_FK: (int)$data['group_id']
+                );
+            }
+            return null;
+        } catch (PDOException $e) {
+            error_log("Material Fetch By ID Error: " . $e->getMessage());
+            return null;
+        }
     }
 
     public static function getMaterialsByGroupId(int $groupId): array

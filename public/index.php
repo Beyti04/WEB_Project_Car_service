@@ -310,6 +310,16 @@ switch ($action) {
         require __DIR__ . '/../src/views/inventoryManager.php';
         break;
 
+    case 'editMaterial':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+
+        // Зареждаме страницата за редактиране на материал
+        require __DIR__ . '/../src/views/editMaterial.php';
+        break;
+
     case 'removeMaterial':
         if (!isset($_SESSION['user_id'])) {
             header("Location: index.php?action=login");
