@@ -36,6 +36,7 @@ use App\Controllers\VehicleController;
 use App\Controllers\EmployeeController;
 use App\Controllers\ClientController;
 use App\Controllers\ServiceController;
+use App\Controllers\MaterialController;
 use Config\Database;
 
 
@@ -220,6 +221,14 @@ switch ($action) {
         require __DIR__ . '/../src/views/addClient.php';
         break;
 
+    case 'newMaterial':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        require __DIR__ . '/../src/views/addMaterial.php';
+        break;
+
     case 'addClient':
         if (!isset($_SESSION['user_id'])) {
             header("Location: index.php?action=login");
@@ -292,6 +301,26 @@ switch ($action) {
         require __DIR__ . '/../src/views/inventoryManager.php';
         break;
 
+    case 'addMaterial':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        (new MaterialController())->addMaterial();
+        require __DIR__ . '/../src/views/inventoryManager.php';
+        break;
+
+    case 'deleteMaterial':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        $materialId = (int)($_GET['material_id'] ?? 0);
+        MaterialController::removeMaterial($materialId);
+        header("Location: index.php?action=inventoryManager");
+        exit;
+        break;
+
     case 'adminDashboard':
         require __DIR__ . '/../src/views/adminDashboard.php';
         break;
@@ -335,6 +364,38 @@ switch ($action) {
         header('Content-Type: application/json');
         echo json_encode($services);
         exit;
+        break;
+
+    case 'removeService':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        $serviceId = (int)($_GET['service_id'] ?? 0);
+        ServiceController::removeService($serviceId);
+        header("Location: index.php?action=serviceManager");
+        exit;
+        break;
+
+    case 'editService':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+
+        // Зареждаме страницата за редактиране на услуга
+        require __DIR__ . '/../src/views/editService.php';
+        break;
+
+    case 'updateService':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        $serviceId = (int)($_GET['id'] ?? 0);
+
+        (new ServiceController())->updateService($serviceId, trim($_POST['service_name'] ?? ''), floatval($_POST['price'] ?? 0), (int)($_POST['service_group_id'] ?? 0));
+        require __DIR__ . '/../src/views/serviceManager.php';
         break;
 
     case 'admin':

@@ -38,4 +38,20 @@ class ServiceController
             require __DIR__ . '/../../src/views/addService.php';
         }
     }
+
+    public static function removeService(int $serviceId): void
+    {
+        Service::deleteById($serviceId);
+    }
+
+    public static function updateService(int $serviceId, string $name, float $price, int $groupId): void
+    {
+        $service = Service::getServiceById($serviceId);
+        if ($service) {
+            $service->name = $name;
+            $service->price = $price;
+            $service->group_id_FK = $groupId;
+            $service->update();
+        }
+    }
 }

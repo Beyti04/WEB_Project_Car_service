@@ -35,6 +35,7 @@
 <body class="font-display bg-background-light dark:bg-background-dark text-[#333333] dark:text-gray-200">
     <?php
 
+    use App\Models\MaterialGroup;
     use App\Models\ServiceGroup;
 
 
@@ -57,9 +58,9 @@
                     <span class="material-symbols-outlined">dashboard</span>
                     <p class="text-sm font-bold leading-normal">Dashboard</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="index.php?action=serviceManager">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="index.php?action=inventoryManager">
                     <span class="material-symbols-outlined text-primary">group</span>
-                    <p class="text-sm font-medium leading-normal">Services</p>
+                    <p class="text-sm font-medium leading-normal">Inventory</p>
                 </a>
                 <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=appointments">
                     <span class="material-symbols-outlined">calendar_month</span>
@@ -96,28 +97,35 @@
 
             <main class="p-10">
                 <div class="max-w-3xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-lg shadow border dark:border-gray-700">
-                    <h1 class="text-3xl font-bold mb-6">Add Service</h1>
+                    <h1 class="text-3xl font-bold mb-6">Add Material</h1>
 
-                    <form action="index.php?action=addService" method="POST" class="space-y-4">
+                    <form action="index.php?action=addMaterial" method="POST" class="space-y-4">
 
                         <div>
-                            <label class="text-sm font-medium mb-1">Service Name</label>
-                            <input type="text" name="service_name" required
+                            <label class="text-sm font-medium mb-1">Material Name</label>
+                            <input type="text" name="material_name" required
                                 class="w-full rounded-md bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
                                 value="">
                         </div>
 
                         <div>
-                            <label class="text-sm font-medium mb-1">Service Group</label>
-                            <select name="service_group_id" required
+                            <label class="text-sm font-medium mb-1">Material Group</label>
+                            <select name="material_group_id" required
                                 class="w-full rounded-md bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
                                 <?php
-                                $serviceGroups = ServiceGroup::getAllServiceGroups();
-                                foreach ($serviceGroups as $group) {
+                                $materialGroups = MaterialGroup::getAllMaterialGroups();
+                                foreach ($materialGroups as $group) {
                                     echo '<option value="' . htmlspecialchars($group->id) . '">' . htmlspecialchars($group->name) . '</option>';
                                 }
                                 ?>
                             </select>
+                        </div>
+
+                        <div>
+                            <label class="text-sm font-medium mb-1">Quantity</label>
+                            <input type="text" name="quantity" required
+                                class="w-full rounded-md bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
+                                value="">
                         </div>
 
                         <div>
@@ -128,14 +136,14 @@
                         </div>
 
                         <div class="flex justify-end gap-3 pt-4 border-t dark:border-gray-700">
-                            <a href="index.php?action=employees"
+                            <a href="index.php?action=inventoryManager"
                                 class="px-4 h-10 flex items-center rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200">
                                 Cancel
                             </a>
 
                             <button type="submit"
                                 class="px-4 h-10 rounded-lg bg-primary text-white font-bold hover:bg-primary/90">
-                                Add Service
+                                Add Material
                             </button>
                         </div>
 

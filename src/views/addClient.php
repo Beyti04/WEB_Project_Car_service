@@ -131,7 +131,7 @@
                         </div>
 
                         <div class="flex justify-end gap-3 pt-4 border-t dark:border-gray-700">
-                            <a href="index.php?action=employees"
+                            <a href="index.php?action=clientManager"
                                 class="px-4 h-10 flex items-center rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200">
                                 Cancel
                             </a>

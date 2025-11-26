@@ -36,6 +36,15 @@
     <?php
 
     use App\Models\ServiceGroup;
+    use App\Models\Service;
+
+    $serviceId = $_GET['service_id'] ?? null;
+    $service = Service::getServiceById((int)$serviceId);
+    $serviceGroup = ServiceGroup::getAllServiceGroups();
+    $groupNames = [];
+    foreach ($serviceGroup as $group) {
+        $groupNames[$group->id] = $group->name;
+    }
 
 
     ?>
@@ -96,15 +105,15 @@
 
             <main class="p-10">
                 <div class="max-w-3xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-lg shadow border dark:border-gray-700">
-                    <h1 class="text-3xl font-bold mb-6">Add Service</h1>
+                    <h1 class="text-3xl font-bold mb-6">Edit Service</h1>
 
-                    <form action="index.php?action=addService" method="POST" class="space-y-4">
+                    <form action="index.php?action=updateService&id=<?php echo htmlspecialchars($service->id); ?>" method="POST" class="space-y-4">
 
                         <div>
                             <label class="text-sm font-medium mb-1">Service Name</label>
                             <input type="text" name="service_name" required
                                 class="w-full rounded-md bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
-                                value="">
+                                value="<?php echo htmlspecialchars($service->name ?? ''); ?>">
                         </div>
 
                         <div>
@@ -124,18 +133,18 @@
                             <label class="text-sm font-medium mb-1">Price</label>
                             <input type="text" name="price" required
                                 class="w-full rounded-md bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
-                                value="">
+                                value="<?php echo htmlspecialchars($service->price ?? ''); ?>">
                         </div>
 
                         <div class="flex justify-end gap-3 pt-4 border-t dark:border-gray-700">
-                            <a href="index.php?action=employees"
+                            <a href="index.php?action=serviceManager"
                                 class="px-4 h-10 flex items-center rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200">
                                 Cancel
                             </a>
 
                             <button type="submit"
                                 class="px-4 h-10 rounded-lg bg-primary text-white font-bold hover:bg-primary/90">
-                                Add Service
+                                Edit Service
                             </button>
                         </div>
 

@@ -21,7 +21,7 @@ class Material
 
     public function save(): void
     {
-        $stmt = $this->db->prepare("INSERT INTO materials (name, stock, unit_price, group_id_FK) VALUES (:name, :stock, :unit_price, :group_id_FK)");
+        $stmt = $this->db->prepare("INSERT INTO materials (name, stock, unit_price, group_id) VALUES (:name, :stock, :unit_price, :group_id_FK)");
         $stmt->execute([
             ':name' => $this->name,
             ':stock' => $this->stock,
@@ -29,6 +29,13 @@ class Material
             ':group_id_FK' => $this->group_id_FK
         ]);
         $this->id = (int)$this->db->lastInsertId();
+    }
+
+    public static function deleteById(int $materialId): void
+    {
+        $db = Database::getInstance();
+        $stmt = $db->prepare("DELETE FROM materials WHERE id = :id");
+        $stmt->execute([':id' => $materialId]);
     }
 
     public static function getAllMaterials(): array

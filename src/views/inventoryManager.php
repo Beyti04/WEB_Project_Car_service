@@ -130,11 +130,12 @@
                             <p class="text-[#617589] dark:text-gray-400 text-base font-normal leading-normal">Manage material availability and stock levels</p>
                         </div>
                         <!-- Modified ToolBar Button -->
-                        <button class="flex min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
-                            <span class="material-symbols-outlined text-xl">add</span>
-                            <span class="truncate">Add New Material</span>
-                        </button>
-
+                        <a href="index.php?action=newMaterial">
+                            <button class="flex min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
+                                <span class="material-symbols-outlined text-xl">add</span>
+                                <span class="truncate">Add New Material</span>
+                            </button>
+                        </a>
                     </div>
                     <!-- Search and Filter Bar -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
@@ -199,14 +200,16 @@
                                             <td class="px-6 py-4 text-gray-600 dark:text-gray-300"><?php echo htmlspecialchars($groupNames[$material->group_id] ?? ''); ?></td>
                                             <td class="px-6 py-4 text-gray-600 dark:text-gray-300">
                                                 <div class="flex items-center gap-2">
-                                                    <div class="w-2 h-2 rounded-full -center <?php echo $material->stock > 0 ? 'bg-green-500' : 'bg-red-500'; ?>"></div>
+                                                    <div class="w-2 h-2 rounded-full -center <?php echo $material->stock > 5 ? 'bg-green-500' : 'bg-red-500'; ?>"></div>
                                                     <span><?php echo htmlspecialchars($material->stock); ?></span>
                                                 </div>
                                             </td>
                                             <td class="px-6 py-4 text-gray-600 dark:text-gray-300">€<?php echo htmlspecialchars(number_format($material->unit_price, 2)); ?></td>
                                             <td class="px-6 py-4 text-right space-x-2">
                                                 <button class="p-2 text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary rounded-lg hover:bg-primary/10 transition-colors"><span class="material-symbols-outlined text-xl">edit</span></button>
-                                                <button class="p-2 text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-500 rounded-lg hover:bg-red-500/10 transition-colors"><span class="material-symbols-outlined text-xl">delete</span></button>
+                                                <a href="index.php?action=deleteMaterial&id=<?php echo htmlspecialchars($material->id); ?>">
+                                                    <button class="p-2 text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-500 rounded-lg hover:bg-red-500/10 transition-colors"><span class="material-symbols-outlined text-xl">delete</span></button>
+                                                </a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
