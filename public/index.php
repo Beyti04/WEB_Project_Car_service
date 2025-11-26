@@ -310,7 +310,7 @@ switch ($action) {
         require __DIR__ . '/../src/views/inventoryManager.php';
         break;
 
-    case 'deleteMaterial':
+    case 'removeMaterial':
         if (!isset($_SESSION['user_id'])) {
             header("Location: index.php?action=login");
             exit;

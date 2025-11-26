@@ -31,11 +31,11 @@ class Material
         $this->id = (int)$this->db->lastInsertId();
     }
 
-    public static function deleteById(int $materialId): void
+    public static function deleteById(int $id): void
     {
         $db = Database::getInstance();
         $stmt = $db->prepare("DELETE FROM materials WHERE id = :id");
-        $stmt->execute([':id' => $materialId]);
+        $stmt->execute([':id' => $id]);
     }
 
     public static function getAllMaterials(): array
