@@ -105,16 +105,19 @@ class Material
         ]);
     }
 
-    public static function editMaterial(int $materialId, string $name, int $stock, float $unitPrice, int $groupId): bool
+    public function update(): bool
     {
-        $db = Database::getInstance();
-        $stmt = $db->prepare("UPDATE materials SET name = :name, stock = :stock, unit_price = :unit_price, group_id_FK = :group_id WHERE id = :id");
+        if ($this->id === null) {
+            throw new \Exception("Cannot update a material without an ID.");
+        }
+
+        $stmt = $this->db->prepare("UPDATE materials SET name = :name, stock = :stock, unit_price = :unit_price, group_id = :group_id_FK WHERE id = :id");
         return $stmt->execute([
-            ':name' => $name,
-            ':stock' => $stock,
-            ':unit_price' => $unitPrice,
-            ':group_id' => $groupId,
-            ':id' => $materialId
+            ':name' => $this->name,
+            ':stock' => $this->stock,
+            ':unit_price' => $this->unit_price,
+            ':group_id_FK' => $this->group_id_FK,
+            ':id' => $this->id
         ]);
     }
 }

@@ -45,4 +45,16 @@ class MaterialController
     {
         Material::deleteById($materialId);
     }
+
+    public static function updateMaterial(int $materialId, string $name, int $stock, float $unitPrice, int $groupId): void
+    {
+        $material = Material::getMaterialById($materialId);
+        if ($material) {
+            $material->name = $name;
+            $material->stock = $stock;
+            $material->unit_price = $unitPrice;
+            $material->group_id_FK = $groupId;
+            $material->update();
+        }
+    }
 }

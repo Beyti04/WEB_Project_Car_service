@@ -104,9 +104,9 @@
 
             <main class="p-10">
                 <div class="max-w-3xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-lg shadow border dark:border-gray-700">
-                    <h1 class="text-3xl font-bold mb-6">Add Material</h1>
+                    <h1 class="text-3xl font-bold mb-6">Edit Material</h1>
 
-                    <form action="index.php?action=addMaterial" method="POST" class="space-y-4">
+                    <form action="index.php?action=updateMaterial&material_id=<?php echo htmlspecialchars($material->id ?? ''); ?>" method="POST" class="space-y-4">
 
                         <div>
                             <label class="text-sm font-medium mb-1">Material Name</label>

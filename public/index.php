@@ -397,6 +397,17 @@ switch ($action) {
         require __DIR__ . '/../src/views/editService.php';
         break;
 
+    case 'updateMaterial':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        $materialId = (int)($_GET['material_id'] ?? 0);
+
+        MaterialController::updateMaterial($materialId, trim($_POST['material_name'] ?? ''), (int)($_POST['quantity'] ?? 0), floatval($_POST['price'] ?? 0), (int)($_POST['material_group_id'] ?? 0));
+        require __DIR__ . '/../src/views/inventoryManager.php';
+        break;
+
     case 'updateService':
         if (!isset($_SESSION['user_id'])) {
             header("Location: index.php?action=login");
