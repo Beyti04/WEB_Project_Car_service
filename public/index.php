@@ -35,6 +35,7 @@ use App\Controllers\AuthController;
 use App\Controllers\VehicleController;
 use App\Controllers\EmployeeController;
 use App\Controllers\ClientController;
+use App\Controllers\ServiceController;
 use Config\Database;
 
 
@@ -240,7 +241,7 @@ switch ($action) {
         if (!isset($_SESSION['user_id'])) {
             header("Location: index.php?action=login");
             exit;
-        } 
+        }
         $clientId = (int)($_GET['client_id'] ?? 0);
         ClientController::updateClient($clientId, trim($_POST['first_name'] ?? ''), trim($_POST['last_name'] ?? ''), trim($_POST['email'] ?? ''), trim($_POST['phone'] ?? ''));
         header("Location: index.php?action=clientManager");
@@ -256,13 +257,30 @@ switch ($action) {
         ClientController::removeClient($clientId);
         header("Location: index.php?action=clientManager");
         exit;
-        break;  
+        break;
 
     case 'serviceManager':
         if (!isset($_SESSION['user_id'])) {
             header("Location: index.php?action=login");
             exit;
         }
+        require __DIR__ . '/../src/views/serviceManager.php';
+        break;
+
+    case 'newService':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        require __DIR__ . '/../src/views/addService.php';
+        break;
+
+    case 'addService':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        (new ServiceController())->addService();
         require __DIR__ . '/../src/views/serviceManager.php';
         break;
 

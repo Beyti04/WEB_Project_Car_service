@@ -129,10 +129,12 @@
                             <h1 class="text-[#111418] dark:text-white text-3xl font-bold tracking-tight">Service Management</h1>
                             <p class="text-[#617589] dark:text-gray-400 text-base font-normal leading-normal">Manage the types of services offered by the car service.</p>
                         </div>
+                        <a href="index.php?action=newService">
                         <button class="flex min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
                             <span class="material-symbols-outlined text-xl">add</span>
                             <span class="truncate">Add New Service</span>
                         </button>
+                        </a>
                     </div>
                     <!-- Toolbar / Filters -->
                     <div class="mb-6">
@@ -171,9 +173,6 @@
                                         }
                                         ?>
                                     </select>
-                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 dark:text-gray-400">
-                                        <span class="material-symbols-outlined">expand_more</span>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -209,8 +208,12 @@
                                     ?>
                                         <td class="px-6 py-4 text-right">
                                             <div class="flex gap-4 justify-end">
+                                                <a href="index.php?action=editService&service_id=<?php echo htmlspecialchars($service->id); ?>">
                                                 <button class="text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary"><span class="material-symbols-outlined">edit</span></button>
+                                                </a>
+                                                <a href="index.php?action=removeService&service_id=<?php echo htmlspecialchars($service->id); ?>">
                                                 <button class="text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-500"><span class="material-symbols-outlined">delete</span></button>
+                                                </a>
                                             </div>
                                         </td>
                                         </tr>
