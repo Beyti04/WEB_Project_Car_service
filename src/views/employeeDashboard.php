@@ -51,7 +51,7 @@
         <aside class="flex flex-col w-64 bg-card-light dark:bg-card-dark border-r border-border-light dark:border-border-dark p-4 shrink-0">
             <a href="index.php?action=employeeDashboard" class="flex items-center gap-3 mb-8">
                 <div class="bg-primary/20 rounded-lg p-2 flex items-center justify-center">
-                    <span class="material-symbols-outlined text-primary text-2xl">engineering</span>
+                    <span class="material-symbols-outlined text-primary text-2xl">directions_car</span>
                 </div>
                 <div class="flex flex-col">
                     <h1 class="text-text-light dark:text-text-dark text-base font-bold leading-normal">AutoManager</h1>
@@ -63,22 +63,15 @@
                     <span class="material-symbols-outlined text-primary">dashboard</span>
                     <p class="text-sm font-bold leading-normal">Dashboard</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=manageClients">
-                    <span class="material-symbols-outlined">groups</span>
-                    <p class="text-sm font-medium leading-normal">Manage Clients</p>
-                </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=manageVehicles">
-                    <span class="material-symbols-outlined">directions_car</span>
-                    <p class="text-sm font-medium leading-normal">Manage Vehicles</p>
-                </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=manageAppointments">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=emptyOrders">
+                    <span class="material-symbols-outlined">receipt_long</span>
+                    <p class="text-sm font-medium leading-normal">Service Requests</p>
+                </a>    
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=emptyOrders">
                     <span class="material-symbols-outlined">calendar_month</span>
                     <p class="text-sm font-medium leading-normal">Appointments</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=serviceRequests">
-                    <span class="material-symbols-outlined">receipt_long</span>
-                    <p class="text-sm font-medium leading-normal">Service Requests</p>
-                </a>
+                
             </nav>
             <div class="flex flex-col gap-4 mt-4">
                 <a href="index.php?action=logout" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors">
@@ -99,7 +92,7 @@
                         <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Employee avatar image" style='background-image: url("https://via.placeholder.com/40");'></div>
                         <div class="flex flex-col text-sm">
                             <p class="font-bold">
-                                <?php echo htmlspecialchars($_SESSION['employee_name'] ?? ''); ?>
+                                <?php echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?>
                             </p>
                             <p class="text-text-secondary-light dark:text-text-secondary-dark">Employee</p>
                         </div>
@@ -110,7 +103,7 @@
             <main class="flex-1 overflow-y-auto p-10">
                 <div class="flex flex-wrap justify-between gap-4 mb-8 items-center">
                     <div class="flex flex-col gap-1">
-                        <p class="text-3xl font-bold leading-tight tracking-tight">Welcome back, <?php echo htmlspecialchars($_SESSION['employee_name'] ?? ''); ?>!</p>
+                        <p class="text-3xl font-bold leading-tight tracking-tight">Welcome back, <?php echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?>!</p>
                         <p class="text-text-secondary-light dark:text-text-secondary-dark text-base font-normal leading-normal">Here's an overview of your tasks and requests.</p>
                     </div>
                 </div>

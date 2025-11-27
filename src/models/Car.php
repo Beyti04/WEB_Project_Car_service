@@ -140,6 +140,32 @@ class Car
         }
     }
 
+    public static function getAllCars(): array {
+        $db = Database::getInstance();
+        $sql = "SELECT * FROM car";
+
+        try {
+            $stmt = $db->prepare($sql);
+            $stmt->execute();
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $cars = [];
+            foreach ($rows as $data) {
+                $cars[] = new Car(
+                    id: (int)$data['id'],
+                    model_id: (int)$data['model_id'],
+                    year: (int)$data['year'],
+                    vin: $data['vin'],
+                    owner: (int)$data['owner']
+                );
+            }
+            return $cars;
+        } catch (PDOException $e) {
+            error_log("Car Get All Error: " . $e->getMessage());
+            return [];
+        }
+    }
+
     public static function getCarById(int $id): ?Car {
         $db = Database::getInstance();
         $sql = "SELECT * FROM car WHERE id = ? LIMIT 1";

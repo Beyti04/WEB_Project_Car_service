@@ -315,6 +315,8 @@ switch ($action) {
             header("Location: index.php?action=login");
             exit;
         }
+        require __DIR__ . '/../src/views/editMaterial.php';
+        break;
 
     case 'orders':
         if (!isset($_SESSION['user_id'])) {
@@ -322,6 +324,34 @@ switch ($action) {
             exit;
         }
         require __DIR__ . '/../src/views/order.php';
+        break;
+
+    case 'emptyOrders':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        require __DIR__ . '/../src/views/emptyOrderRequests.php';
+        break;
+
+    case 'employeeAppointments':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        require __DIR__ . '/../src/views/employeeAppointments.php';
+        break;
+
+    case 'takeOrder':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        $employeeId = (int)($_SESSION['user_id'] ?? 0);
+        $orderId = (int)($_GET['order_id'] ?? 0);
+        EmployeeController::takeOrder($employeeId, $orderId);
+        header("Location: index.php?action=userDashboard");
+        exit;
         break;
 
     case 'removeMaterial':

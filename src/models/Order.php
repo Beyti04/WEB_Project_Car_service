@@ -24,7 +24,8 @@ class Order
         $this->employee = $data['employee'] ?? null;
     }
 
-    public function getOrderByCarId(int $car_id): array{
+    public function getOrderByCarId(int $car_id): array
+    {
         try {
             $sql = "
                 SELECT o.id AS order_id, o.opened_at, o.full_price, c.id AS car_id, c.make, c.model FROM orders o
@@ -65,5 +66,40 @@ class Order
         }
     }
 
-    
+    public static function getOrdersWithNoEmployee(): array
+    {
+        try {
+            $sql = "SELECT o.id as order_id,o.opened_at, s.status, b.brand_name, m.model_name,cli.id AS client_id, CONCAT(cli.first_name, ' ', cli.last_name) AS client_name FROM orders o
+            JOIN status s ON o.status_id = s.id
+            JOIN car c ON o.car_id = c.id
+            JOIN car_model m ON c.model_id = m.id
+            JOIN car_brand b ON m.brand_id = b.id
+            JOIN clients cli ON c.owner = cli.id
+            WHERE o.employee_id IS NULL
+        ";
+
+            $db = Database::getInstance();
+            $stmt = $db->prepare($sql);
+            $stmt->execute();
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $orders = [];
+
+            foreach ($rows as $r) {
+                $orders[] = [
+                    'id' => $r['order_id'],
+                    'status' => $r['status'],
+                    'client_name' => $r['client_name'],
+                    'client_id' => $r['client_id'],
+                    'car_data' => [$r['brand_name'], $r['model_name']],
+                    'opened_at' => $r['opened_at'],
+                    
+                ];
+            }
+
+            return $orders;
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
 }

@@ -61,4 +61,12 @@ class EmployeeController
             $employee->deleteEmployee();
         }
     }
+
+    public static function takeOrder(int $employeeId, int $orderId): void
+    {
+        $employee = Employee::getEmployeeById($employeeId);
+        if ($employee) {
+            $employee->takeOrder($orderId);
+        }
+    }
 }

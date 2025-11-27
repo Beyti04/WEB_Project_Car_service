@@ -37,7 +37,7 @@
 </head>
 
 <body class="font-display bg-background-light dark:bg-background-dark">
-    <div class="relative flex min-h-screen w-full">
+    <div class="flex h-screen">
         <!-- SideNavBar -->
         <aside class="flex flex-col w-64 bg-white border-r border-border-light p-4 shrink-0">
             <a href="#" class="flex items-center gap-3 mb-8">
@@ -77,10 +77,6 @@
                 <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=inventoryManager">
                     <span class="material-symbols-outlined">inventory_2</span>
                     <p class="text-sm font-medium leading-normal">Inventory</p>
-                </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
-                    <span class="material-symbols-outlined">assessment</span>
-                    <p class="text-sm font-medium leading-normal">Reports</p>
                 </a>
             </nav>
             <div class="flex flex-col gap-4">

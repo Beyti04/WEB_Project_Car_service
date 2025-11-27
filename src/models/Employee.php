@@ -154,4 +154,20 @@ class Employee
             return false;
         }
     }
+
+    public function takeOrder(int $orderId): bool
+    {
+        $sql = "UPDATE orders SET employee_id = ? WHERE id = ?";
+
+        try {
+            $stmt = $this->db->prepare($sql);
+            return $stmt->execute([
+                $this->id,
+                $orderId
+            ]);
+        } catch (PDOException $e) {
+            error_log("Take Order Error: " . $e->getMessage());
+            return false;
+        }
+    }
 }
