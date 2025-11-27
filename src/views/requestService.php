@@ -114,7 +114,7 @@
                         </div>
 
                         <div class="bg-card-light p-8 rounded-lg shadow-sm border border-border-light">
-                            <form action="#" method="POST" class="space-y-8">
+                            <form action="index.php?action=addClientService&id=<?php echo htmlspecialchars($_SESSION['user_id'] ?? ''); ?>" method="POST" class="space-y-8">
                                 <!-- Vehicle selection -->
                                 <div>
                                     <label class="block text-sm font-medium text-text-light mb-2" for="vehicle">Select Vehicle</label>
@@ -157,7 +157,7 @@
                                             $service_groups = ServiceGroup::getAllServiceGroups();
                                             foreach ($service_groups as $group) {
                                             ?>
-                                                
+
                                                 <option value="<?php echo htmlspecialchars($group->id); ?>"><?php echo htmlspecialchars($group->name); ?></option>
                                             <?php } ?>
                                         </select>
@@ -184,28 +184,8 @@
                                                 <span class="material-symbols-outlined text-text-secondary-light">calendar_today</span>
                                             </div>
                                         </div>
-                                        <div class="relative">
-                                            <select id="time" name="time" class="w-full pl-10 pr-4 py-2.5 rounded border border-border-light bg-card-light focus:ring-primary focus:border-primary">
-                                                <option>9:00 AM</option>
-                                                <option>10:00 AM</option>
-                                                <option>11:00 AM</option>
-                                                <option>1:00 PM</option>
-                                                <option>2:00 PM</option>
-                                                <option>3:00 PM</option>
-                                                <option>4:00 PM</option>
-                                            </select>
-                                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                <span class="material-symbols-outlined text-text-secondary-light">schedule</span>
-                                            </div>
-                                        </div>
                                     </div>
                                     <p class="text-xs text-text-secondary-light mt-2">We will confirm the final appointment time via email.</p>
-                                </div>
-
-                                <!-- Notes -->
-                                <div>
-                                    <label class="block text-sm font-medium text-text-light mb-2" for="notes">Additional Notes (Optional)</label>
-                                    <textarea id="notes" name="notes" rows="4" placeholder="e.g. I hear a strange noise when turning right..." class="w-full rounded border border-border-light bg-card-light focus:ring-primary focus:border-primary"></textarea>
                                 </div>
 
                                 <div class="pt-4 border-t border-border-light flex justify-end">

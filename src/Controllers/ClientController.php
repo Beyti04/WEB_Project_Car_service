@@ -62,4 +62,20 @@ class ClientController
             $client->deleteClient();
         }
     }
+
+    public static function createClientOrder(int $clientId, $vehicle, $service, $date): void
+    {
+        $client = Client::getClientById($clientId);
+        if ($client) {
+            $query = "INSERT INTO orders (car_id, status_id, opened_at, closed_at, employee_id, full_price) VALUES (?, ?, ?, ?, ?, ?)";
+            $db = \Config\Database::getInstance();
+            $stmt = $db->prepare($query);
+            $stmt->execute([$vehicle, 1, $date, null, null, null]);
+
+            $queryService = "INSERT INTO order_service (order_id, service_id) VALUES (?, ?)";
+            $stmtService = $db->prepare($queryService);
+            $orderId = $db->lastInsertId();
+            $stmtService->execute([$orderId, $service]);
+        }
+    }
 }

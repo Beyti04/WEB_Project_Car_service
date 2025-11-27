@@ -316,8 +316,12 @@ switch ($action) {
             exit;
         }
 
-        // Зареждаме страницата за редактиране на материал
-        require __DIR__ . '/../src/views/editMaterial.php';
+    case 'orders':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        require __DIR__ . '/../src/views/order.php';
         break;
 
     case 'removeMaterial':
@@ -353,6 +357,16 @@ switch ($action) {
         }
         // Зареждаме страницата за управление на срещи
         require __DIR__ . '/../src/views/requestService.php';
+        break;
+
+    case 'addClientService':
+        // Проверяваме дали е логнат
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        (new ClientController())->createClientOrder((int)($_GET['id'] ?? 0), $_POST['vehicle'], $_POST['service'], $_POST['date']);
+        require __DIR__ . '/../src/views/userDashboard.php';
         break;
 
     case 'getModels':

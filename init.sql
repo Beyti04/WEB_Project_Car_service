@@ -93,7 +93,7 @@ CREATE TABLE orders (
     status_id INT NOT NULL,
     opened_at DATE NOT NULL,
     closed_at DATE,
-    employee_id INT NOT NULL,
+    employee_id INT,
     full_price DECIMAL(10, 2), /* Поправено от money */
     FOREIGN KEY (car_id) REFERENCES car(id),
     FOREIGN KEY (status_id) REFERENCES status(id),
