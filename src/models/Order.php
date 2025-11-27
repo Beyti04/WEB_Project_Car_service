@@ -69,12 +69,15 @@ class Order
     public static function getOrdersWithNoEmployee(): array
     {
         try {
-            $sql = "SELECT o.id as order_id,o.opened_at, s.status, b.brand_name, m.model_name,cli.id AS client_id, CONCAT(cli.first_name, ' ', cli.last_name) AS client_name FROM orders o
+            $sql = "SELECT o.id as order_id,o.opened_at, s.status,sg.name AS service_group,b.brand_name, m.model_name,cli.id AS client_id, CONCAT(cli.first_name, ' ', cli.last_name) AS client_name FROM orders o
             JOIN status s ON o.status_id = s.id
             JOIN car c ON o.car_id = c.id
             JOIN car_model m ON c.model_id = m.id
             JOIN car_brand b ON m.brand_id = b.id
             JOIN clients cli ON c.owner = cli.id
+            JOIN order_service os ON o.id = os.order_id
+            JOIN services sv ON os.service_id = sv.id
+            JOIN service_groups sg ON sv.group_id = sg.id
             WHERE o.employee_id IS NULL
         ";
 
@@ -89,16 +92,58 @@ class Order
                 $orders[] = [
                     'id' => $r['order_id'],
                     'status' => $r['status'],
+                    'service_group' => $r['service_group'],
                     'client_name' => $r['client_name'],
                     'client_id' => $r['client_id'],
                     'car_data' => [$r['brand_name'], $r['model_name']],
                     'opened_at' => $r['opened_at'],
-                    
+
                 ];
             }
 
             return $orders;
         } catch (PDOException $e) {
+            return [];
+        }
+    }
+
+    public static function assignEmployeeToOrder(int $orderId, int $employeeId): bool
+    {
+        $db = Database::getInstance();
+        $sql = "UPDATE orders SET employee_id = ? WHERE id = ?";
+
+        try {
+            $stmt = $db->prepare($sql);
+            $stmt->execute([$employeeId, $orderId]);
+            return $stmt->rowCount() > 0;
+        } catch (PDOException $e) {
+            error_log("Assign Employee to Order Error: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public static function getOrderByEmployeeId(int $employeeId): array
+    {
+        $db = Database::getInstance();
+        $sql = "SELECT o.id as order_id,o.opened_at, s.status,sg.name AS service_group,b.brand_name, m.model_name,cli.id AS client_id, CONCAT(cli.first_name, ' ', cli.last_name) AS client_name FROM orders o
+            JOIN status s ON o.status_id = s.id
+            JOIN car c ON o.car_id = c.id
+            JOIN car_model m ON c.model_id = m.id
+            JOIN car_brand b ON m.brand_id = b.id
+            JOIN clients cli ON c.owner = cli.id
+            JOIN order_service os ON o.id = os.order_id
+            JOIN services sv ON os.service_id = sv.id
+            JOIN service_groups sg ON sv.group_id = sg.id
+             WHERE employee_id = ?";
+
+        try {
+            $stmt = $db->prepare($sql);
+            $stmt->execute([$employeeId]);
+            $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $orders ?: [];
+        } catch (PDOException $e) {
+            error_log("Get Orders by Employee ID Error: " . $e->getMessage());
             return [];
         }
     }

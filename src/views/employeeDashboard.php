@@ -67,7 +67,7 @@
                     <span class="material-symbols-outlined">receipt_long</span>
                     <p class="text-sm font-medium leading-normal">Service Requests</p>
                 </a>    
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=emptyOrders">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=employeeAppointments">
                     <span class="material-symbols-outlined">calendar_month</span>
                     <p class="text-sm font-medium leading-normal">Appointments</p>
                 </a>
@@ -139,8 +139,7 @@
                         <!-- Service History -->
                         <div class="rounded-xl border border-border-light dark:border-border-dark p-6 bg-card-light dark:bg-card-dark">
                             <div class="flex justify-between items-center mb-4">
-                                <h2 class="text-lg font-bold leading-normal">Service History</h2>
-                                <a class="text-sm font-bold text-primary hover:underline" href="#">View All</a>
+                                <h2 class="text-lg font-bold leading-normal">Previous Appointments</h2>
                             </div>
                             <div class="overflow-x-auto">
                                 <table class="w-full text-left">
@@ -149,7 +148,6 @@
                                             <th class="py-3 pr-6" scope="col">Date</th>
                                             <th class="py-3 px-6" scope="col">Service</th>
                                             <th class="py-3 px-6" scope="col">Client</th>
-                                            <th class="py-3 pl-6 text-right" scope="col">Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -157,13 +155,11 @@
                                             <td class="py-4 pr-6 font-medium">Jun 15, 2023</td>
                                             <td class="py-4 px-6">Brake Pad Replacement</td>
                                             <td class="py-4 px-6 text-text-secondary-light dark:text-text-secondary-dark">John Doe</td>
-                                            <td class="py-4 pl-6 text-right font-medium">Completed</td>
                                         </tr>
                                         <tr class="border-b border-border-light dark:border-border-dark">
                                             <td class="py-4 pr-6 font-medium">Jan 10, 2023</td>
                                             <td class="py-4 px-6">Annual Inspection</td>
                                             <td class="py-4 px-6 text-text-secondary-light dark:text-text-secondary-dark">Jane Smith</td>
-                                            <td class="py-4 pl-6 text-right font-medium">Completed</td>
                                         </tr>
                                     </tbody>
                                 </table>

@@ -63,12 +63,12 @@
                     <span class="material-symbols-outlined">dashboard</span>
                     <p class="text-sm font-bold leading-normal">Dashboard</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="index.php?action=emptyOrders">
-                    <span class="material-symbols-outlined text-primary">receipt_long</span>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=emptyOrders">
+                    <span class="material-symbols-outlined ">receipt_long</span>
                     <p class="text-sm font-medium leading-normal">Service Requests</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=employeeAppointments">
-                    <span class="material-symbols-outlined">calendar_month</span>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="index.php?action=employeeAppointments">
+                    <span class="material-symbols-outlined text-primary">calendar_month</span>
                     <p class="text-sm font-medium leading-normal">Appointments</p>
                 </a>
 
@@ -106,7 +106,33 @@
                     <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
                         <h1 class="text-gray-900 dark:text-white text-3xl font-bold leading-tight">Service Order Management</h1>
                     </div>
-                    
+                    <!-- Search and Filter Bar -->
+                    <div class="p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm mb-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-center">
+                            <div class="lg:col-span-2">
+                                <label class="flex flex-col min-w-40 h-12 w-full">
+                                    <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+                                        <div class="text-gray-500 dark:text-gray-400 flex bg-background-light dark:bg-gray-700 items-center justify-center pl-4 rounded-l-lg">
+                                            <span class="material-symbols-outlined">search</span>
+                                        </div>
+                                        <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 border-none bg-background-light dark:bg-gray-700 h-full placeholder:text-gray-500 dark:placeholder:text-gray-400 px-4 text-sm" placeholder="Search by client, car, order ID..." value="" />
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="flex items-center gap-3 overflow-x-auto">
+                                <button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-background-light dark:bg-gray-700 px-4 w-full">
+                                    <p class="text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal">Status: All</p>
+                                    <span class="material-symbols-outlined text-gray-500 dark:text-gray-400 text-base">expand_more</span>
+                                </button>
+                            </div>
+                            <div class="flex items-center gap-3 overflow-x-auto">
+                                <button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-background-light dark:bg-gray-700 px-4 w-full">
+                                    <p class="text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal">Employee</p>
+                                    <span class="material-symbols-outlined text-gray-500 dark:text-gray-400 text-base">expand_more</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                     <!-- Table -->
                     <div class="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
                         <div class="overflow-x-auto">
@@ -115,14 +141,14 @@
 
                                 use App\Models\Order;
 
-                                $orders = Order::getOrdersWithNoEmployee();
+                                $orders = Order::getOrderByEmployeeId($_SESSION['user_id'] ?? 0);
                                 ?>
                                 <thead class="bg-gray-50 dark:bg-gray-700/50">
                                     <tr>
                                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Order ID</th>
                                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Client Name</th>
                                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Car (Make &amp; Model)</th>
-                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Service Group</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Service group</th>
                                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
                                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date Opened</th>
                                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
@@ -135,18 +161,18 @@
 
                                     ?>
                                         <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30">
-                                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 font-mono"><?php echo $order['id']; ?></td>
+                                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 font-mono"><?php echo $order['order_id']; ?></td>
                                             <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white"><?php echo $order['client_name']; ?></td>
-                                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400"><?php echo $order['car_data'][0] . ' ' . $order['car_data'][1]; ?></td>
+                                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400"><?php echo $order['brand_name'] . ' ' . $order['model_name']; ?></td>
                                             <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400"><?php echo $order['service_group']; ?></td>
                                             <td class="px-4 py-3 whitespace-nowrap text-sm">
                                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800"><?php echo $order['status']?></span>
                                             </td>
                                             <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400"><?php echo $order['opened_at']; ?></td>
                                             <td class="px-4 py-3 whitespace-nowrap text-sm font-medium">
-                                                <a href="index.php?action=takeOrder&order_id=<?php echo $order['id']; ?>">
                                                 <div class="flex items-center gap-2">
-                                                    <button class="w-full flex items-center justify-center gap-2 h-10 px-4 rounded-lg bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark text-sm font-bold hover:bg-primary/10 transition-colors">Take Order</button>
+                                                    <button class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary"><span class="material-symbols-outlined text-xl">edit</span></button>
+                                                    <button class="text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-500"><span class="material-symbols-outlined text-xl">delete</span></button>
                                                 </div>
                                             </td>
                                         </tr>
