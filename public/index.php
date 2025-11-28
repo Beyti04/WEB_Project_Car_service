@@ -268,6 +268,14 @@ switch ($action) {
         exit;
         break;
 
+    case 'clientBilling':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        require __DIR__ . '/../src/views/userBilling.php';
+        break;
+
     case 'serviceManager':
         if (!isset($_SESSION['user_id'])) {
             header("Location: index.php?action=login");
@@ -351,6 +359,17 @@ switch ($action) {
         $orderId = (int)($_GET['order_id'] ?? 0);
         EmployeeController::takeOrder($employeeId, $orderId);
         header("Location: index.php?action=userDashboard");
+        exit;
+        break;
+
+    case 'cancelClientOrder':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        $orderId = (int)($_GET['order_id'] ?? 0);
+        ClientController::cancelOrder($orderId);
+        header("Location: index.php?action=userAppointmentManager");
         exit;
         break;
 

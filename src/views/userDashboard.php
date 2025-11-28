@@ -75,7 +75,7 @@
                     <p class="text-sm font-medium leading-normal">Service History</p>
                 </a>
 
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=clientBilling">
                     <span class="material-symbols-outlined">receipt_long</span>
                     <p class="text-sm font-medium leading-normal">Billing</p>
                 </a>
@@ -121,32 +121,67 @@
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div class="lg:col-span-2 flex flex-col gap-6">
                         <div class="rounded-xl border border-border-light dark:border-border-dark p-6 bg-card-light dark:bg-card-dark">
-                            <h2 class="text-lg font-bold leading-normal mb-4">Current Order Status</h2>
-                            <div class="flex flex-col sm:flex-row gap-6 items-start">
-                                <div class="flex-1">
-                                    <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm">2022 Toyota Highlander</p>
-                                    <p class="font-bold text-xl mb-3">Oil Change &amp; Tire Rotation</p>
-                                    <div class="flex items-center gap-2 text-sm text-text-secondary-light dark:text-text-secondary-dark">
-                                        <span class="material-symbols-outlined text-base">receipt_long</span>
-                                        <span>Order #ORD-2024-1138</span>
-                                    </div>
-                                </div>
-                                <div class="flex-1 w-full">
-                                    <div class="flex items-center justify-between mb-1">
-                                        <p class="font-bold text-primary">In Progress</p>
-                                        <p class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Est. completion: 4:30 PM</p>
-                                    </div>
-                                    <div class="w-full bg-background-light dark:bg-background-dark rounded-full h-2.5">
-                                        <div class="bg-primary h-2.5 rounded-full" style="width: 65%"></div>
-                                    </div>
-                                </div>
+                            <h2 class="text-lg font-bold leading-normal mb-4">Current Orders Status</h2>
+                            <div class="block gap-6 items-start">
+
+                                <?php
+
+                                use App\Controllers\VehicleController;
+
+                                $currentAppointments = VehicleController::getCurrentAppointments((int)$_SESSION['selected_car_id'] ?? 0);
+
+                                if (empty($currentAppointments)) {
+                                    echo '<p class="text-text-secondary-light text-center dark:text-text-secondary-dark">No current orders available.</p>';
+                                } else {
+
+                                    foreach ($currentAppointments as $appointment) { ?>
+                                        <div class="mb-6 last:mb-0">
+                                            <div class="">
+                                                <div class="flex items-center  text-sm text-text-secondary-light dark:text-text-secondary-dark">
+                                                    <span class="material-symbols-outlined text-base">receipt_long</span>
+                                                    <span>Order #<?php echo htmlspecialchars($appointment['order_id']); ?></span>
+                                                </div>
+
+                                            </div>
+                                            <div class="flex-1 w-full">
+                                                <div class="flex items-center justify-between">
+                                                    <p class="font-bold text-xl mb-3"><?php echo htmlspecialchars($appointment['service_name']); ?></p>
+                                                    <?php
+                                                    if ($appointment['status'] == 'В изчакване') {
+                                                        $progressWidth = 0;
+                                                        $color = 'text-gray-400';
+                                                    } elseif ($appointment['status'] == 'Приета') {
+                                                        $progressWidth = 20;
+                                                        $color = 'text-primary';
+                                                    } elseif ($appointment['status'] == 'Диагностика') {
+                                                        $progressWidth = 40;
+                                                        $color = 'text-yellow-500';
+                                                    } elseif ($appointment['status'] == 'Ремонт') {
+                                                        $progressWidth = 60;
+                                                        $color = 'text-orange-500';
+                                                    } elseif ($appointment['status'] == 'Тестване') {
+                                                        $progressWidth = 80; {
+                                                            $color = 'text-purple-500';
+                                                        }
+                                                    }
+
+                                                    ?>
+                                                    <p class="font-bold <?php echo $color; ?>"><?php echo htmlspecialchars($appointment['status']); ?></p>
+                                                </div>
+                                                <div class="w-full bg-background-light dark:bg-background-dark rounded-full h-2.5">
+                                                    <div class="bg-primary h-2.5 rounded-full" style="width: <?php echo $progressWidth ?>%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                <?php
+                                    }
+                                } ?>
                             </div>
                         </div>
                         <a name="service_history">
                             <div class="rounded-xl border border-border-light dark:border-border-dark p-6 bg-card-light dark:bg-card-dark">
                                 <div class="flex justify-between items-center mb-4">
                                     <h2 class="text-lg font-bold leading-normal">Service History</h2>
-                                    <a class="text-sm font-bold text-primary hover:underline" href="#">View All</a>
                                 </div>
                                 <div class="overflow-x-auto">
                                     <table class="w-full text-left">
@@ -154,47 +189,27 @@
                                             <tr>
                                                 <th class="py-3 pr-6" scope="col">Date</th>
                                                 <th class="py-3 px-6" scope="col">Service</th>
-                                                <th class="py-3 px-6" scope="col">Vehicle</th>
                                                 <th class="py-3 pl-6 text-right" scope="col">Cost</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="border-b border-border-light dark:border-border-dark">
-                                                <td class="py-4 pr-6 font-medium">Jun 15, 2023</td>
-                                                <td class="py-4 px-6">Brake Pad Replacement</td>
-                                                <td class="py-4 px-6 text-text-secondary-light dark:text-text-secondary-dark">2022 Toyota Highlander</td>
-                                                <td class="py-4 pl-6 text-right font-medium">$345.00</td>
-                                            </tr>
-                                            <tr class="border-b border-border-light dark:border-border-dark">
-                                                <td class="py-4 pr-6 font-medium">Jan 10, 2023</td>
-                                                <td class="py-4 px-6">Annual Inspection</td>
-                                                <td class="py-4 px-6 text-text-secondary-light dark:text-text-secondary-dark">2022 Toyota Highlander</td>
-                                                <td class="py-4 pl-6 text-right font-medium">$120.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="py-4 pr-6 font-medium">Jul 05, 2022</td>
-                                                <td class="py-4 px-6">Oil Change</td>
-                                                <td class="py-4 px-6 text-text-secondary-light dark:text-text-secondary-dark">2022 Toyota Highlander</td>
-                                                <td class="py-4 pl-6 text-right font-medium">$85.50</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="py-4 pr-6 font-medium">Jul 05, 2022</td>
-                                                <td class="py-4 px-6">Oil Change</td>
-                                                <td class="py-4 px-6 text-text-secondary-light dark:text-text-secondary-dark">2022 Toyota Highlander</td>
-                                                <td class="py-4 pl-6 text-right font-medium">$85.50</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="py-4 pr-6 font-medium">Jul 05, 2022</td>
-                                                <td class="py-4 px-6">Oil Change</td>
-                                                <td class="py-4 px-6 text-text-secondary-light dark:text-text-secondary-dark">2022 Toyota Highlander</td>
-                                                <td class="py-4 pl-6 text-right font-medium">$85.50</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="py-4 pr-6 font-medium">Jul 05, 2022</td>
-                                                <td class="py-4 px-6">Oil Change</td>
-                                                <td class="py-4 px-6 text-text-secondary-light dark:text-text-secondary-dark">2022 Toyota Highlander</td>
-                                                <td class="py-4 pl-6 text-right font-medium">$85.50</td>
-                                            </tr>
+                                            <?php $serviceHistory = VehicleController::getVehicleServiceHistory($_SESSION['selected_car_id']);
+                                            if (empty($serviceHistory)) {
+                                                echo '<tr><td colspan="4" class="py-4 px-6 text-center text-text-secondary-light dark:text-text-secondary-dark">No service history available.</td></tr>';
+                                            } else {
+                                                foreach ($serviceHistory as $service) {
+                                            ?>
+                                                    <tr class="border-b border-border-light dark:border-border-dark">
+                                                        <td class="py-4 pr-6 font-medium"><?php echo htmlspecialchars($service['closed_at']); ?></td>
+                                                        <td class="py-4 px-6"><?php echo htmlspecialchars($service['service_name']); ?></td>
+                                                        <?php if ($service['full_price'] == 0) {
+                                                            $service['full_price'] = 'N/A';
+                                                        } ?>
+                                                        <td class="py-4 pl-6 text-right font-medium"><?php echo htmlspecialchars($service['full_price']); ?></td>
+                                                    </tr>
+                                            <?php }
+                                            }
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -202,35 +217,18 @@
                         </a>
                     </div>
                     <div class="flex flex-col gap-6">
-                        <div class="flex flex-col gap-4 rounded-xl border border-border-light dark:border-border-dark p-6 bg-card-light dark:bg-card-dark">
-                            <h2 class="text-lg font-bold leading-normal">Upcoming Appointment</h2>
-                            <div class="flex flex-col gap-4">
-                                <div class="flex items-center gap-4">
-                                    <div class="flex flex-col items-center justify-center p-3 rounded-lg bg-primary/10 w-16 h-16 shrink-0">
-                                        <p class="text-primary font-bold text-lg">DEC</p>
-                                        <p class="text-primary/80 font-bold text-2xl">21</p>
-                                    </div>
-                                    <div>
-                                        <p class="font-bold">10:00 AM - State Inspection</p>
-                                        <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm">2022 Toyota Highlander</p>
-                                    </div>
-                                </div>
-                                <div class="flex gap-2">
-                                    <button class="w-full flex items-center justify-center gap-2 h-10 px-4 rounded-lg bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark text-sm font-bold hover:bg-primary/10 transition-colors">Reschedule</button>
-                                    <button class="w-full flex items-center justify-center gap-2 h-10 px-4 rounded-lg bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark text-sm font-bold text-danger hover:bg-danger/10 hover:border-danger/20 transition-colors">Cancel</button>
-                                </div>
-                            </div>
-                        </div>
                         <?php
+
                         use App\Models\CarModel;
                         use App\Models\CarBrand;
+
                         $selectedCarHtml = "<p class='text-sm text-text-secondary-light dark:text-text-secondary-dark'>No vehicle selected</p>";
 
                         if (isset($_SESSION['selected_car_id'], $_SESSION['selected_car_model_id'], $_SESSION['selected_car_year'], $_SESSION['selected_car_vin'])) {
-                        $carModel = CarModel::getModelById((int)$_SESSION['selected_car_model_id']);
-                        $carBrand = CarBrand::getBrandById($carModel->brand_id);
+                            $carModel = CarModel::getModelById((int)$_SESSION['selected_car_model_id']);
+                            $carBrand = CarBrand::getBrandById($carModel->brand_id);
 
-                        $selectedCarHtml = "
+                            $selectedCarHtml = "
                         <p class='font-bold text-base'>{$_SESSION['selected_car_year']} {$carBrand->make} {$carModel->model_name}</p>
                         <p class='text-sm text-text-secondary-light dark:text-text-secondary-dark'>VIN: " . $_SESSION['selected_car_vin'] . "</p>
                         ";
@@ -253,7 +251,6 @@
             </main>
         </div>
     </div>
-
 </body>
 
 </html>

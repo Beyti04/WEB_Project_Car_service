@@ -69,4 +69,12 @@ class EmployeeController
             $employee->takeOrder($orderId);
         }
     }
+
+    public static function cancelOrder(int $employeeId, int $orderId): void
+    {
+        $employee = Employee::getEmployeeById($employeeId);
+        if ($employee) {
+            $employee->cancelOrder($orderId);
+        }
+    }
 }

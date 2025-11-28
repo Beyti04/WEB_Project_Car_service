@@ -67,15 +67,94 @@ class ClientController
     {
         $client = Client::getClientById($clientId);
         if ($client) {
-            $query = "INSERT INTO orders (car_id, status_id, opened_at, closed_at, employee_id, full_price) VALUES (?, ?, ?, ?, ?, ?)";
             $db = \Config\Database::getInstance();
-            $stmt = $db->prepare($query);
-            $stmt->execute([$vehicle, 1, $date, null, null, null]);
+            $query = "SELECT base_price FROM services WHERE id = ?";
 
-            $queryService = "INSERT INTO order_service (order_id, service_id) VALUES (?, ?)";
-            $stmtService = $db->prepare($queryService);
+            $stmt = $db->prepare($query);
+            $stmt->execute([$service]);
+            $basePrice = $stmt->fetchColumn();
+
+            $query = "INSERT INTO orders (car_id, status_id, opened_at, closed_at, employee_id, full_price) VALUES (?, ?, ?, ?, ?, ?)";
+
+            $stmt = $db->prepare($query);
+            $stmt->execute([$vehicle, 1, $date, null, null, $basePrice]);
+
+            $queryService = "INSERT INTO order_service (order_id, service_id,price) VALUES (?, ?, ?)";
+
+            $stmt = $db->prepare($queryService);
             $orderId = $db->lastInsertId();
-            $stmtService->execute([$orderId, $service]);
+            $stmt->execute([$orderId, $service, $basePrice]);
+            $serviceId = $db->lastInsertId();
+
+            $queryAuditLog = "INSERT INTO audit_logs (user_id,action,entity,entity_id,created_at) VALUES (?,?,?,?,NOW())";
+
+            $stmt = $db->prepare($queryAuditLog);
+            $stmt->execute([$clientId, "Created order for vehicle: $vehicle", "orders", $orderId]);
+            $stmt->execute([$clientId, "Created service order for order: $orderId", "order_service", $serviceId]);
         }
+    }
+
+    public static function getCurrentClientAppointments(int $clientId): array
+    {
+        $client = Client::getClientById($clientId);
+        if (!$client) {
+            return [];
+        }
+
+        $query = "SELECT o.id as order_id, o.opened_at, s.status, c.year as car_year, cb.brand_name, cm.model_name, sv.name as service_name
+                  FROM orders o
+                  JOIN status s ON o.status_id = s.id
+                  JOIN order_service os ON o.id = os.order_id
+                  JOIN services sv ON os.service_id = sv.id
+                  JOIN car c ON o.car_id = c.id
+                  JOIN car_model cm ON c.model_id = cm.id
+                  JOIN car_brand cb ON cm.brand_id = cb.id
+                  WHERE c.owner = :client_id AND s.status NOT IN ('Завършена', 'Отказана')
+                  ORDER BY o.opened_at DESC";
+
+        $db = \Config\Database::getInstance();
+        $stmt = $db->prepare($query);
+        $stmt->execute([':client_id' => $clientId]);
+        $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $rows;
+    }
+
+    public static function getPastClientAppointments(int $clientId): array
+    {
+        $client = Client::getClientById($clientId);
+        if (!$client) {
+            return [];
+        }
+
+        $query = "SELECT o.id as order_id, o.opened_at,o.closed_at, s.status, c.year as car_year, cb.brand_name, cm.model_name, sv.name as service_name
+                  FROM orders o
+                  JOIN status s ON o.status_id = s.id
+                  JOIN order_service os ON o.id = os.order_id
+                  JOIN services sv ON os.service_id = sv.id
+                  JOIN car c ON o.car_id = c.id
+                  JOIN car_model cm ON c.model_id = cm.id
+                  JOIN car_brand cb ON cm.brand_id = cb.id
+                  WHERE c.owner = :client_id AND s.status IN ('Завършена', 'Отказана')
+                  ORDER BY o.opened_at DESC";
+
+        $db = \Config\Database::getInstance();
+        $stmt = $db->prepare($query);
+        $stmt->execute([':client_id' => $clientId]);
+        $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $rows;
+    }
+
+    public static function cancelOrder(int $orderId): void
+    {
+        $db = \Config\Database::getInstance();
+        $query = "UPDATE orders SET status_id = (SELECT id FROM status WHERE status = 'Отказана'), closed_at = NOW(), full_price = 0 WHERE id = ?";
+        $stmt = $db->prepare($query);
+        $stmt->execute([$orderId]);
+
+        $queryAuditLog = "INSERT INTO audit_logs (user_id,action,entity,entity_id,created_at) VALUES (?,?,?,?,NOW())";
+        $stmt = $db->prepare($queryAuditLog);
+        $stmt->execute([$_SESSION['user_id'], "Canceled order", "orders", $orderId]);
     }
 }

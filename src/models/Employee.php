@@ -157,7 +157,7 @@ class Employee
 
     public function takeOrder(int $orderId): bool
     {
-        $sql = "UPDATE orders SET employee_id = ? WHERE id = ?";
+        $sql = "UPDATE orders SET employee_id = ?,status_id = 2 WHERE id = ?";
 
         try {
             $stmt = $this->db->prepare($sql);
@@ -167,6 +167,21 @@ class Employee
             ]);
         } catch (PDOException $e) {
             error_log("Take Order Error: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function cancelOrder(int $orderId): bool
+    {
+        $sql = "UPDATE orders SET status_id =(SELECT id FROM statuses WHERE name = 'Отказана') WHERE id = ?";
+
+        try {
+            $stmt = $this->db->prepare($sql);
+            return $stmt->execute([
+                $orderId
+            ]);
+        } catch (PDOException $e) {
+            error_log("Cancel Order Error: " . $e->getMessage());
             return false;
         }
     }

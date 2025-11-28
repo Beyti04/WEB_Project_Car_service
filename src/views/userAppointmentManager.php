@@ -106,139 +106,109 @@
             <!-- Page Content -->
             <div class="flex-1 p-10 overflow-y-auto">
                 <div class="max-w-5xl mx-auto">
-                    <!-- Upcoming Appointments Section -->
                     <section>
                         <h2 class="text-gray-900 dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] pb-3 pt-5">Upcoming Appointments</h2>
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            <!-- Card 1 -->
-                            <div class="bg-white dark:bg-background-dark/80 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 overflow-hidden">
-                                <div class="p-6">
-                                    <p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal mb-1.5">Mon, Oct 28, 2024 at 10:00 AM</p>
-                                    <p class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] mb-3">Oil Change &amp; Tire Rotation</p>
-                                    <div class="flex items-center gap-3 mb-4">
-                                        <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">directions_car</span>
-                                        <p class="text-gray-600 dark:text-gray-300 text-base font-normal leading-normal">2023 Honda Civic</p>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <span class="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900/50 px-3 py-1 text-xs font-medium text-green-700 dark:text-green-300">Confirmed</span>
-                                    </div>
-                                </div>
-                                <div class="border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50 px-6 py-4 flex items-center justify-end gap-3">
-                                    <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal hover:bg-gray-300 dark:hover:bg-gray-600">
-                                        <span class="truncate">Cancel</span>
-                                    </button>
-                                    <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary text-white text-sm font-medium leading-normal hover:bg-primary/90">
-                                        <span class="truncate">Modify</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <!-- Card 2 -->
-                            <div class="bg-white dark:bg-background-dark/80 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 overflow-hidden">
-                                <div class="p-6">
-                                    <p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal mb-1.5">Wed, Nov 06, 2024 at 2:30 PM</p>
-                                    <p class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] mb-3">Brake Inspection</p>
-                                    <div class="flex items-center gap-3 mb-4">
-                                        <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">directions_car</span>
-                                        <p class="text-gray-600 dark:text-gray-300 text-base font-normal leading-normal">2021 Toyota RAV4</p>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <span class="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900/50 px-3 py-1 text-xs font-medium text-green-700 dark:text-green-300">Confirmed</span>
-                                    </div>
-                                </div>
-                                <div class="border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50 px-6 py-4 flex items-center justify-end gap-3">
-                                    <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4  bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal hover:bg-gray-300 dark:hover:bg-gray-600">
-                                        <span class="truncate">Cancel</span>
-                                    </button>
-                                    <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary text-white text-sm font-medium leading-normal hover:bg-primary/90">
-                                        <span class="truncate">Modify</span>
-                                    </button>
-                                </div>
-                            </div>
+                            <?php
+                            $clientId = $_SESSION['user_id'] ?? null;
+                            if ($clientId) {
+                                $currentAppointments = \App\Controllers\ClientController::getCurrentClientAppointments($clientId);
+                            } else {
+                                $currentAppointments = [];
+                            }
 
-
-
-                            <!-- Card 1 -->
-                            <div class="bg-white dark:bg-background-dark/80 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 overflow-hidden">
-                                <div class="p-6">
-                                    <p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal mb-1.5">Mon, Oct 28, 2024 at 10:00 AM</p>
-                                    <p class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] mb-3">Oil Change &amp; Tire Rotation</p>
-                                    <div class="flex items-center gap-3 mb-4">
-                                        <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">directions_car</span>
-                                        <p class="text-gray-600 dark:text-gray-300 text-base font-normal leading-normal">2023 Honda Civic</p>
+                            if (!empty($currentAppointments)) {
+                                foreach ($currentAppointments as $appointment) { ?>
+                                    <div class="bg-white dark:bg-background-dark/80 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 overflow-hidden">
+                                        <div class="p-6">
+                                            <p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal mb-1.5"><?php echo htmlspecialchars($appointment['opened_at']); ?></p>
+                                            <p class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] mb-3"><?php echo htmlspecialchars($appointment['service_name']); ?></p>
+                                            <div class="flex items-center gap-3 mb-4">
+                                                <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">directions_car</span>
+                                                <p class="text-gray-600 dark:text-gray-300 text-base font-normal leading-normal"><?php echo htmlspecialchars($appointment['car_year'] . ' ' . $appointment['brand_name'] . ' ' . $appointment['model_name']); ?></p>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <?php if ($appointment['status'] != "В изчакване") { ?>
+                                                    <span class="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900/50 px-3 py-1 text-xs font-medium text-green-700 dark:text-green-300"><?php echo htmlspecialchars($appointment['status']); ?></span>
+                                            </div>
+                                        </div>
+                                    <?php } else { ?>
+                                        <span class="inline-flex items-center rounded-full bg-yellow-100 dark:bg-yellow-900/50 px-3 py-1 text-xs font-medium text-yellow-700 dark:text-yellow-300"><?php echo htmlspecialchars($appointment['status']); ?></span>
                                     </div>
-                                    <div class="flex items-center gap-2">
-                                        <span class="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900/50 px-3 py-1 text-xs font-medium text-green-700 dark:text-green-300">Confirmed</span>
-                                    </div>
-                                </div>
-                                <div class="border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50 px-6 py-4 flex items-center justify-end gap-3">
-                                    <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal hover:bg-gray-300 dark:hover:bg-gray-600">
-                                        <span class="truncate">Cancel</span>
-                                    </button>
-                                    <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary text-white text-sm font-medium leading-normal hover:bg-primary/90">
-                                        <span class="truncate">Modify</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <!-- Card 2 -->
-                            <div class="bg-white dark:bg-background-dark/80 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 overflow-hidden">
-                                <div class="p-6">
-                                    <p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal mb-1.5">Wed, Nov 06, 2024 at 2:30 PM</p>
-                                    <p class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] mb-3">Brake Inspection</p>
-                                    <div class="flex items-center gap-3 mb-4">
-                                        <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">directions_car</span>
-                                        <p class="text-gray-600 dark:text-gray-300 text-base font-normal leading-normal">2021 Toyota RAV4</p>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <span class="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900/50 px-3 py-1 text-xs font-medium text-green-700 dark:text-green-300">Confirmed</span>
-                                    </div>
-                                </div>
-                                <div class="border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50 px-6 py-4 flex items-center justify-end gap-3">
-                                    <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal hover:bg-gray-300 dark:hover:bg-gray-600">
-                                        <span class="truncate">Cancel</span>
-                                    </button>
-                                    <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary text-white text-sm font-medium leading-normal hover:bg-primary/90">
-                                        <span class="truncate">Modify</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <!-- If no current appointments display this! -->
-                            <div class="bg-white dark:bg-background-dark/80 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-700 flex flex-col items-center justify-center p-10 text-center min-h-[250px]">
-                                <span class="material-symbols-outlined text-5xl text-gray-400 dark:text-gray-500 mb-4">event_busy</span>
-                                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">No Current Appointments</h3>
-                                <p class="text-gray-500 dark:text-gray-400 mt-1 max-w-xs">Your service history will appear here once you complete more appointments.</p>
-                            </div>
                         </div>
-                    </section>
-                    <!-- Past Appointments Section -->
-                    <section class="mt-12">
-                        <h2 class="text-gray-900 dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] pb-3 pt-5">Past Appointments</h2>
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            <!-- Card 3 -->
-                            <div class="bg-white dark:bg-background-dark/80 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 overflow-hidden opacity-70">
-                                <div class="p-6">
-                                    <p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal mb-1.5">Fri, Aug 16, 2024 at 9:00 AM</p>
-                                    <p class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] mb-3">Annual Maintenance</p>
-                                    <div class="flex items-center gap-3 mb-4">
-                                        <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">directions_car</span>
-                                        <p class="text-gray-600 dark:text-gray-300 text-base font-normal leading-normal">2023 Honda Civic</p>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <span class="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900/50 px-3 py-1 text-xs font-medium text-blue-700 dark:text-blue-300">Completed</span>
-                                    </div>
-                                </div>
+                        <a href="index.php?action=cancelClientOrder&order_id=<?php echo $appointment['order_id']; ?>">
+                            <div class="border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50 px-6 py-4 flex items-center justify-end gap-3">
+                                <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal hover:bg-gray-300 dark:hover:bg-gray-600">
+                                    <span class="truncate">Cancel</span>
+                                </button>
                             </div>
-                            <!-- Empty State Card -->
-                            <div class="bg-white dark:bg-background-dark/80 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-700 flex flex-col items-center justify-center p-10 text-center min-h-[250px]">
-                                <span class="material-symbols-outlined text-5xl text-gray-400 dark:text-gray-500 mb-4">event_busy</span>
-                                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">No More Past Appointments</h3>
-                                <p class="text-gray-500 dark:text-gray-400 mt-1 max-w-xs">Your service history will appear here once you complete more appointments.</p>
-                            </div>
-                        </div>
-                    </section>
+                        <?php } ?>
+                        </a>
                 </div>
+            <?php
+                                }
+                            } else {
+            ?>
+
+            <!-- If no current appointments display this! -->
+            <div class="bg-white dark:bg-background-dark/80 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-700 flex flex-col items-center justify-center p-10 text-center min-h-[250px]">
+                <span class="material-symbols-outlined text-5xl text-gray-400 dark:text-gray-500 mb-4">event_busy</span>
+                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">No Current Appointments</h3>
+                <p class="text-gray-500 dark:text-gray-400 mt-1 max-w-xs">Your appointments will appear here once you schedule them.</p>
             </div>
-            </main>
+        <?php
+                            }
+        ?>
+            </div>
+            </section>
+            <!-- Past Appointments Section -->
+            <section class="mt-12">
+                <h2 class="text-gray-900 dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] pb-3 pt-5">Past Appointments</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Card 3 -->
+                    <?php
+                    if ($clientId) {
+                        $pastAppointments = \App\Controllers\ClientController::getPastClientAppointments($clientId);
+                    } else {
+                        $pastAppointments = [];
+                    }
+
+                    if (!empty($pastAppointments)) {
+                        foreach ($pastAppointments as $appointment) { ?>
+                            <div class="bg-white dark:bg-background-dark/80 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 overflow-hidden">
+                                <div class="p-6">
+                                    <p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal mb-1.5"><?php echo htmlspecialchars($appointment['opened_at']); ?> • <?php echo htmlspecialchars($appointment['closed_at']); ?></p>
+                                    <p class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] mb-3"><?php echo htmlspecialchars($appointment['service_name']); ?></p>
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">directions_car</span>
+                                        <p class="text-gray-600 dark:text-gray-300 text-base font-normal leading-normal"><?php echo htmlspecialchars($appointment['car_year'] . ' ' . $appointment['brand_name'] . ' ' . $appointment['model_name']); ?></p>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="inline-flex items-center rounded-full <?php echo $appointment['status'] == 'Готова' ? 'bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300' : 'bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300'; ?> px-3 py-1 text-xs font-medium"><?php echo htmlspecialchars($appointment['status']); ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php
+                        }
+                    } else {
+                        ?>
+
+                        <!-- If no past appointments display this! -->
+                        <div class="bg-white dark:bg-background-dark/80 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-700 flex flex-col items-center justify-center p-10 text-center min-h-[250px]">
+                            <span class="material-symbols-outlined text-5xl text-gray-400 dark:text-gray-500 mb-4">history</span>
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">No Past Appointments</h3>
+                            <p class="text-gray-500 dark:text-gray-400 mt-1 max-w-xs">Your past service appointments will appear here once you complete more services.</p>
+                        </div>
+                    <?php
+                    }
+                    ?>
+
+                </div>
+            </section>
         </div>
+    </div>
+    </main>
+    </div>
 </body>
 
 </html>

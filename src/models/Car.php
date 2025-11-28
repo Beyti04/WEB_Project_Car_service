@@ -191,6 +191,48 @@ class Car
         }
     }
 
+    public function getCurrentAppointments(): array {
+        $sql = "SELECT o.id as order_id, o.opened_at, s.status, sv.name as service_name
+                FROM orders o
+                JOIN status s ON o.status_id = s.id
+                JOIN order_service os ON o.id = os.order_id
+                JOIN services sv ON os.service_id = sv.id
+                WHERE o.car_id = ? AND o.status_id NOT IN (SELECT id FROM status WHERE status IN ('Завършена', 'Отказана'))
+                ORDER BY o.opened_at DESC";
+
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([$this->id]);
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $rows;
+        } catch (PDOException $e) {
+            error_log("Car Current Appointments Error: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    public function getServiceHistory(): array {
+        $sql = "SELECT o.id as order_id, o.closed_at,o.full_price, s.status, sv.name as service_name
+                FROM orders o
+                JOIN status s ON o.status_id = s.id
+                JOIN order_service os ON o.id = os.order_id
+                JOIN services sv ON os.service_id = sv.id
+                WHERE o.car_id = ? AND o.status_id IN (SELECT id FROM status WHERE status IN ('Завършена', 'Отказана'))
+                ORDER BY o.opened_at DESC";
+
+        try {
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([$this->id]);
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $rows;
+        } catch (PDOException $e) {
+            error_log("Car Service History Error: " . $e->getMessage());
+            return [];
+        }
+    }
+
     public function delete(): bool {
         $sql = "DELETE FROM car WHERE id = ?";
 

@@ -139,22 +139,6 @@ CREATE TABLE audit_logs (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-/* ЗАБЕЛЕЖКА: Таблицата 'full_order_listing' от DDL-а е с много
-   проблематичен дизайн (1-към-1 връзка към 'orders' и
-   към 'order_materials' И 'order_service').
-   Това я прави почти неизползваема.
-   Създавам я, както е по DDL, но не я препоръчвам.
-*/
-CREATE TABLE full_order_listing (
-    id INT NOT NULL, -- Това е ID-то на поръчката
-    materials_order_id INT NOT NULL,
-    service_order_id INT NOT NULL,
-    PRIMARY KEY (id, materials_order_id, service_order_id),
-    FOREIGN KEY (id) REFERENCES orders(id),
-    FOREIGN KEY (materials_order_id) REFERENCES order_materials(id),
-    FOREIGN KEY (service_order_id) REFERENCES order_service(id)
-);
-
 -- Марки автомобили
 INSERT INTO car_brand (brand_name) VALUES
 ('BMW'),
@@ -358,7 +342,7 @@ INSERT INTO car_model (brand_id, model_name) SELECT id, 'Jogger' FROM car_brand 
 INSERT INTO role (role_name) VALUES ('Admin'), ('Employee'),('Client');
 
 -- Статуси на поръчки
-INSERT INTO status (status) VALUES ('Приета'), ('Диагностика'), ('Ремонт'), ('Тестване'), ('Готова');
+INSERT INTO status (status) VALUES ('В изчакване'),('Приета'), ('Диагностика'), ('Ремонт'), ('Тестване'), ('Готова'),('Отказана');
 
 -- Групи
 INSERT INTO service_groups (name) VALUES ('Обслужване'), ('Диагностика'), ('Климатизация'), ('Двигател'), ('Трансмисия'), ('Окачване'), ('Спирачна система');

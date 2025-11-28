@@ -92,4 +92,22 @@ class VehicleController
         header("Location: index.php?action=userDashboard");
         exit;
     }
+
+    public static function getCurrentAppointments(int $carId): array
+    {
+        $car = Car::getCarById($carId);
+        if ($car && $car->owner === ($_SESSION['user_id'] ?? 0)) {
+            return $car->getCurrentAppointments();
+        }
+        return [];
+    }
+
+    public static function getVehicleServiceHistory(int $carId): array
+    {
+        $car = Car::getCarById($carId);
+        if ($car && $car->owner === ($_SESSION['user_id'] ?? 0)) {
+            return $car->getServiceHistory();
+        }
+        return [];
+    }
 }
