@@ -128,52 +128,57 @@
 
                                 use App\Controllers\VehicleController;
 
-                                $currentAppointments = VehicleController::getCurrentAppointments((int)$_SESSION['selected_car_id'] ?? 0);
-
-                                if (empty($currentAppointments)) {
-                                    echo '<p class="text-text-secondary-light text-center dark:text-text-secondary-dark">No current orders available.</p>';
+                                if (!isset($_SESSION['selected_car_id'])) {
+                                    echo '<p class="text-text-secondary-light text-center dark:text-text-secondary-dark">No vehicle selected. Please select a vehicle to view current orders.</p>';
                                 } else {
 
-                                    foreach ($currentAppointments as $appointment) { ?>
-                                        <div class="mb-6 last:mb-0">
-                                            <div class="">
-                                                <div class="flex items-center  text-sm text-text-secondary-light dark:text-text-secondary-dark">
-                                                    <span class="material-symbols-outlined text-base">receipt_long</span>
-                                                    <span>Order #<?php echo htmlspecialchars($appointment['order_id']); ?></span>
-                                                </div>
+                                    $currentAppointments = VehicleController::getCurrentAppointments((int)$_SESSION['selected_car_id'] ?? 0);
 
-                                            </div>
-                                            <div class="flex-1 w-full">
-                                                <div class="flex items-center justify-between">
-                                                    <p class="font-bold text-xl mb-3"><?php echo htmlspecialchars($appointment['service_name']); ?></p>
-                                                    <?php
-                                                    if ($appointment['status'] == 'В изчакване') {
-                                                        $progressWidth = 0;
-                                                        $color = 'text-gray-400';
-                                                    } elseif ($appointment['status'] == 'Приета') {
-                                                        $progressWidth = 20;
-                                                        $color = 'text-primary';
-                                                    } elseif ($appointment['status'] == 'Диагностика') {
-                                                        $progressWidth = 40;
-                                                        $color = 'text-yellow-500';
-                                                    } elseif ($appointment['status'] == 'Ремонт') {
-                                                        $progressWidth = 60;
-                                                        $color = 'text-orange-500';
-                                                    } elseif ($appointment['status'] == 'Тестване') {
-                                                        $progressWidth = 80; {
-                                                            $color = 'text-purple-500';
+                                    if (empty($currentAppointments)) {
+                                        echo '<p class="text-text-secondary-light text-center dark:text-text-secondary-dark">No current orders available.</p>';
+                                    } else {
+
+                                        foreach ($currentAppointments as $appointment) { ?>
+                                            <div class="mb-6 last:mb-0">
+                                                <div class="">
+                                                    <div class="flex items-center  text-sm text-text-secondary-light dark:text-text-secondary-dark">
+                                                        <span class="material-symbols-outlined text-base">receipt_long</span>
+                                                        <span>Order #<?php echo htmlspecialchars($appointment['order_id']); ?></span>
+                                                    </div>
+
+                                                </div>
+                                                <div class="flex-1 w-full">
+                                                    <div class="flex items-center justify-between">
+                                                        <p class="font-bold text-xl mb-3"><?php echo htmlspecialchars($appointment['service_name']); ?></p>
+                                                        <?php
+                                                        if ($appointment['status'] == 'В изчакване') {
+                                                            $progressWidth = 0;
+                                                            $color = 'text-gray-400';
+                                                        } elseif ($appointment['status'] == 'Приета') {
+                                                            $progressWidth = 20;
+                                                            $color = 'text-primary';
+                                                        } elseif ($appointment['status'] == 'Диагностика') {
+                                                            $progressWidth = 40;
+                                                            $color = 'text-yellow-500';
+                                                        } elseif ($appointment['status'] == 'Ремонт') {
+                                                            $progressWidth = 60;
+                                                            $color = 'text-orange-500';
+                                                        } elseif ($appointment['status'] == 'Тестване') {
+                                                            $progressWidth = 80; {
+                                                                $color = 'text-purple-500';
+                                                            }
                                                         }
-                                                    }
 
-                                                    ?>
-                                                    <p class="font-bold <?php echo $color; ?>"><?php echo htmlspecialchars($appointment['status']); ?></p>
-                                                </div>
-                                                <div class="w-full bg-background-light dark:bg-background-dark rounded-full h-2.5">
-                                                    <div class="bg-primary h-2.5 rounded-full" style="width: <?php echo $progressWidth ?>%"></div>
+                                                        ?>
+                                                        <p class="font-bold <?php echo $color; ?>"><?php echo htmlspecialchars($appointment['status']); ?></p>
+                                                    </div>
+                                                    <div class="w-full bg-background-light dark:bg-background-dark rounded-full h-2.5">
+                                                        <div class="bg-primary h-2.5 rounded-full" style="width: <?php echo $progressWidth ?>%"></div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
                                 <?php
+                                        }
                                     }
                                 } ?>
                             </div>
@@ -193,21 +198,27 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php $serviceHistory = VehicleController::getVehicleServiceHistory($_SESSION['selected_car_id']);
-                                            if (empty($serviceHistory)) {
-                                                echo '<tr><td colspan="4" class="py-4 px-6 text-center text-text-secondary-light dark:text-text-secondary-dark">No service history available.</td></tr>';
+                                            <?php
+                                            if (!isset($_SESSION['selected_car_id'])) {
+                                                echo '<tr><td colspan="4" class="py-4 px-6 text-center text-text-secondary-light dark:text-text-secondary-dark">No vehicle selected. Please select a vehicle to view service history.</td></tr>';
                                             } else {
-                                                foreach ($serviceHistory as $service) {
+
+                                                $serviceHistory = VehicleController::getVehicleServiceHistory($_SESSION['selected_car_id']);
+                                                if (empty($serviceHistory)) {
+                                                    echo '<tr><td colspan="4" class="py-4 px-6 text-center text-text-secondary-light dark:text-text-secondary-dark">No service history available.</td></tr>';
+                                                } else {
+                                                    foreach ($serviceHistory as $service) {
                                             ?>
-                                                    <tr class="border-b border-border-light dark:border-border-dark">
-                                                        <td class="py-4 pr-6 font-medium"><?php echo htmlspecialchars($service['closed_at']); ?></td>
-                                                        <td class="py-4 px-6"><?php echo htmlspecialchars($service['service_name']); ?></td>
-                                                        <?php if ($service['full_price'] == 0) {
-                                                            $service['full_price'] = 'N/A';
-                                                        } ?>
-                                                        <td class="py-4 pl-6 text-right font-medium"><?php echo htmlspecialchars($service['full_price']); ?></td>
-                                                    </tr>
+                                                        <tr class="border-b border-border-light dark:border-border-dark">
+                                                            <td class="py-4 pr-6 font-medium"><?php echo htmlspecialchars($service['closed_at']); ?></td>
+                                                            <td class="py-4 px-6"><?php echo htmlspecialchars($service['service_name']); ?></td>
+                                                            <?php if ($service['full_price'] == 0) {
+                                                                $service['full_price'] = 'N/A';
+                                                            } ?>
+                                                            <td class="py-4 pl-6 text-right font-medium"><?php echo htmlspecialchars($service['full_price']); ?></td>
+                                                        </tr>
                                             <?php }
+                                                }
                                             }
                                             ?>
                                         </tbody>
