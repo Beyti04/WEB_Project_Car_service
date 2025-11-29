@@ -37,6 +37,7 @@ use App\Controllers\EmployeeController;
 use App\Controllers\ClientController;
 use App\Controllers\ServiceController;
 use App\Controllers\MaterialController;
+use App\Models\Order;
 use Config\Database;
 
 
@@ -413,6 +414,15 @@ switch ($action) {
             header("Location: index.php?action=login");
             exit;
         }
+        require __DIR__ . '/../src/views/employeeUpdateOrder.php';
+        break;
+
+    case 'updateOrder':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        Order::updateOrder($_GET['order_id'],$_POST['materials']??[],$_POST['status']);
         require __DIR__ . '/../src/views/employeeUpdateOrder.php';
         break;
 

@@ -99,7 +99,7 @@
             <main class="flex-1 overflow-y-auto p-10">
                 <div class="flex justify-center">
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full max-w-6xl">
-                        <form class="lg:col-span-2 flex flex-col gap-6">
+                        <form action="index.php?action=updateOrder&order_id=<?= $_GET['order_id'] ?>" method="POST" class="lg:col-span-2 flex flex-col gap-6">
                             <!-- Active Service Requests -->
                             <?php
 
@@ -191,24 +191,51 @@
 
                                 <!-- Scrollable container -->
                                 <div class="flex flex-col gap-4 max-h-80 overflow-y-auto" id="materialsContainer">
-                                    <?php
-                                    foreach ($materialGroups as $group) :
-                                    ?>
+                                    <?php foreach ($materialGroups as $group) : ?>
                                         <p class="text-sm font-semibold text-text-secondary-light dark:text-text-secondary-dark" id="group-<?php echo $group->id ?>">
                                             <?php echo $group->name ?>
                                         </p>
                                         <?php foreach ($materials as $material) : ?>
                                             <?php if ($material->group_id == $group->id) : ?>
-                                                <div class="flex flex-col gap-2">
-                                                    <label class="flex items-center gap-3 p-3 border border-border-light dark:border-border-dark rounded-lg cursor-pointer hover:bg-primary/10">
-                                                        <input type="checkbox" name="materials[]" value="<?php echo $material->id ?>" class="form-checkbox text-primary h-4 w-4" />
+                                                <div class="flex items-center justify-between gap-3 p-3 border border-border-light dark:border-border-dark rounded-lg hover:bg-primary/10">
+                                                    <label class="flex items-center gap-3">
+                                                        <input type="checkbox" class="form-checkbox text-primary h-4 w-4 material-checkbox"
+                                                            name="materials[<?php echo $material->id ?>][id]"
+                                                            value="<?php echo $material->id ?>" />
                                                         <span class="text-text-light dark:text-text-dark"><?php echo $material->name ?></span>
                                                     </label>
+
+                                                    <!-- Quantity input, initially disabled -->
+                                                    <input type="number" name="materials[<?php echo $material->id ?>][quantity]" min="1" value="1"
+                                                        class="w-16 border border-border-light dark:border-border-dark rounded-lg p-1 text-sm focus:outline-none material-quantity"
+                                                        disabled />
                                                 </div>
                                             <?php endif; ?>
                                         <?php endforeach; ?>
                                     <?php endforeach; ?>
                                 </div>
+
+                                <script>
+                                    // Grab all checkboxes inside the materials container
+                                    const container = document.getElementById('materialsContainer');
+                                    const checkboxes = container.querySelectorAll('.material-checkbox');
+
+                                    checkboxes.forEach(checkbox => {
+                                        checkbox.addEventListener('change', function() {
+                                            // Find the quantity input in the same row
+                                            const quantityInput = this.closest('div').querySelector('.material-quantity');
+                                            if (this.checked) {
+                                                quantityInput.disabled = false; // Enable quantity
+                                            } else {
+                                                quantityInput.disabled = true; // Disable quantity
+                                                quantityInput.value = 1; // Reset quantity to 1
+                                            }
+                                        });
+                                    });
+                                </script>
+
+
+
                             </div>
                             <div class="flex justify-end mt-6">
                                 <button type="submit" class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors font-bold">
@@ -217,19 +244,23 @@
                             </div>
 
                             <script>
-                                const select = document.getElementById('materialGroupSelect');
-                                const container = document.getElementById('materialsContainer');
+                                document.addEventListener('DOMContentLoaded', () => {
+                                    const select = document.getElementById('materialGroupSelect');
+                                    const container = document.getElementById('materialsContainer');
 
-                                select.addEventListener('change', function() {
-                                    const groupId = this.value;
-                                    if (!groupId) return;
-                                    const target = document.getElementById(groupId);
-                                    if (target) {
-                                        // Scroll the container to the target group
-                                        container.scrollTop = target.offsetTop - container.offsetTop;
-                                    }
+                                    select.addEventListener('change', function() {
+                                        const groupId = this.value;
+                                        if (!groupId) return;
+
+                                        const target = document.getElementById(groupId);
+                                        if (target) {
+                                            // Scroll the container so that the group is visible at the top
+                                            container.scrollTop = target.offsetTop - container.offsetTop;
+                                        }
+                                    });
                                 });
                             </script>
+
 
 
                         </form>

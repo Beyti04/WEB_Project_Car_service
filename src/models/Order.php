@@ -159,4 +159,45 @@ class Order
             return [];
         }
     }
+
+    public static function updateOrder(int $orderId, $materials, $status)
+    {
+        $db = Database::getInstance();
+
+        $sqlPrice = "SELECT unit_price FROM materials WHERE id=?";
+        $sql = "INSERT INTO order_materials (order_id,material_id, quantity, price) VALUES ($orderId,?,?,?)";
+        $sqlAuditLog = "INSERT INTO audit_logs (user_id,action,entity,entity_id,created_at) VALUES (?,?,?,?,NOW())";
+        $sqlGetStatus = "SELECT status_id FROM orders WHERE id=$orderId";
+
+        if (!empty($materials)) {
+            foreach ($materials as $material) {
+                $stmt = $db->prepare($sqlPrice);
+                $stmt->execute([$material['id']]);
+                $price = $stmt->fetch(PDO::FETCH_ASSOC);
+                $price = (float)$price['unit_price'] * (int)$material['quantity'];
+
+                $stmt = $db->prepare($sql);
+                $stmt->execute([$material['id'], $material['quantity'], $price]);
+
+                $materialOrderId = $db->lastInsertId();
+
+                $stmt = $db->prepare($sqlAuditLog);
+                $stmt->execute([$_SESSION['user_id'], "Updated order materials for order: $orderId", "order_materials", $materialOrderId]);
+            }
+        }
+
+        $stmt = $db->prepare($sqlGetStatus);
+        $stmt->execute();
+        $currentStatus = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if($currentStatus['status_id']!=$status){
+            $sqlSetStatus= "UPDATE orders SET status_id = ? WHERE id=?";
+            $stmt=$db->prepare($sqlSetStatus);
+            $stmt->execute([$status,$orderId]);
+
+            $statusName=$status['name'];
+            $stmt->$db->prepare($sqlAuditLog);
+            $stmt->execute([$_SESSION['user_id'],"Updated order status to: $statusName","orders",$orderId]);
+        }
+    }
 }
