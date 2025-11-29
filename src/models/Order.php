@@ -119,7 +119,7 @@ class Order
             JOIN order_service os ON o.id = os.order_id
             JOIN services sv ON os.service_id = sv.id
             JOIN service_groups sg ON sv.group_id = sg.id
-             WHERE employee_id = ?";
+             WHERE employee_id = ? AND s.id NOT IN (6,7)";
 
         try {
             $stmt = $db->prepare($sql);
@@ -165,6 +165,8 @@ class Order
         $db = Database::getInstance();
 
         $sqlPrice = "SELECT unit_price FROM materials WHERE id=?";
+        $sqlGetOrderFullPrice = "SELECT full_price FROM orders where id=$orderId";
+        $sqlUpdateOrderFullPrice = "UPDATE orders SET full_price=? where id=?";
         $sql = "INSERT INTO order_materials (order_id,material_id, quantity, price) VALUES ($orderId,?,?,?)";
         $sqlAuditLog = "INSERT INTO audit_logs (user_id,action,entity,entity_id,created_at) VALUES (?,?,?,?,NOW())";
         $sqlGetStatus = "SELECT status_id FROM orders WHERE id=$orderId";
@@ -183,6 +185,14 @@ class Order
 
                 $stmt = $db->prepare($sqlAuditLog);
                 $stmt->execute([$_SESSION['user_id'], "Updated order materials for order: $orderId", "order_materials", $materialOrderId]);
+
+                $stmt = $db->prepare($sqlGetOrderFullPrice);
+                $stmt->execute();
+                $orderPrice = $stmt->fetch(PDO::FETCH_ASSOC);
+                $orderPrice = (float)$orderPrice['full_price'] + $price;
+
+                $stmt = $db->prepare($sqlUpdateOrderFullPrice);
+                $stmt->execute([$orderPrice, $orderId]);
             }
         }
 
@@ -190,14 +200,25 @@ class Order
         $stmt->execute();
         $currentStatus = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if($currentStatus['status_id']!=$status){
-            $sqlSetStatus= "UPDATE orders SET status_id = ? WHERE id=?";
-            $stmt=$db->prepare($sqlSetStatus);
-            $stmt->execute([$status,$orderId]);
+        if ($currentStatus['status_id'] != $status) {
 
-            $statusName=$status['name'];
+            if ($status == 6) {
+                $sqlSetStatus = "UPDATE orders SET status_id = ?,closed_at=NOW() WHERE id=?";
+                $stmt = $db->prepare($sqlSetStatus);
+                $stmt->execute([$status, $orderId]);
+
+
+                $stmt->$db->prepare($sqlAuditLog);
+                $stmt->execute([$_SESSION['user_id'], "Updated order status to: $status", "orders", $orderId]);
+            }
+            else{
+            $sqlSetStatus = "UPDATE orders SET status_id = ? WHERE id=?";
+            $stmt = $db->prepare($sqlSetStatus);
+            $stmt->execute([$status, $orderId]);
+
             $stmt->$db->prepare($sqlAuditLog);
-            $stmt->execute([$_SESSION['user_id'],"Updated order status to: $statusName","orders",$orderId]);
+            $stmt->execute([$_SESSION['user_id'], "Updated order status to: $status", "orders", $orderId]);
+            }
         }
     }
 }

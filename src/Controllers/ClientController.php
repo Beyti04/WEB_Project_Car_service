@@ -146,6 +146,79 @@ class ClientController
         return $rows;
     }
 
+    public static function getFinishedOrders(int $clientId): array
+    {
+        $client = Client::getClientById($clientId);
+
+        if (!$client) {
+            return [];
+        }
+
+        $query = "SELECT o.id as order_id, o.opened_at,o.closed_at,o.full_price, c.year as car_year, cb.brand_name, cm.model_name, sv.name as service_name,sv.base_price
+                  FROM orders o
+                  JOIN status s ON s.id=o.status_id
+                  JOIN order_service os ON o.id = os.order_id
+                  JOIN services sv ON os.service_id = sv.id
+                  JOIN car c ON o.car_id = c.id
+                  JOIN car_model cm ON c.model_id = cm.id
+                  JOIN car_brand cb ON cm.brand_id = cb.id
+                  WHERE c.owner = :client_id AND s.id = 6
+                  ORDER BY o.opened_at DESC";
+
+        $db = \Config\Database::getInstance();
+        $stmt = $db->prepare($query);
+        $stmt->execute([':client_id' => $clientId]);
+        $orders = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        $sqlMaterials = "SELECT m.name,om.quantity,om.price FROM order_materials om
+                         JOIN materials m ON om.material_id=m.id
+                         WHERE om.order_id=?";
+
+        $stmt = $db->prepare($sqlMaterials);
+        foreach ($orders as &$order) {
+            $stmt->execute([$order['order_id']]);
+            $order['materials'] = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        }
+
+        return $orders;
+    }
+
+    public static function getOrderById(int $clientId, int $orderId)
+    {
+        $client = Client::getClientById($clientId);
+
+        if (!$client) {
+            return [];
+        }
+
+        $query = "SELECT o.id as order_id, o.opened_at,o.closed_at,o.full_price, c.year as car_year, cb.brand_name, cm.model_name, sv.name as service_name,sv.base_price
+                  FROM orders o
+                  JOIN status s ON s.id=o.status_id
+                  JOIN order_service os ON o.id = os.order_id
+                  JOIN services sv ON os.service_id = sv.id
+                  JOIN car c ON o.car_id = c.id
+                  JOIN car_model cm ON c.model_id = cm.id
+                  JOIN car_brand cb ON cm.brand_id = cb.id
+                  WHERE o.id=:order_id AND s.id = 6
+                  ORDER BY o.opened_at DESC";
+
+        $db = \Config\Database::getInstance();
+        $stmt = $db->prepare($query);
+        $stmt->execute([':order_id' => $orderId]);
+        $order = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        $sqlMaterials = "SELECT m.name,om.quantity,om.price FROM order_materials om
+                         JOIN materials m ON om.material_id=m.id
+                         WHERE om.order_id=?";
+
+        $stmt = $db->prepare($sqlMaterials);
+
+        $stmt->execute([$order['order_id']]);
+        $order['materials'] = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $order;
+    }
+
     public static function cancelOrder(int $orderId): void
     {
         $db = \Config\Database::getInstance();
