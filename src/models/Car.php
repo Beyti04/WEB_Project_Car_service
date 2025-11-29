@@ -197,7 +197,7 @@ class Car
                 JOIN status s ON o.status_id = s.id
                 JOIN order_service os ON o.id = os.order_id
                 JOIN services sv ON os.service_id = sv.id
-                WHERE o.car_id = ? AND o.status_id NOT IN (SELECT id FROM status WHERE status IN ('Завършена', 'Отказана'))
+                WHERE o.car_id = ? AND o.status_id NOT IN (SELECT id FROM status WHERE status IN ('Готова', 'Отказана'))
                 ORDER BY o.opened_at DESC";
 
         try {
@@ -218,7 +218,7 @@ class Car
                 JOIN status s ON o.status_id = s.id
                 JOIN order_service os ON o.id = os.order_id
                 JOIN services sv ON os.service_id = sv.id
-                WHERE o.car_id = ? AND o.status_id IN (SELECT id FROM status WHERE status IN ('Завършена', 'Отказана'))
+                WHERE o.car_id = ? AND o.status_id IN (SELECT id FROM status WHERE status IN ('Готова', 'Отказана'))
                 ORDER BY o.opened_at DESC";
 
         try {
