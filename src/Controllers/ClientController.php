@@ -191,8 +191,9 @@ class ClientController
             return [];
         }
 
-        $query = "SELECT o.id as order_id, o.opened_at,o.closed_at,o.full_price, c.year as car_year, cb.brand_name, cm.model_name, sv.name as service_name,sv.base_price
+        $query = "SELECT o.id as order_id, o.opened_at,o.closed_at,o.full_price, c.year as car_year,c.vin, CONCAT(e.first_name, ' ', e.last_name) AS employee_name, cb.brand_name, cm.model_name, sv.name as service_name,sv.base_price
                   FROM orders o
+                  JOIN employees e ON e.id = o.employee_id
                   JOIN status s ON s.id=o.status_id
                   JOIN order_service os ON o.id = os.order_id
                   JOIN services sv ON os.service_id = sv.id
