@@ -408,6 +408,14 @@ switch ($action) {
         require __DIR__ . '/../src/views/requestService.php';
         break;
 
+    case 'orderMaterials':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        require __DIR__ . '/../src/views/employeeUpdateOrder.php';
+        break;
+
     case 'addClientService':
         // Проверяваме дали е логнат
         if (!isset($_SESSION['user_id'])) {

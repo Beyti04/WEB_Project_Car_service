@@ -18,7 +18,7 @@ class Status
     public static function getAllStatuses(): array
     {
         $db = Database::getInstance();
-        $stmt = $db->query("SELECT * FROM status");
+        $stmt = $db->query("SELECT * FROM status ORDER BY id");
         return $stmt->fetchAll(PDO::FETCH_CLASS);
     }
 
