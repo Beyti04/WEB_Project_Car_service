@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Car;
+use Config\Database;
 
 class VehicleController
 {
@@ -50,6 +51,14 @@ class VehicleController
             owner: $_SESSION['user_id']
         );
         $car->save();
+
+        $db = Database::getInstance();
+        $carId = $db->lastInsertId();
+        $sqlAuditLog = "INSERT INTO audit_logs (user_id,action,entity,entity_id,created_at) VALUES (?,?,?,?,NOW())";
+        $stmt = $db->prepare($sqlAuditLog);
+
+        $stmt->execute([$_SESSION['user_id'], "Added new vehicle", "car", $carId]);
+
         // Зареждаме вашето View за добавяне на превозно средство
         require __DIR__ . '/../../src/views/userVehicleManager.php';
     }
@@ -60,9 +69,16 @@ class VehicleController
         if ($car && $car->owner === ($_SESSION['user_id'] ?? 0)) {
             $car->delete();
         }
-        if(isset($_SESSION['selected_car_id']) && $_SESSION['selected_car_id'] === $carId) {
+        if (isset($_SESSION['selected_car_id']) && $_SESSION['selected_car_id'] === $carId) {
             unset($_SESSION['selected_car_id'], $_SESSION['selected_car_vin'], $_SESSION['selected_car_model_id'], $_SESSION['selected_car_year']);
         }
+
+        $db = Database::getInstance();
+        $sqlAuditLog = "INSERT INTO audit_logs (user_id,action,entity,entity_id,created_at) VALUES (?,?,?,?,NOW())";
+        $stmt = $db->prepare($sqlAuditLog);
+
+        $stmt->execute([$_SESSION['user_id'], "Removed vehicle", "car", $carId]);
+
         header("Location: index.php?action=myVehicles");
         exit;
     }
@@ -76,6 +92,12 @@ class VehicleController
             $car->vin = $vin;
             $car->update();
         }
+
+        $db = Database::getInstance();
+        $sqlAuditLog = "INSERT INTO audit_logs (user_id,action,entity,entity_id,created_at) VALUES (?,?,?,?,NOW())";
+        $stmt = $db->prepare($sqlAuditLog);
+
+        $stmt->execute([$_SESSION['user_id'], "Updated vehicle data", "car", $carId]);
         header("Location: index.php?action=myVehicles");
         exit;
     }

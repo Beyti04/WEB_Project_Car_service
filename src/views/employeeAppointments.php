@@ -92,7 +92,11 @@
                         <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Employee avatar image" style='background-image: url("https://via.placeholder.com/40");'></div>
                         <div class="flex flex-col text-sm">
                             <p class="font-bold">
-                                <?php echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?>
+                                <?php
+
+                                use App\Models\Status;
+
+                                echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?>
                             </p>
                             <p class="text-text-secondary-light dark:text-text-secondary-dark">Employee</p>
                         </div>
@@ -120,90 +124,105 @@
                                 </label>
                             </div>
                             <div class="flex items-center gap-3 overflow-x-auto">
-                                <button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-background-light dark:bg-gray-700 px-4 w-full">
-                                    <p class="text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal">Status: All</p>
-                                    <span class="material-symbols-outlined text-gray-500 dark:text-gray-400 text-base">expand_more</span>
-                                </button>
+                                <div class="relative w-full">
+                                    <select
+                                        class="flex h-10 items-center justify-between gap-x-2 rounded-lg bg-background-light dark:bg-gray-700 px-4 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal border border-border-light dark:border-border-dark appearance-none cursor-pointer">
+                                        <option value="all" selected disabled>Status</option>
+
+                                        <?php
+                                        $statuses = Status::getAllStatuses();
+                                        array_shift($statuses);
+                                        array_pop($statuses);
+
+                                        foreach ($statuses as $status) {
+                                        ?>
+                                                <option value="<?php echo $status->id ?>">
+                                                    <?php echo $status->status ?>
+                                                </option>
+                                        <?php
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+
                             </div>
-
                         </div>
-                    </div>
-                    <!-- Table -->
-                    <div class="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full">
-                                <?php
-
-                                use App\Models\Order;
-
-                                $orders = Order::getOrderByEmployeeId($_SESSION['user_id'] ?? 0);
-                                ?>
-                                <thead class="bg-gray-50 dark:bg-gray-700/50">
-                                    <tr>
-                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Order ID</th>
-                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Client Name</th>
-                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Car (Make &amp; Model)</th>
-                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Service</th>
-                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
-                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date Opened</th>
-                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                        <!-- Table -->
+                        <div class="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm mt-4">
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full">
                                     <?php
 
-                                    foreach ($orders as $order) {
-                                        if ($order['status'] == 'Приета') {
-                                            $color = 'text-blue-700 dark:text-primary-300 bg-blue-100 dark:bg-blue-500/50';
-                                        } elseif ($order['status'] == 'Диагностика') {
-                                            $color = 'text-yellow-700 dark:text-yellow-300 bg-yellow-100 dark:bg-yellow-900/50';
-                                        } elseif ($order['status'] == 'Ремонт') {
-                                            $color = 'text-orange-700 dark:text-orange-300 bg-orange-100 dark:bg-orange-900/50';
-                                        } elseif ($order['status'] == 'Тестване') {
-                                            $color = 'text-purple-700 dark:text-purple-300 bg-purple-100 dark:bg-purple-900/50';
-                                        } else {
-                                            $color = 'text-lightgray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-900/50';
-                                        }
+                                    use App\Models\Order;
 
+                                    $orders = Order::getOrderByEmployeeId($_SESSION['user_id'] ?? 0);
                                     ?>
-                                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30">
-                                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 font-mono"><?php echo $order['order_id']; ?></td>
-                                            <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white"><?php echo $order['client_name']; ?></td>
-                                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400"><?php echo $order['brand_name'] . ' ' . $order['model_name']; ?></td>
-                                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400"><?php echo $order['service_name']; ?></td>
-                                            <td class="px-4 py-3 whitespace-nowrap text-sm">
-                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <?php echo $color ?>"><?php echo $order['status'] ?></span>
-                                            </td>
-                                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400"><?php echo $order['opened_at']; ?></td>
-                                            <td class="px-4 py-3 whitespace-nowrap text-sm font-medium">
-                                                <div class="flex items-center gap-2">
-                                                    <a href="index.php?action=orderMaterials&order_id=<?php echo $order['order_id'] ?>">
-                                                        <button class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary"><span class="material-symbols-outlined text-xl">edit</span></button>
-                                                    </a>
-                                                    <a href="index.php?action=cancelEmployeeOrder&order_id=<?php echo $order['order_id'] ?>">
-                                                        <button class="text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-500"><span class="material-symbols-outlined text-xl">Cancel</span></button>
-                                                    </a>
-                                                </div>
-                                            </td>
+                                    <thead class="bg-gray-50 dark:bg-gray-700/50">
+                                        <tr>
+                                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Order ID</th>
+                                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Client Name</th>
+                                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Car (Make &amp; Model)</th>
+                                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Service</th>
+                                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
+                                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date Opened</th>
+                                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
                                         </tr>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                        <?php
+
+                                        foreach ($orders as $order) {
+                                            if ($order['status'] == 'Приета') {
+                                                $color = 'text-blue-700 dark:text-primary-300 bg-blue-100 dark:bg-blue-500/50';
+                                            } elseif ($order['status'] == 'Диагностика') {
+                                                $color = 'text-yellow-700 dark:text-yellow-300 bg-yellow-100 dark:bg-yellow-900/50';
+                                            } elseif ($order['status'] == 'Ремонт') {
+                                                $color = 'text-orange-700 dark:text-orange-300 bg-orange-100 dark:bg-orange-900/50';
+                                            } elseif ($order['status'] == 'Тестване') {
+                                                $color = 'text-purple-700 dark:text-purple-300 bg-purple-100 dark:bg-purple-900/50';
+                                            } else {
+                                                $color = 'text-lightgray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-900/50';
+                                            }
+
+                                        ?>
+                                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30">
+                                                <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 font-mono"><?php echo $order['order_id']; ?></td>
+                                                <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white"><?php echo $order['client_name']; ?></td>
+                                                <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400"><?php echo $order['brand_name'] . ' ' . $order['model_name']; ?></td>
+                                                <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400"><?php echo $order['service_name']; ?></td>
+                                                <td class="px-4 py-3 whitespace-nowrap text-sm">
+                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <?php echo $color ?>"><?php echo $order['status'] ?></span>
+                                                </td>
+                                                <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400"><?php echo $order['opened_at']; ?></td>
+                                                <td class="px-4 py-3 whitespace-nowrap text-sm font-medium">
+                                                    <div class="flex items-center gap-2">
+                                                        <a href="index.php?action=orderMaterials&order_id=<?php echo $order['order_id'] ?>">
+                                                            <button class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary"><span class="material-symbols-outlined text-xl">edit</span></button>
+                                                        </a>
+                                                        <a href="index.php?action=cancelEmployeeOrder&order_id=<?php echo $order['order_id'] ?>">
+                                                            <button class="text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-500"><span class="material-symbols-outlined text-xl">Cancel</span></button>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- Pagination -->
+                        <div class="flex items-center justify-between mt-6 px-1">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Showing <span class="font-medium">1</span> to <span class="font-medium">5</span> of <span class="font-medium">20</span> results</p>
+                            <div class="flex items-center gap-2">
+                                <button class="flex items-center justify-center h-8 w-8 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50" disabled="">
+                                    <span class="material-symbols-outlined text-lg">chevron_left</span>
+                                </button>
+                                <button class="flex items-center justify-center h-8 w-8 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
+                                    <span class="material-symbols-outlined text-lg">chevron_right</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <!-- Pagination -->
-                    <div class="flex items-center justify-between mt-6 px-1">
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Showing <span class="font-medium">1</span> to <span class="font-medium">5</span> of <span class="font-medium">20</span> results</p>
-                        <div class="flex items-center gap-2">
-                            <button class="flex items-center justify-center h-8 w-8 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50" disabled="">
-                                <span class="material-symbols-outlined text-lg">chevron_left</span>
-                            </button>
-                            <button class="flex items-center justify-center h-8 w-8 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
-                                <span class="material-symbols-outlined text-lg">chevron_right</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
             </main>
         </div>
 </body>

@@ -115,161 +115,123 @@
                     <div class="flex items-center gap-3">
                         <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuADijiRLLPR2eRQXqbVqSmI5KeUFyXAg8F2zmY2mwfb1Pgm6eF-NmHWlSRm0xVvnz3wcPCkB7pflS81XhFJqdUyEEk4srBqEw81WqNgyxpAXWyBF4WXayX_79fjNwvjFvRP2mygTB8JtFtvmgwCmXAkWO1vUyZ6xTjfEnPmwsZD1QhwGVWu-iSAwpmnxmU_NGK7U5sH-U54t-zfth88S-uqzwxhC_4dJgAlM1nGXJJ3Wb2EztyredxX5Mc4g-N4vxPoQmZFTCyPxOs");'></div>
                         <div class="flex flex-col text-sm">
-                            <p class="font-bold"><?php echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?></p>
+                            <p class="font-bold"><?php
+
+                                                    use App\Models\Order;
+
+                                                    echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?></p>
                             <p class="text-text-secondary-light dark:text-text-secondary-dark">Admin</p>
                         </div>
                     </div>
                 </div>
             </header>
-        <!-- Main Content -->
-        <main class="flex-1 flex flex-col overflow-y-auto">
-            <div class="p-8">
-                <!-- PageHeading -->
-                <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
-                    <h1 class="text-gray-900 dark:text-white text-3xl font-bold leading-tight">Service Order Management</h1>
-                </div>
-                <!-- Search and Filter Bar -->
-                <div class="p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm mb-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-center">
-                        <div class="lg:col-span-2">
-                            <label class="flex flex-col min-w-40 h-12 w-full">
-                                <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
-                                    <div class="text-gray-500 dark:text-gray-400 flex bg-background-light dark:bg-gray-700 items-center justify-center pl-4 rounded-l-lg">
-                                        <span class="material-symbols-outlined">search</span>
+            <!-- Main Content -->
+            <main class="flex-1 flex flex-col overflow-y-auto">
+                <div class="p-8">
+                    <!-- PageHeading -->
+                    <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+                        <h1 class="text-gray-900 dark:text-white text-3xl font-bold leading-tight">Service Order Management</h1>
+                    </div>
+                    <!-- Search and Filter Bar -->
+                    <div class="p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm mb-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-center">
+                            <div class="lg:col-span-2">
+                                <label class="flex flex-col min-w-40 h-12 w-full">
+                                    <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+                                        <div class="text-gray-500 dark:text-gray-400 flex bg-background-light dark:bg-gray-700 items-center justify-center pl-4 rounded-l-lg">
+                                            <span class="material-symbols-outlined">search</span>
+                                        </div>
+                                        <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 border-none bg-background-light dark:bg-gray-700 h-full placeholder:text-gray-500 dark:placeholder:text-gray-400 px-4 text-sm" placeholder="Search by client, car, order ID..." value="" />
                                     </div>
-                                    <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/50 border-none bg-background-light dark:bg-gray-700 h-full placeholder:text-gray-500 dark:placeholder:text-gray-400 px-4 text-sm" placeholder="Search by client, car, order ID..." value="" />
-                                </div>
-                            </label>
+                                </label>
+                            </div>
+                            <div class="flex items-center gap-3 overflow-x-auto">
+                                <button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-background-light dark:bg-gray-700 px-4 w-full">
+                                    <p class="text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal">Status: All</p>
+                                    <span class="material-symbols-outlined text-gray-500 dark:text-gray-400 text-base">expand_more</span>
+                                </button>
+                            </div>
+                            <div class="flex items-center gap-3 overflow-x-auto">
+                                <button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-background-light dark:bg-gray-700 px-4 w-full">
+                                    <p class="text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal">Employee</p>
+                                    <span class="material-symbols-outlined text-gray-500 dark:text-gray-400 text-base">expand_more</span>
+                                </button>
+                            </div>
                         </div>
-                        <div class="flex items-center gap-3 overflow-x-auto">
-                            <button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-background-light dark:bg-gray-700 px-4 w-full">
-                                <p class="text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal">Status: All</p>
-                                <span class="material-symbols-outlined text-gray-500 dark:text-gray-400 text-base">expand_more</span>
+                    </div>
+                    <!-- Table -->
+                    <div class="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full">
+                                <thead class="bg-gray-50 dark:bg-gray-700/50">
+                                    <tr>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Order ID</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Client Name</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Car</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Assigned Employee</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date Opened</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                    <?php
+                                    $orders = Order::getAllCurrentOrders();
+                                    foreach ($orders as $order) {
+                                        if ($order['status'] == 'Приета') {
+                                            $color = 'text-blue-700 dark:text-primary-300 bg-blue-100 dark:bg-blue-500/50';
+                                        } elseif ($order['status'] == 'Диагностика') {
+                                            $color = 'text-yellow-700 dark:text-yellow-300 bg-yellow-100 dark:bg-yellow-900/50';
+                                        } elseif ($order['status'] == 'Ремонт') {
+                                            $color = 'text-orange-700 dark:text-orange-300 bg-orange-100 dark:bg-orange-900/50';
+                                        } elseif ($order['status'] == 'Тестване') {
+                                            $color = 'text-purple-700 dark:text-purple-300 bg-purple-100 dark:bg-purple-900/50';
+                                        } elseif ($order['status'] == 'В изчакване') {
+                                            $color = 'text-lightgray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-900/50';
+                                        } elseif($order['status'] == 'Готова') {
+                                            $color = 'text-green-700 dark:text-green-300 bg-green-100 dark:bg-green-900/50';
+                                        } else
+                                        {
+                                            $color = 'text-red-700 dark:text-red-300 bg-red-100 dark:bg-red-900/50';
+                                        }
+                                    ?>
+                                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30">
+                                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 font-mono">#<?php echo $order['order_id'] ?></td>
+                                            <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white"><?php echo $order['client_name'] ?></td>
+                                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400"><?php echo $order['year'] . ' ' . $order['brand_name'] . ' ' . $order['model_name'] ?></td>
+                                            <td class="px-4 py-3 whitespace-nowrap text-sm">
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <?php echo $color ?>"><?php echo $order['status'] ?></span>
+                                            </td>
+                                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400"><?php echo $order['employee_name'] != NULL ? $order['employee_name'] : "N/A" ?></td>
+                                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400"><?php echo $order['opened_at'] ?></td>
+                                            <td class="px-4 py-3 whitespace-nowrap text-sm font-medium">
+                                                <div class="flex items-center gap-2">
+                                                    <button class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary"><span class="material-symbols-outlined text-xl">edit</span></button>
+                                                    <button class="text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-500"><span class="material-symbols-outlined text-xl">delete</span></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- Pagination -->
+                    <div class="flex items-center justify-between mt-6 px-1">
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Showing <span class="font-medium">1</span> to <span class="font-medium">5</span> of <span class="font-medium">20</span> results</p>
+                        <div class="flex items-center gap-2">
+                            <button class="flex items-center justify-center h-8 w-8 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50" disabled="">
+                                <span class="material-symbols-outlined text-lg">chevron_left</span>
+                            </button>
+                            <button class="flex items-center justify-center h-8 w-8 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
+                                <span class="material-symbols-outlined text-lg">chevron_right</span>
                             </button>
                         </div>
-                        <div class="flex items-center gap-3 overflow-x-auto">
-                            <button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-background-light dark:bg-gray-700 px-4 w-full">
-                                <p class="text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal">Employee</p>
-                                <span class="material-symbols-outlined text-gray-500 dark:text-gray-400 text-base">expand_more</span>
-                            </button>
-                        </div>
                     </div>
                 </div>
-                <!-- Table -->
-                <div class="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full">
-                            <thead class="bg-gray-50 dark:bg-gray-700/50">
-                                <tr>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Order ID</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Client Name</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Car (Make &amp; Model)</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Assigned Employee</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date Opened</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30">
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 font-mono">#12345</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">John Doe</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Toyota Camry</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm">
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Repair</span>
-                                    </td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Mike L.</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">2023-10-26</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium">
-                                        <div class="flex items-center gap-2">
-                                            <button class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary"><span class="material-symbols-outlined text-xl">edit</span></button>
-                                            <button class="text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-500"><span class="material-symbols-outlined text-xl">delete</span></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30">
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 font-mono">#12346</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">Jane Smith</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Honda Civic</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm">
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Completed</span>
-                                    </td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Sarah J.</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">2023-10-25</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium">
-                                        <div class="flex items-center gap-2">
-                                            <button class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary"><span class="material-symbols-outlined text-xl">edit</span></button>
-                                            <button class="text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-500"><span class="material-symbols-outlined text-xl">delete</span></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30">
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 font-mono">#12347</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">Robert Brown</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Ford F-150</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm">
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">Diagnostic</span>
-                                    </td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Mike L.</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">2023-10-26</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium">
-                                        <div class="flex items-center gap-2">
-                                            <button class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary"><span class="material-symbols-outlined text-xl">edit</span></button>
-                                            <button class="text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-500"><span class="material-symbols-outlined text-xl">delete</span></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30">
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 font-mono">#12348</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">Emily White</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Nissan Rogue</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm">
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">Accepted</span>
-                                    </td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Chris P.</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">2023-10-27</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium">
-                                        <div class="flex items-center gap-2">
-                                            <button class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary"><span class="material-symbols-outlined text-xl">edit</span></button>
-                                            <button class="text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-500"><span class="material-symbols-outlined text-xl">delete</span></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30">
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 font-mono">#12349</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">David Green</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Chevrolet Silverado</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm">
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Testing</span>
-                                    </td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">Sarah J.</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">2023-10-24</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium">
-                                        <div class="flex items-center gap-2">
-                                            <button class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary"><span class="material-symbols-outlined text-xl">edit</span></button>
-                                            <button class="text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-500"><span class="material-symbols-outlined text-xl">delete</span></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <!-- Pagination -->
-                <div class="flex items-center justify-between mt-6 px-1">
-                    <p class="text-sm text-gray-600 dark:text-gray-400">Showing <span class="font-medium">1</span> to <span class="font-medium">5</span> of <span class="font-medium">20</span> results</p>
-                    <div class="flex items-center gap-2">
-                        <button class="flex items-center justify-center h-8 w-8 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50" disabled="">
-                            <span class="material-symbols-outlined text-lg">chevron_left</span>
-                        </button>
-                        <button class="flex items-center justify-center h-8 w-8 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
-                            <span class="material-symbols-outlined text-lg">chevron_right</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </main>
-    </div>
+            </main>
+        </div>
 </body>
 
 </html>

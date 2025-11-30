@@ -37,6 +37,7 @@ use App\Controllers\EmployeeController;
 use App\Controllers\ClientController;
 use App\Controllers\ServiceController;
 use App\Controllers\MaterialController;
+use App\Models\Employee;
 use App\Models\Order;
 use Config\Database;
 
@@ -380,7 +381,7 @@ switch ($action) {
             exit;
         }
         $orderId = (int)($_GET['order_id'] ?? 0);
-        
+
         EmployeeController::cancelOrder($_SESSION['user_id'], $orderId);
         require __DIR__ . '/../src/views/employeeAppointments.php';
         break;

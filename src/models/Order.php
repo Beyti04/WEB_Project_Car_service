@@ -230,4 +230,20 @@ class Order
             }
         }
     }
+
+    public static function getAllCurrentOrders(): array
+    {
+        $sql = "SELECT o.id as order_id,o.opened_at, CONCAT(cli.first_name,' ',cli.last_name) as client_name,c.year,b.brand_name,m.model_name,s.status,CONCAT(e.first_name,' ',e.last_name) as employee_name FROM orders o
+        LEFT JOIN status s ON s.id=o.status_id
+        LEFT JOIN employees e ON e.id=o.employee_id
+        LEFT JOIN car c ON c.id=o.car_id
+        LEFT JOIN clients cli ON cli.id=c.owner
+        LEFT JOIN car_model m ON m.id=c.model_id
+        LEFT JOIN car_brand b ON b.id=m.brand_id";
+
+        $db = Database::getInstance();
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
