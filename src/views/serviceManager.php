@@ -222,19 +222,63 @@
                     </div>
                 </div>
                 <!-- Pagination -->
-                <div class="flex items-center justify-center p-4">
-                    <a class="flex size-10 items-center justify-center text-[#111418] dark:text-gray-400 hover:text-primary dark:hover:text-primary" href="#">
-                        <span class="material-symbols-outlined text-xl">chevron_left</span>
-                    </a>
-                    <a class="text-sm font-bold leading-normal tracking-[0.015em] flex size-10 items-center justify-center text-white rounded-full bg-primary" href="#">1</a>
-                    <a class="text-sm font-normal leading-normal flex size-10 items-center justify-center text-[#111418] dark:text-white rounded-full hover:bg-gray-200 dark:hover:bg-gray-800" href="#">2</a>
-                    <a class="text-sm font-normal leading-normal flex size-10 items-center justify-center text-[#111418] dark:text-white rounded-full hover:bg-gray-200 dark:hover:bg-gray-800" href="#">3</a>
-                    <span class="text-sm font-normal leading-normal flex size-10 items-center justify-center text-[#111418] dark:text-white rounded-full" href="#">...</span>
-                    <a class="text-sm font-normal leading-normal flex size-10 items-center justify-center text-[#111418] dark:text-white rounded-full hover:bg-gray-200 dark:hover:bg-gray-800" href="#">10</a>
-                    <a class="flex size-10 items-center justify-center text-[#111418] dark:text-gray-400 hover:text-primary dark:hover:text-primary" href="#">
-                        <span class="material-symbols-outlined text-xl">chevron_right</span>
-                    </a>
-                </div>
+                <div id="pagination-controls" class="flex items-center justify-center p-4 gap-2"></div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const itemsPerPage = 5;
+                        const tableBody = document.querySelector('tbody');
+                        const rows = Array.from(tableBody.querySelectorAll('tr'));
+                        const paginationContainer = document.getElementById('pagination-controls');
+                        const totalPages = Math.ceil(rows.length / itemsPerPage);
+
+                        function showPage(page) {
+                            rows.forEach(row => row.style.display = 'none');
+
+                            const start = (page - 1) * itemsPerPage;
+                            const end = start + itemsPerPage;
+
+                            rows.slice(start, end).forEach(row => row.style.display = '');
+                            updateButtons(page);
+                        }
+
+                        function updateButtons(page) {
+                            paginationContainer.innerHTML = '';
+
+                            const prevBtn = document.createElement('button');
+                            prevBtn.innerHTML = '<span class="material-symbols-outlined text-xl">chevron_left</span>';
+                            prevBtn.className = `flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 ${page === 1 ? 'text-gray-300 cursor-not-allowed' : 'text-[#111418] dark:text-gray-400'}`;
+                            prevBtn.onclick = () => {
+                                if (page > 1) showPage(page - 1);
+                            };
+                            paginationContainer.appendChild(prevBtn);
+
+                            for (let i = 1; i <= totalPages; i++) {
+                                if (i === 1 || i === totalPages || (i >= page - 1 && i <= page + 1)) {
+                                    const btn = document.createElement('button');
+                                    btn.innerText = i;
+                                    btn.className = `flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 ${i === page ? 'bg-primary text-white' : 'text-[#111418] dark:text-white'}`;
+                                    btn.onclick = () => showPage(i);
+                                    paginationContainer.appendChild(btn);
+                                } else if (i === page - 2 || i === page + 2) {
+                                    const span = document.createElement('span');
+                                    span.innerText = '...';
+                                    span.className = 'text-sm font-normal flex size-10 items-center justify-center text-[#111418] dark:text-white';
+                                    paginationContainer.appendChild(span);
+                                }
+                            }
+
+                            const nextBtn = document.createElement('button');
+                            nextBtn.innerHTML = '<span class="material-symbols-outlined text-xl">chevron_right</span>';
+                            nextBtn.className = `flex size-10 items-center justify-center rounded-full hover:bg
+                            -200 dark:hover:bg-gray-800 ${page === totalPages ? 'text-gray-300 cursor-not-allowed' : 'text-[#111418] dark:text-gray-400'}`;
+                            nextBtn.onclick = () => {
+                                if (page < totalPages) showPage(page + 1);
+                            };
+                            paginationContainer.appendChild(nextBtn);
+                        }
+                        showPage(1);
+                    });
+                </script>
 
         </div>
         </main>

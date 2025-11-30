@@ -218,19 +218,6 @@
                     </div>
                 </div>
                 <!-- Pagination -->
-                <!--<div class="flex items-center justify-center p-4">
-                    <a class="flex size-10 items-center justify-center text-[#111418] dark:text-gray-400 hover:text-primary dark:hover:text-primary" href="#">
-                        <span class="material-symbols-outlined text-xl">chevron_left</span>
-                    </a>
-                    <a class="text-sm font-bold leading-normal tracking-[0.015em] flex size-10 items-center justify-center text-white rounded-full bg-primary" href="#">1</a>
-                    <a class="text-sm font-normal leading-normal flex size-10 items-center justify-center text-[#111418] dark:text-white rounded-full hover:bg-gray-200 dark:hover:bg-gray-800" href="#">2</a>
-                    <a class="text-sm font-normal leading-normal flex size-10 items-center justify-center text-[#111418] dark:text-white rounded-full hover:bg-gray-200 dark:hover:bg-gray-800" href="#">3</a>
-                    <span class="text-sm font-normal leading-normal flex size-10 items-center justify-center text-[#111418] dark:text-white rounded-full" href="#">...</span>
-                    <a class="text-sm font-normal leading-normal flex size-10 items-center justify-center text-[#111418] dark:text-white rounded-full hover:bg-gray-200 dark:hover:bg-gray-800" href="#">10</a>
-                    <a class="flex size-10 items-center justify-center text-[#111418] dark:text-gray-400 hover:text-primary dark:hover:text-primary" href="#">
-                        <span class="material-symbols-outlined text-xl">chevron_right</span>
-                    </a>
-                </div>-->
                 <div id="pagination-controls" class="flex items-center justify-center p-4 gap-2"></div>
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
