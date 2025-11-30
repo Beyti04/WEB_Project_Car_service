@@ -58,8 +58,8 @@
                 </div>
             </a>
             <nav class="flex flex-col gap-2 flex-1">
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="index.php?action=userDashboard">
-                    <span class="material-symbols-outlined text-primary">dashboard</span>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=userDashboard">
+                    <span class="material-symbols-outlined">dashboard</span>
                     <p class="text-sm font-bold leading-normal">Dashboard</p>
                 </a>
                 <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=myVehicles">
@@ -75,8 +75,8 @@
                     <p class="text-sm font-medium leading-normal">Service History</p>
                 </a>
 
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
-                    <span class="material-symbols-outlined">receipt_long</span>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="#">
+                    <span class="material-symbols-outlined text-primary">receipt_long</span>
                     <p class="text-sm font-medium leading-normal">Billing</p>
                 </a>
             </nav>

@@ -108,7 +108,7 @@
                     </div>
                     <!-- Search and Filter Bar -->
                     <div class="p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm mb-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-center">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-center">
                             <div class="lg:col-span-2">
                                 <label class="flex flex-col min-w-40 h-12 w-full">
                                     <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
@@ -125,12 +125,7 @@
                                     <span class="material-symbols-outlined text-gray-500 dark:text-gray-400 text-base">expand_more</span>
                                 </button>
                             </div>
-                            <div class="flex items-center gap-3 overflow-x-auto">
-                                <button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-background-light dark:bg-gray-700 px-4 w-full">
-                                    <p class="text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal">Employee</p>
-                                    <span class="material-symbols-outlined text-gray-500 dark:text-gray-400 text-base">expand_more</span>
-                                </button>
-                            </div>
+
                         </div>
                     </div>
                     <!-- Table -->
@@ -148,7 +143,7 @@
                                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Order ID</th>
                                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Client Name</th>
                                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Car (Make &amp; Model)</th>
-                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Service group</th>
+                                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Service</th>
                                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
                                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date Opened</th>
                                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
@@ -158,23 +153,36 @@
                                     <?php
 
                                     foreach ($orders as $order) {
+                                        if ($order['status'] == 'Приета') {
+                                            $color = 'text-blue-700 dark:text-primary-300 bg-blue-100 dark:bg-blue-500/50';
+                                        } elseif ($order['status'] == 'Диагностика') {
+                                            $color = 'text-yellow-700 dark:text-yellow-300 bg-yellow-100 dark:bg-yellow-900/50';
+                                        } elseif ($order['status'] == 'Ремонт') {
+                                            $color = 'text-orange-700 dark:text-orange-300 bg-orange-100 dark:bg-orange-900/50';
+                                        } elseif ($order['status'] == 'Тестване') {
+                                            $color = 'text-purple-700 dark:text-purple-300 bg-purple-100 dark:bg-purple-900/50';
+                                        } else {
+                                            $color = 'text-lightgray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-900/50';
+                                        }
 
                                     ?>
                                         <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30">
                                             <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 font-mono"><?php echo $order['order_id']; ?></td>
                                             <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white"><?php echo $order['client_name']; ?></td>
                                             <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400"><?php echo $order['brand_name'] . ' ' . $order['model_name']; ?></td>
-                                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400"><?php echo $order['service_group']; ?></td>
+                                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400"><?php echo $order['service_name']; ?></td>
                                             <td class="px-4 py-3 whitespace-nowrap text-sm">
-                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800"><?php echo $order['status']?></span>
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <?php echo $color ?>"><?php echo $order['status'] ?></span>
                                             </td>
                                             <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400"><?php echo $order['opened_at']; ?></td>
                                             <td class="px-4 py-3 whitespace-nowrap text-sm font-medium">
                                                 <div class="flex items-center gap-2">
-                                                    <a href="index.php?action=orderMaterials&order_id=<?php echo $order['order_id']?>">
-                                                    <button class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary"><span class="material-symbols-outlined text-xl">edit</span></button>
+                                                    <a href="index.php?action=orderMaterials&order_id=<?php echo $order['order_id'] ?>">
+                                                        <button class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary"><span class="material-symbols-outlined text-xl">edit</span></button>
                                                     </a>
-                                                    <button class="text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-500"><span class="material-symbols-outlined text-xl">Cancel</span></button>
+                                                    <a href="index.php?action=cancelEmployeeOrder&order_id=<?php echo $order['order_id'] ?>">
+                                                        <button class="text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-500"><span class="material-symbols-outlined text-xl">Cancel</span></button>
+                                                    </a>
                                                 </div>
                                             </td>
                                         </tr>

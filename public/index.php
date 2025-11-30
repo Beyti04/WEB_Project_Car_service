@@ -374,6 +374,17 @@ switch ($action) {
         exit;
         break;
 
+    case 'cancelEmployeeOrder':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        $orderId = (int)($_GET['order_id'] ?? 0);
+        
+        EmployeeController::cancelOrder($_SESSION['user_id'], $orderId);
+        require __DIR__ . '/../src/views/employeeAppointments.php';
+        break;
+
     case 'removeMaterial':
         if (!isset($_SESSION['user_id'])) {
             header("Location: index.php?action=login");
@@ -422,8 +433,8 @@ switch ($action) {
             header("Location: index.php?action=login");
             exit;
         }
-        Order::updateOrder($_GET['order_id'],$_POST['materials']??[],$_POST['status']);
-        require __DIR__ . '/../src/views/employeeUpdateOrder.php';
+        Order::updateOrder($_GET['order_id'], $_POST['materials'] ?? [], $_POST['status']);
+        require __DIR__ . '/../src/views/employeeDashboard.php';
         break;
 
     case 'downloadPDF':
@@ -431,7 +442,7 @@ switch ($action) {
             header("Location: index.php?action=login");
             exit;
         }
-        require __DIR__.'/../src/views/downloadPDF.php';
+        require __DIR__ . '/../src/views/downloadPDF.php';
         exit;
         break;
 

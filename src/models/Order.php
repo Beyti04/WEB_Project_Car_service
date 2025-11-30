@@ -110,7 +110,7 @@ class Order
     public static function getOrderByEmployeeId(int $employeeId): array
     {
         $db = Database::getInstance();
-        $sql = "SELECT o.id as order_id,o.opened_at, s.status,sg.name AS service_group,b.brand_name, m.model_name,cli.id AS client_id, CONCAT(cli.first_name, ' ', cli.last_name) AS client_name FROM orders o
+        $sql = "SELECT o.id as order_id,o.opened_at, s.status,sv.name AS service_name,b.brand_name, m.model_name,cli.id AS client_id, CONCAT(cli.first_name, ' ', cli.last_name) AS client_name FROM orders o
             JOIN status s ON o.status_id = s.id
             JOIN car c ON o.car_id = c.id
             JOIN car_model m ON c.model_id = m.id
@@ -193,6 +193,16 @@ class Order
 
                 $stmt = $db->prepare($sqlUpdateOrderFullPrice);
                 $stmt->execute([$orderPrice, $orderId]);
+
+                $sqlGetMaterialAvailable = "SELECT stock FROM materials WHERE id=?";
+                $stmt = $db->prepare($sqlGetMaterialAvailable);
+                $stmt->execute([$material['id']]);
+                $quantity = $stmt->fetch(PDO::FETCH_ASSOC);
+                $quantity = (int)$quantity['stock'] - (int)$material['quantity'];
+
+                $sqlUpdateMaterialQuantity = "UPDATE materials SET stock =? WHERE id=?";
+                $stmt = $db->prepare($sqlUpdateMaterialQuantity);
+                $stmt->execute([$quantity, $material['id']]);
             }
         }
 
@@ -208,16 +218,15 @@ class Order
                 $stmt->execute([$status, $orderId]);
 
 
-                $stmt->$db->prepare($sqlAuditLog);
+                $stmt = $db->prepare($sqlAuditLog);
                 $stmt->execute([$_SESSION['user_id'], "Updated order status to: $status", "orders", $orderId]);
-            }
-            else{
-            $sqlSetStatus = "UPDATE orders SET status_id = ? WHERE id=?";
-            $stmt = $db->prepare($sqlSetStatus);
-            $stmt->execute([$status, $orderId]);
+            } else {
+                $sqlSetStatus = "UPDATE orders SET status_id = ? WHERE id=?";
+                $stmt = $db->prepare($sqlSetStatus);
+                $stmt->execute([$status, $orderId]);
 
-            $stmt->$db->prepare($sqlAuditLog);
-            $stmt->execute([$_SESSION['user_id'], "Updated order status to: $status", "orders", $orderId]);
+                $stmt = $db->prepare($sqlAuditLog);
+                $stmt->execute([$_SESSION['user_id'], "Updated order status to: $status", "orders", $orderId]);
             }
         }
     }

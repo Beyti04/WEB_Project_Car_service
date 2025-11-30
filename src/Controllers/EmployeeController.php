@@ -77,4 +77,13 @@ class EmployeeController
             $employee->cancelOrder($orderId);
         }
     }
+
+    public static function getPreviousAppointments(int $employeeId): array
+    {
+        $employee = Employee::getEmployeeById($employeeId);
+        if ($employee) {
+            return $employee->getPastAppointments();
+        }
+        return [];
+    }
 }

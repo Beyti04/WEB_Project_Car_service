@@ -66,12 +66,12 @@
                 <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=emptyOrders">
                     <span class="material-symbols-outlined">receipt_long</span>
                     <p class="text-sm font-medium leading-normal">Service Requests</p>
-                </a>    
+                </a>
                 <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=employeeAppointments">
                     <span class="material-symbols-outlined">calendar_month</span>
                     <p class="text-sm font-medium leading-normal">Appointments</p>
                 </a>
-                
+
             </nav>
             <div class="flex flex-col gap-4 mt-4">
                 <a href="index.php?action=logout" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors">
@@ -92,7 +92,11 @@
                         <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Employee avatar image" style='background-image: url("https://via.placeholder.com/40");'></div>
                         <div class="flex flex-col text-sm">
                             <p class="font-bold">
-                                <?php echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?>
+                                <?php
+
+                                use App\Controllers\EmployeeController;
+
+                                echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?>
                             </p>
                             <p class="text-text-secondary-light dark:text-text-secondary-dark">Employee</p>
                         </div>
@@ -100,98 +104,135 @@
                 </div>
             </header>
 
-            <main class="flex-1 overflow-y-auto p-10">
-                <div class="flex flex-wrap justify-between gap-4 mb-8 items-center">
-                    <div class="flex flex-col gap-1">
-                        <p class="text-3xl font-bold leading-tight tracking-tight">Welcome back, <?php echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?>!</p>
-                        <p class="text-text-secondary-light dark:text-text-secondary-dark text-base font-normal leading-normal">Here's an overview of your tasks and requests.</p>
-                    </div>
-                </div>
+            <main class="flex-1 overflow-y-auto p-10 flex justify-center">
+                <!-- Centered container -->
+                <div class="w-full max-w-6xl">
 
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div class="lg:col-span-2 flex flex-col gap-6">
-                        <!-- Active Service Requests -->
-                        <div class="rounded-xl border border-border-light dark:border-border-dark p-6 bg-card-light dark:bg-card-dark">
-                            <h2 class="text-lg font-bold leading-normal mb-4">Active Service Requests</h2>
-                            <div class="flex flex-col gap-4">
-                                <div class="flex flex-col sm:flex-row gap-6 items-start">
-                                    <div class="flex-1">
-                                        <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm">2022 Toyota Highlander</p>
-                                        <p class="font-bold text-xl mb-3">Oil Change &amp; Tire Rotation</p>
-                                        <div class="flex items-center gap-2 text-sm text-text-secondary-light dark:text-text-secondary-dark">
-                                            <span class="material-symbols-outlined text-base">receipt_long</span>
-                                            <span>Order #ORD-2024-1138</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex-1 w-full">
-                                        <div class="flex items-center justify-between mb-1">
-                                            <p class="font-bold text-primary">In Progress</p>
-                                            <p class="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">Est. completion: 4:30 PM</p>
-                                        </div>
-                                        <div class="w-full bg-background-light dark:bg-background-dark rounded-full h-2.5">
-                                            <div class="bg-primary h-2.5 rounded-full" style="width: 65%"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Service History -->
-                        <div class="rounded-xl border border-border-light dark:border-border-dark p-6 bg-card-light dark:bg-card-dark">
-                            <div class="flex justify-between items-center mb-4">
-                                <h2 class="text-lg font-bold leading-normal">Previous Appointments</h2>
-                            </div>
-                            <div class="overflow-x-auto">
-                                <table class="w-full text-left">
-                                    <thead class="text-xs text-text-secondary-light dark:text-text-secondary-dark uppercase">
-                                        <tr>
-                                            <th class="py-3 pr-6" scope="col">Date</th>
-                                            <th class="py-3 px-6" scope="col">Service</th>
-                                            <th class="py-3 px-6" scope="col">Client</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="border-b border-border-light dark:border-border-dark">
-                                            <td class="py-4 pr-6 font-medium">Jun 15, 2023</td>
-                                            <td class="py-4 px-6">Brake Pad Replacement</td>
-                                            <td class="py-4 px-6 text-text-secondary-light dark:text-text-secondary-dark">John Doe</td>
-                                        </tr>
-                                        <tr class="border-b border-border-light dark:border-border-dark">
-                                            <td class="py-4 pr-6 font-medium">Jan 10, 2023</td>
-                                            <td class="py-4 px-6">Annual Inspection</td>
-                                            <td class="py-4 px-6 text-text-secondary-light dark:text-text-secondary-dark">Jane Smith</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                    <div class="flex flex-wrap justify-between gap-4 mb-8 items-center">
+                        <div class="flex flex-col gap-1">
+                            <p class="text-3xl font-bold leading-tight tracking-tight">
+                                Welcome back, <?php echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?>!
+                            </p>
+                            <p class="text-text-secondary-light dark:text-text-secondary-dark text-base font-normal leading-normal">
+                                Here's an overview of your tasks and requests.
+                            </p>
                         </div>
                     </div>
 
-                    <!-- Upcoming Appointments -->
-                    <div class="flex flex-col gap-6">
-                        <div class="flex flex-col gap-4 rounded-xl border border-border-light dark:border-border-dark p-6 bg-card-light dark:bg-card-dark">
-                            <h2 class="text-lg font-bold leading-normal">Upcoming Appointment</h2>
-                            <div class="flex flex-col gap-4">
-                                <div class="flex items-center gap-4">
-                                    <div class="flex flex-col items-center justify-center p-3 rounded-lg bg-primary/10 w-16 h-16 shrink-0">
-                                        <p class="text-primary font-bold text-lg">DEC</p>
-                                        <p class="text-primary/80 font-bold text-2xl">21</p>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="lg:col-span-3 flex flex-col gap-6">
+
+                            <!-- Active Service Requests -->
+                            <div class="rounded-xl border border-border-light dark:border-border-dark p-6 bg-card-light dark:bg-card-dark">
+                                <h2 class="text-lg font-bold leading-normal mb-4">Active Appointments</h2>
+
+                                <div class="flex flex-col gap-4">
+                                    <div class="flex flex-col gap-6 items-start">
+
+                                        <?php
+
+                                        use App\Models\Order;
+
+                                        $activeOrders = Order::getOrderByEmployeeId($_SESSION['user_id']);
+
+                                        foreach ($activeOrders as $order) {
+                                            if ($order['status'] == 'Приета') {
+                                                $progressWidth = 20;
+                                                $color = 'text-primary';
+                                            } elseif ($order['status'] == 'Диагностика') {
+                                                $progressWidth = 40;
+                                                $color = 'text-yellow-500';
+                                            } elseif ($order['status'] == 'Ремонт') {
+                                                $progressWidth = 60;
+                                                $color = 'text-orange-500';
+                                            } elseif ($order['status'] == 'Тестване') {
+                                                $progressWidth = 80;
+                                                $color = 'text-purple-500';
+                                            }
+                                        ?>
+
+                                            <div class="flex flex-col md:flex-row gap-4 w-full">
+                                                <div class="flex-1">
+                                                    <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm">
+                                                        <?php echo htmlspecialchars($order['brand_name']) . " " . htmlspecialchars($order['model_name']) ?>
+                                                    </p>
+                                                    <p class="font-bold text-xl mb-3">
+                                                        <?php echo htmlspecialchars($order['service_name']) ?>
+                                                    </p>
+                                                    <div class="flex items-center gap-2 text-sm text-text-secondary-light dark:text-text-secondary-dark">
+                                                        <span class="material-symbols-outlined text-base">receipt_long</span>
+                                                        <span>Order #<?php echo htmlspecialchars($order['order_id']) ?></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="flex-1 w-full">
+                                                    <div class="flex items-center justify-between mb-1">
+                                                        <p class="font-bold <?php echo $color ?>">
+                                                            <?php echo $order['status'] ?>
+                                                        </p>
+                                                    </div>
+
+                                                    <div class="w-full bg-background-light dark:bg-background-dark rounded-full h-2.5">
+                                                        <div class="bg-primary h-2.5 rounded-full"
+                                                            style="width: <?php echo $progressWidth ?>%">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        <?php } ?>
+
                                     </div>
-                                    <div>
-                                        <p class="font-bold">10:00 AM - State Inspection</p>
-                                        <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm">2022 Toyota Highlander</p>
-                                    </div>
-                                </div>
-                                <div class="flex gap-2">
-                                    <button class="w-full flex items-center justify-center gap-2 h-10 px-4 rounded-lg bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark text-sm font-bold hover:bg-primary/10 transition-colors">Reschedule</button>
-                                    <button class="w-full flex items-center justify-center gap-2 h-10 px-4 rounded-lg bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark text-sm font-bold text-danger hover:bg-danger/10 hover:border-danger/20 transition-colors">Cancel</button>
                                 </div>
                             </div>
+
+                            <!-- Service History -->
+                            <div class="rounded-xl border border-border-light dark:border-border-dark p-6 bg-card-light dark:bg-card-dark">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h2 class="text-lg font-bold leading-normal">Previous Appointments</h2>
+                                </div>
+
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-left">
+                                        <thead class="text-xs text-text-secondary-light dark:text-text-secondary-dark uppercase">
+                                            <tr>
+                                                <th class="py-3 pr-6">Date</th>
+                                                <th class="py-3 px-6">Service</th>
+                                                <th class="py-3 px-6">Vehicle</th>
+                                                <th class="py-3 px-6">Client</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <?php
+                                            $orders = EmployeeController::getPreviousAppointments($_SESSION['user_id']);
+                                            foreach ($orders as $order) {
+                                            ?>
+                                                <tr class="border-b border-border-light dark:border-border-dark">
+                                                    <td class="py-4 pr-6 font-medium"><?php echo htmlspecialchars($order['opened_at']) ?></td>
+                                                    <td class="py-4 px-6"><?php echo htmlspecialchars($order['service_name']) ?></td>
+                                                    <td class="py-4 px-6">
+                                                        <?php echo htmlspecialchars($order['year']) . " " . htmlspecialchars($order['brand_name']) . " " . htmlspecialchars($order['model_name']) ?>
+                                                    </td>
+                                                    <td class="py-4 px-6 text-text-secondary-light dark:text-text-secondary-dark">
+                                                        <?php echo htmlspecialchars($order['client_name']) ?>
+                                                    </td>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
+
                 </div>
             </main>
+
         </div>
     </div>
 </body>
+
 </html>

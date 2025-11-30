@@ -171,18 +171,38 @@ class Employee
         }
     }
 
-    public function cancelOrder(int $orderId): bool
+    public function cancelOrder(int $orderId)
     {
-        $sql = "UPDATE orders SET status_id =(SELECT id FROM statuses WHERE name = 'Отказана') WHERE id = ?";
+        $sql = "UPDATE orders SET status_id =(SELECT id FROM status WHERE status = 'Отказана') WHERE id = ?";
+        $sqlAuditLog = "INSERT INTO audit_logs (user_id,action,entity,entity_id,created_at) VALUES (?,?,?,?,NOW())";
 
-        try {
-            $stmt = $this->db->prepare($sql);
-            return $stmt->execute([
-                $orderId
-            ]);
-        } catch (PDOException $e) {
-            error_log("Cancel Order Error: " . $e->getMessage());
-            return false;
-        }
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$orderId]);
+
+        $stmt = $this->db->prepare($sqlAuditLog);
+        $stmt->execute([$_SESSION['user_id'], "Canceled order", "orders", $orderId]);
+    }
+
+    public function getPastAppointments(): array
+    {
+        $sql = "SELECT o.opened_at, sv.name AS service_name,c.year,b.brand_name,m.model_name, CONCAT(cli.first_name,' ',cli.last_name) AS client_name FROM orders o
+              JOIN order_service os ON os.order_id=o.id
+              JOIN services sv ON sv.id=os.service_id
+              JOIN car c ON c.id=o.car_id
+              JOIN car_model m ON m.id=c.model_id
+              JOIN car_brand b ON b.id=m.brand_id
+              JOIN clients cli ON cli.id=c.owner
+              JOIN status s ON s.id=o.status_id
+              WHERE employee_id=$this->id AND s.status IN ('Готова','Отказана')
+              ORDER BY o.opened_at ASC";
+
+        $db = Database::getInstance();
+
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+
+        $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $orders ?? [];
     }
 }

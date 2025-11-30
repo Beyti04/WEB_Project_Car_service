@@ -69,7 +69,7 @@
                     <p class="text-sm font-medium leading-normal">Service History</p>
                 </a>
 
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=clientBilling">
                     <span class="material-symbols-outlined">receipt_long</span>
                     <p class="text-sm font-medium leading-normal">Billing</p>
                 </a>
@@ -118,7 +118,19 @@
                             }
 
                             if (!empty($currentAppointments)) {
-                                foreach ($currentAppointments as $appointment) { ?>
+                                foreach ($currentAppointments as $appointment) {
+                                    if ($appointment['status'] == 'Приета') {
+                                        $color = 'text-blue-700 dark:text-primary-300 bg-blue-100 dark:bg-blue-500/50';
+                                    } elseif ($appointment['status'] == 'Диагностика') {
+                                        $color = 'text-yellow-700 dark:text-yellow-300 bg-yellow-100 dark:bg-yellow-900/50';
+                                    } elseif ($appointment['status'] == 'Ремонт') {
+                                        $color = 'text-orange-700 dark:text-orange-300 bg-orange-100 dark:bg-orange-900/50';
+                                    } elseif ($appointment['status'] == 'Тестване') {
+                                        $color = 'text-purple-700 dark:text-purple-300 bg-purple-100 dark:bg-purple-900/50';
+                                    } else {
+                                        $color = 'text-lightgray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-900/50';
+                                    }
+                            ?>
                                     <div class="bg-white dark:bg-background-dark/80 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 overflow-hidden">
                                         <div class="p-6">
                                             <p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal mb-1.5"><?php echo htmlspecialchars($appointment['opened_at']); ?></p>
@@ -129,11 +141,11 @@
                                             </div>
                                             <div class="flex items-center gap-2">
                                                 <?php if ($appointment['status'] != "В изчакване") { ?>
-                                                    <span class="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900/50 px-3 py-1 text-xs font-medium text-green-700 dark:text-green-300"><?php echo htmlspecialchars($appointment['status']); ?></span>
+                                                    <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-medium <?php echo $color ?>"><?php echo htmlspecialchars($appointment['status']); ?></span>
                                             </div>
                                         </div>
                                     <?php } else { ?>
-                                        <span class="inline-flex items-center rounded-full bg-yellow-100 dark:bg-yellow-900/50 px-3 py-1 text-xs font-medium text-yellow-700 dark:text-yellow-300"><?php echo htmlspecialchars($appointment['status']); ?></span>
+                                        <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-medium <?php echo $color ?>"><?php echo htmlspecialchars($appointment['status']); ?></span>
                                     </div>
                         </div>
                         <a href="index.php?action=cancelClientOrder&order_id=<?php echo $appointment['order_id']; ?>">

@@ -109,7 +109,7 @@ class ClientController
                   JOIN car c ON o.car_id = c.id
                   JOIN car_model cm ON c.model_id = cm.id
                   JOIN car_brand cb ON cm.brand_id = cb.id
-                  WHERE c.owner = :client_id AND s.status NOT IN ('Завършена', 'Отказана')
+                  WHERE c.owner = :client_id AND s.status NOT IN ('Готова', 'Отказана')
                   ORDER BY o.opened_at DESC";
 
         $db = \Config\Database::getInstance();
@@ -135,7 +135,7 @@ class ClientController
                   JOIN car c ON o.car_id = c.id
                   JOIN car_model cm ON c.model_id = cm.id
                   JOIN car_brand cb ON cm.brand_id = cb.id
-                  WHERE c.owner = :client_id AND s.status IN ('Завършена', 'Отказана')
+                  WHERE c.owner = :client_id AND s.status IN ('Готова', 'Отказана')
                   ORDER BY o.opened_at DESC";
 
         $db = \Config\Database::getInstance();

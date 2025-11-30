@@ -134,6 +134,7 @@
                                             <?php
                                             $statuses = Status::getAllStatuses();
                                             array_shift($statuses);
+                                            array_pop($statuses);
                                             // Determine progress width and color based on current order status
                                             if ($currentOrder['status'] == 'В изчакване') {
                                                 $progressWidth = 0;
@@ -201,14 +202,17 @@
                                                     <label class="flex items-center gap-3">
                                                         <input type="checkbox" class="form-checkbox text-primary h-4 w-4 material-checkbox"
                                                             name="materials[<?php echo $material->id ?>][id]"
-                                                            value="<?php echo $material->id ?>" />
+                                                            value="<?php echo $material->id ?>" <?php echo $material->stock<=0?'disabled':''?>/>
                                                         <span class="text-text-light dark:text-text-dark"><?php echo $material->name ?></span>
+                                                        <?php if($material->stock<=0){?>
+                                                            <span class="text-text-light dark:text-text-dark">OUT OF STOCK</span>
+                                                            <?php }?>
                                                     </label>
 
                                                     <!-- Quantity input, initially disabled -->
-                                                    <input type="number" name="materials[<?php echo $material->id ?>][quantity]" min="1" value="1"
+                                                    <input type="number" name="materials[<?php echo $material->id ?>][quantity]" min="1" value="1" max="<?php echo (int)$material->stock ?>"
                                                         class="w-16 border border-border-light dark:border-border-dark rounded-lg p-1 text-sm focus:outline-none material-quantity"
-                                                        disabled />
+                                                        disabled hidden />
                                                 </div>
                                             <?php endif; ?>
                                         <?php endforeach; ?>
@@ -226,8 +230,10 @@
                                             const quantityInput = this.closest('div').querySelector('.material-quantity');
                                             if (this.checked) {
                                                 quantityInput.disabled = false; // Enable quantity
+                                                quantityInput.hidden = false;
                                             } else {
                                                 quantityInput.disabled = true; // Disable quantity
+                                                quantityInput.hidden = true;
                                                 quantityInput.value = 1; // Reset quantity to 1
                                             }
                                         });
