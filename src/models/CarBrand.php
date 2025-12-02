@@ -16,26 +16,6 @@ class CarBrand
         $this->db = Database::getInstance();
     }
 
-    public function save(): bool {
-        $sql = "INSERT INTO car_brand (make) 
-                VALUES (?)";
-        
-        try {
-            $stmt = $this->db->prepare($sql);
-            $success = $stmt->execute([
-                $this->make
-            ]);
-
-            if ($success) {
-                $this->id = (int)$this->db->lastInsertId();
-            }
-            return $success;
-        } catch (PDOException $e) {
-            error_log("CarBrand Save Error: " . $e->getMessage());
-            return false;
-        }
-    }
-
     public static function getBrandById(int $id): ?CarBrand {
         $db = Database::getInstance();
         $sql = "SELECT * FROM car_brand WHERE id = ?";

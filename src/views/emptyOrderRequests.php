@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Service Order Management</title>
+    <title>Service Order Management - TU Service</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
     <link href="https://fonts.googleapis.com" rel="preconnect" />
@@ -20,6 +20,14 @@
                         "primary": "#1173d4",
                         "background-light": "#f6f7f8",
                         "background-dark": "#101922",
+                        "text-light": "#333333",
+                        "text-dark": "#EAEAEA",
+                        "text-secondary-light": "#808080",
+                        "text-secondary-dark": "#A0AEC0",
+                        "border-light": "#dbe0e6",
+                        "border-dark": "#3A475A",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#1A2836"
                     },
                     fontFamily: {
                         "display": ["Inter", "sans-serif"]
@@ -54,8 +62,8 @@
                     <span class="material-symbols-outlined text-primary text-2xl">directions_car</span>
                 </div>
                 <div class="flex flex-col">
-                    <h1 class="text-text-light dark:text-text-dark text-base font-bold leading-normal">AutoManager</h1>
-                    <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal">Employee Portal</p>
+                    <h1 class="text-text-light dark:text-text-dark text-base font-bold leading-normal">TU Service</h1>
+                    <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal">Employee View</p>
                 </div>
             </a>
             <nav class="flex flex-col gap-2 flex-1">

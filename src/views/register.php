@@ -55,7 +55,7 @@ use App\Models\Role;
             <div class="text-center">
                 <a href="index.php" class="flex justify-center items-center gap-3 mb-4">
                     <span class="material-symbols-outlined text-primary text-4xl">directions_car</span>
-                    <h1 class="text-2xl font-bold text-[#111418] dark:text-white">AutoManager Pro</h1>
+                    <h1 class="text-2xl font-bold text-[#111418] dark:text-white">TU Service</h1>
                 </a>
                 <div class="flex flex-col gap-3">
                     <p class="text-[#111418] dark:text-gray-200 text-4xl font-black leading-tight tracking-[-0.033em]">Create an Account</p>
@@ -63,7 +63,7 @@ use App\Models\Role;
                 </div>
             </div>
             <!-- Form Container -->
-             <?php
+            <?php
             if (isset($_GET['error'])) {
                 $error = htmlspecialchars(urldecode($_GET['error']));
             }
@@ -106,7 +106,7 @@ use App\Models\Role;
                     <label class="flex flex-col min-w-40 flex-1">
                         <p class="text-[#111418] dark:text-gray-300 text-base font-medium leading-normal pb-2">Email</p>
                         <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white dark:bg-gray-800 focus:outline-0 focus:ring-2 focus:ring-primary/50 border <?php if (isset($error) && strpos($error, 'Този имейл вече е регистриран!') !== false) echo 'border-validation-error'; ?> bg-white focus:border-primary h-14 placeholder:text-[#617589] dark:placeholder:text-gray-500 p-[15px] text-base font-normal leading-normal" placeholder="Enter your email" name="email" value="" />
-                        <?php 
+                        <?php
                         if (isset($error) && strpos($error, 'имейл') !== false) {
                             echo '<p class="text-validation-error text-sm mt-1">' . htmlspecialchars($error) . '</p>';
                         }
@@ -135,7 +135,7 @@ use App\Models\Role;
                                 <span class="material-symbols-outlined">visibility_off</span>
                             </button>
                         </div>
-                        <?php 
+                        <?php
                         if (isset($error) && strpos($error, 'Паролите не съвпадат!') !== false) {
                             echo '<p class="text-validation-error text-sm mt-1">' . htmlspecialchars($error) . '</p>';
                         }

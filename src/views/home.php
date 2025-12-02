@@ -62,13 +62,9 @@
                                 </defs>
                             </svg>
                         </div>
-                        <h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">AutoManager Pro</h2>
+                        <h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">TU Servie</h2>
                     </div>
                     <div class="flex flex-1 justify-end items-center gap-8">
-                        <div class="hidden md:flex items-center gap-9">
-                            <a class="text-sm font-medium leading-normal hover:text-primary dark:hover:text-secondary" href="#">Features</a>
-                            <a class="text-sm font-medium leading-normal hover:text-primary dark:hover:text-secondary" href="#">Contact</a>
-                        </div>
                         <div class="flex gap-2">
                             <a class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-transparent border border-primary text-primary dark:border-white dark:text-white dark:hover:bg-white/10 text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/10 transition-colors" href="index.php?action=login">
                                 <span class="truncate">Log In</span>
@@ -132,7 +128,7 @@
                 <section class="w-full flex justify-center py-16 md:py-24 bg-white dark:bg-background-dark/50">
                     <div class="w-full max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
                         <p class="text-primary dark:text-white text-2xl font-medium leading-relaxed italic">"This system cut our admin time in half! The efficiency gains are incredible."</p>
-                        <p class="mt-4 text-text-light dark:text-text-dark text-base font-bold">John Doe</p>
+                        <p class="mt-4 text-text-light dark:text-text-dark text-base font-bold">Admin</p>
                         <p class="text-gray-500 dark:text-gray-400 text-sm">Manager, Precision Auto Works</p>
                     </div>
                 </section>
@@ -140,7 +136,7 @@
             <!-- Footer -->
             <footer class="w-full flex justify-center py-8 border-t border-gray-200 dark:border-gray-800">
                 <div class="w-full max-w-6xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-                    <p class="text-sm text-gray-500 dark:text-gray-400">© 2024 AutoManager Pro. All rights reserved.</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">© 2024 TU Service. All rights reserved.</p>
                     <div class="flex gap-4">
                         <a class="text-sm text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-secondary" href="#">Privacy Policy</a>
                         <a class="text-sm text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-secondary" href="#">Terms of Service</a>

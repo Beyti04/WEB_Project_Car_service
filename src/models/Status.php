@@ -21,33 +21,5 @@ class Status
         $stmt = $db->query("SELECT * FROM status ORDER BY id");
         return $stmt->fetchAll(PDO::FETCH_CLASS);
     }
-
-    public static function getStatusById(int $id): ?Status
-    {
-        $db = Database::getInstance();
-        $sql = "SELECT * FROM status WHERE id = ? LIMIT 1";
-        try {
-            $stmt = $db->prepare($sql);
-            $stmt->execute([$id]);
-
-            $data = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if ($data) {
-                return new Status(
-                    id: (int)$data['id'],
-                    name: $data['name']
-                );
-            }
-            return null;
-        } catch (PDOException $e) {
-            error_log("Status Fetch By ID Error: " . $e->getMessage());
-            return null;
-        }
-    }
 }
-
-
-
-
-
 ?>

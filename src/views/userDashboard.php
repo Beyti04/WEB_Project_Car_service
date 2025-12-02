@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Client Dashboard - AutoManager</title>
+    <title>Client Dashboard - TU Service</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
@@ -53,8 +53,8 @@
                     <span class="material-symbols-outlined text-primary text-2xl">directions_car</span>
                 </div>
                 <div class="flex flex-col">
-                    <h1 class="text-text-light dark:text-text-dark text-base font-bold leading-normal">AutoManager</h1>
-                    <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal">Client Portal</p>
+                    <h1 class="text-text-light dark:text-text-dark text-base font-bold leading-normal">TU Service</h1>
+                    <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal">Client View</p>
                 </div>
             </a>
             <nav class="flex flex-col gap-2 flex-1">

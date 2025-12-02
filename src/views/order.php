@@ -20,6 +20,14 @@
                         "primary": "#1173d4",
                         "background-light": "#f6f7f8",
                         "background-dark": "#101922",
+                        "text-light": "#333333",
+                        "text-dark": "#EAEAEA",
+                        "text-secondary-light": "#808080",
+                        "text-secondary-dark": "#A0AEC0",
+                        "border-light": "#dbe0e6",
+                        "border-dark": "#3A475A",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#1A2836"
                     },
                     fontFamily: {
                         "display": ["Inter", "sans-serif"]
@@ -48,13 +56,14 @@
 <body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
     <div class="flex h-screen">
         <!-- SideNavBar -->
-        <aside class="flex flex-col w-64 bg-card-light dark:bg-card-dark border-r border-border-light dark:border-border-dark p-4 shrink-0">
+        <aside class="flex flex-col w-64 bg-white border-r border-border-light p-4 shrink-0">
+
             <a href="#" class="flex items-center gap-3 mb-8">
                 <div class="bg-primary/20 rounded-lg p-2 flex items-center justify-center">
                     <span class="material-symbols-outlined text-primary text-2xl">directions_car</span>
                 </div>
                 <div class="flex flex-col">
-                    <h1 class="text-text-light dark:text-text-dark text-base font-bold leading-normal">AutoManager</h1>
+                    <h1 class="text-text-light dark:text-text-dark text-base font-bold leading-normal">TU Service</h1>
                     <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal">Admin View</p>
                 </div>
             </a>
@@ -96,7 +105,7 @@
         <!-- Main Content -->
         <div class="flex-1 flex flex-col">
             <!-- TopNavBar -->
-            <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-border-light dark:border-border-dark px-10 py-3 bg-card-light dark:bg-card-dark">
+            <header class="flex items-center justify-between whitespace-nowrap border-b border-border-light px-10 py-3 bg-white">
                 <div class="flex flex-1 justify-end gap-4 items-center">
                     <button class="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark hover:bg-primary/10 transition-colors">
                         <span class="material-symbols-outlined">notifications</span>
@@ -165,7 +174,7 @@
                                 </thead>
                                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                                     <?php
-                                    $orders = Order::getAllCurrentOrders();
+                                    $orders = Order::getAllOrders();
                                     foreach ($orders as $order) {
                                         if ($order['status'] == 'Приета') {
                                             $color = 'text-blue-700 dark:text-primary-300 bg-blue-100 dark:bg-blue-500/50';
@@ -194,7 +203,9 @@
                                             <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400"><?php echo $order['opened_at'] ?></td>
                                             <td class="px-4 py-3 whitespace-nowrap text-sm font-medium">
                                                 <div class="flex items-center gap-2">
-                                                    <button class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary"><span class="material-symbols-outlined text-xl">edit</span></button>
+                                                    <a href="index.php?action=editOrderAdmin&order_id=<?php echo $order['order_id'] ?>">
+                                                        <button class="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary"><span class="material-symbols-outlined text-xl">edit</span></button>
+                                                    </a>
                                                     <button class="text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-500"><span class="material-symbols-outlined text-xl">delete</span></button>
                                                 </div>
                                             </td>

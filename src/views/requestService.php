@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Request New Service - AutoManager</title>
+    <title>Request New Service - TU Service</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
@@ -19,7 +19,11 @@
                         "text-light": "#333333",
                         "text-secondary-light": "#808080",
                         "border-light": "#dbe0e6",
-                        "card-light": "#FFFFFF"
+                        "card-light": "#FFFFFF",
+                        "text-dark": "#EAEAEA",
+                        "text-secondary-dark": "#A0AEC0",
+                        "border-dark": "#3A475A",
+                        "card-dark": "#1A2836"
                     },
                     fontFamily: {
                         "display": ["Inter", "sans-serif"]
@@ -47,8 +51,8 @@
                     <span class="material-symbols-outlined text-primary text-2xl">directions_car</span>
                 </div>
                 <div class="flex flex-col">
-                    <h1 class="text-text-light text-base font-bold leading-normal">AutoManager</h1>
-                    <p class="text-text-secondary-light text-sm font-normal leading-normal">Client Portal</p>
+                    <h1 class="text-text-light text-base font-bold leading-normal">TU Service</h1>
+                    <p class="text-text-secondary-light text-sm font-normal leading-normal">Client View</p>
                 </div>
             </a>
             <nav class="flex flex-col gap-2 flex-1">

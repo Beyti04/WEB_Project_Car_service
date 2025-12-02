@@ -15,16 +15,16 @@ class Car
         public int $year,
         public string $vin,
         public int $owner
-    )
-    {
+    ) {
         $this->db = Database::getInstance();
     }
 
 
-    public function save(): bool {
+    public function save(): bool
+    {
         $sql = "INSERT INTO car (model_id, year, vin, owner) 
                 VALUES (?, ?, ?, ?)";
-        
+
         try {
             $stmt = $this->db->prepare($sql);
             $success = $stmt->execute([
@@ -44,7 +44,8 @@ class Car
         }
     }
 
-    public static function findByVin(string $vin): ?Car {
+    public static function findByVin(string $vin): ?Car
+    {
         $db = Database::getInstance();
         $sql = "SELECT * FROM car WHERE vin = ? LIMIT 1";
 
@@ -69,7 +70,8 @@ class Car
         }
     }
 
-    public static function getCarsByOwner(int $ownerId): array {
+    public static function getCarsByOwner(int $ownerId): array
+    {
         $db = Database::getInstance();
         $sql = "SELECT * FROM car WHERE owner = ?";
 
@@ -95,78 +97,8 @@ class Car
         }
     }
 
-    public function getBrands(): ?array {
-        $db = Database::getInstance();
-        $sql = "SELECT * FROM car_brand ";
-
-        try {
-            $stmt = $db->prepare($sql);
-            $stmt->execute([$this->model_id]);
-            $data = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if ($data) {
-                return [
-                    'id' => (int)$data['id'],
-                    'brand' => $data['brand_name']
-                ];
-            }
-            return null;
-        } catch (PDOException $e) {
-            error_log("Car Brand Details Error: " . $e->getMessage());
-            return null;
-        }
-    }
-
-    public function getModels($car_brand): ?array {
-        $db = Database::getInstance();
-        $sql = "SELECT * FROM car_model WHERE brand_id = $car_brand";
-
-        try {
-            $stmt = $db->prepare($sql);
-            $stmt->execute([$this->model_id]);
-            $data = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if ($data) {
-                return [
-                    'id' => (int)$data['id'],
-                    'make' => $data['make'],
-                    'model' => $data['model']
-                ];
-            }
-            return null;
-        } catch (PDOException $e) {
-            error_log("Car Model Details Error: " . $e->getMessage());
-            return null;
-        }
-    }
-
-    public static function getAllCars(): array {
-        $db = Database::getInstance();
-        $sql = "SELECT * FROM car";
-
-        try {
-            $stmt = $db->prepare($sql);
-            $stmt->execute();
-            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            $cars = [];
-            foreach ($rows as $data) {
-                $cars[] = new Car(
-                    id: (int)$data['id'],
-                    model_id: (int)$data['model_id'],
-                    year: (int)$data['year'],
-                    vin: $data['vin'],
-                    owner: (int)$data['owner']
-                );
-            }
-            return $cars;
-        } catch (PDOException $e) {
-            error_log("Car Get All Error: " . $e->getMessage());
-            return [];
-        }
-    }
-
-    public static function getCarById(int $id): ?Car {
+    public static function getCarById(int $id): ?Car
+    {
         $db = Database::getInstance();
         $sql = "SELECT * FROM car WHERE id = ? LIMIT 1";
 
@@ -191,7 +123,8 @@ class Car
         }
     }
 
-    public function getCurrentAppointments(): array {
+    public function getCurrentAppointments(): array
+    {
         $sql = "SELECT o.id as order_id, o.opened_at, s.status, sv.name as service_name
                 FROM orders o
                 JOIN status s ON o.status_id = s.id
@@ -212,7 +145,8 @@ class Car
         }
     }
 
-    public function getServiceHistory(): array {
+    public function getServiceHistory(): array
+    {
         $sql = "SELECT o.id as order_id, o.closed_at,o.full_price, s.status, sv.name as service_name
                 FROM orders o
                 JOIN status s ON o.status_id = s.id
@@ -233,7 +167,8 @@ class Car
         }
     }
 
-    public function delete(): bool {
+    public function delete(): bool
+    {
         $sql = "DELETE FROM car WHERE id = ?";
 
         try {
@@ -245,7 +180,8 @@ class Car
         }
     }
 
-    public function update(): bool {
+    public function update(): bool
+    {
         $sql = "UPDATE car SET model_id = ?, year = ?, vin = ? WHERE id = ?";
 
         try {

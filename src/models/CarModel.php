@@ -17,45 +17,6 @@ class CarModel
         $this->db = Database::getInstance();
     }
 
-    public function save(): bool
-    {
-        $sql = "INSERT INTO car_model (brand_id, model_name) 
-                VALUES (?, ?)";
-
-        try {
-            $stmt = $this->db->prepare($sql);
-            $success = $stmt->execute([
-                $this->brand_id,
-                $this->model_name
-            ]);
-
-            if ($success) {
-                $this->id = (int)$this->db->lastInsertId();
-            }
-            return $success;
-        } catch (PDOException $e) {
-            error_log("CarModel Save Error: " . $e->getMessage());
-            return false;
-        }
-    }
-
-    public static function getAllModels(): array
-    {
-        $db = Database::getInstance();
-        $sql = "SELECT * FROM car_model";
-
-        try {
-            $stmt = $db->prepare($sql);
-            $stmt->execute();
-            $models = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            return $models;
-        } catch (PDOException $e) {
-            error_log("CarModel Fetch Error: " . $e->getMessage());
-            return [];
-        }
-    }
-
     public static function getModelById(int $id): ?CarModel
     {
         $sql = "SELECT * FROM car_model WHERE id = ?";

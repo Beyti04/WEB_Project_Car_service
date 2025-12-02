@@ -54,8 +54,8 @@
                     <span class="material-symbols-outlined text-primary text-2xl">directions_car</span>
                 </div>
                 <div class="flex flex-col">
-                    <h1 class="text-text-light dark:text-text-dark text-base font-bold leading-normal">AutoManager</h1>
-                    <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal">Employee Portal</p>
+                    <h1 class="text-text-light dark:text-text-dark text-base font-bold leading-normal">TU Service</h1>
+                    <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal">Employee View</p>
                 </div>
             </a>
             <nav class="flex flex-col gap-2 flex-1">

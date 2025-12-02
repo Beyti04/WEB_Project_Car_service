@@ -24,48 +24,6 @@ class Order
         $this->employee = $data['employee'] ?? null;
     }
 
-    public function getOrderByCarId(int $car_id): array
-    {
-        try {
-            $sql = "
-                SELECT o.id AS order_id, o.opened_at, o.full_price, c.id AS car_id, c.make, c.model FROM orders o
-                JOIN car c ON o.car_id=c.id
-                JOIN employees e ON o.employee_id=e.id
-                WHERE o.car_id = :car_id
-                ORDER BY o.opened_at DESC
-            ";
-
-            $stmt = $this->db->prepare($sql);
-            $stmt->execute([':car_id' => $car_id]);
-            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            $orders = [];
-            foreach ($rows as $r) {
-                $orders[] = [
-                    'id' => isset($r['order_id']) ? (int)$r['order_id'] : null,
-                    'opened_at' => $r['opened_at'] ?? null,
-                    'full_price' => isset($r['full_price']) ? (float)$r['full_price'] : 0.0,
-                    'car' => $r['car_id'] ? [
-                        'id' => (int)$r['car_id'],
-                        'make' => $r['car_make'] ?? null,
-                        'model' => $r['car_model'] ?? null,
-                        'plate' => $r['car_plate'] ?? null,
-                    ] : null,
-                    'employee' => $r['emp_id'] ? [
-                        'id' => (int)$r['emp_id'],
-                        'first_name' => $r['emp_first'] ?? null,
-                        'last_name' => $r['emp_last'] ?? null,
-                    ] : null,
-                ];
-            }
-
-            return $orders;
-        } catch (PDOException $e) {
-            // Log error in real app; return empty array on failure
-            return [];
-        }
-    }
-
     public static function getOrdersWithNoEmployee(): array
     {
         try {
@@ -231,7 +189,7 @@ class Order
         }
     }
 
-    public static function getAllCurrentOrders(): array
+    public static function getAllOrders(): array
     {
         $sql = "SELECT o.id as order_id,o.opened_at, CONCAT(cli.first_name,' ',cli.last_name) as client_name,c.year,b.brand_name,m.model_name,s.status,CONCAT(e.first_name,' ',e.last_name) as employee_name FROM orders o
         LEFT JOIN status s ON s.id=o.status_id
@@ -247,7 +205,27 @@ class Order
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public static function getActiveOrders(): int
+    public static function getAllCurrentOrders(): array
+    {
+        $sql = "SELECT o.id as order_id,o.opened_at, CONCAT(cli.first_name,' ',cli.last_name) as client_name,c.year,b.brand_name,m.model_name,s.status,CONCAT(e.first_name,' ',e.last_name) as employee_name,sv.name as service_name FROM orders o
+        LEFT JOIN status s ON s.id=o.status_id
+        LEFT JOIN employees e ON e.id=o.employee_id
+        LEFT JOIN car c ON c.id=o.car_id
+        LEFT JOIN clients cli ON cli.id=c.owner
+        LEFT JOIN car_model m ON m.id=c.model_id
+        LEFT JOIN car_brand b ON b.id=m.brand_id
+        LEFT JOIN order_service os ON os.order_id=o.id
+        LEFT JOIN services sv ON sv.id=os.service_id
+        WHERE s.status NOT IN ('Готова','Отказана')
+        ORDER BY o.opened_at DESC";
+
+        $db = Database::getInstance();
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function getActiveOrdersCount(): int
     {
         $sql = "SELECT COUNT(*) AS active_orders_count
             FROM orders o
@@ -263,7 +241,7 @@ class Order
         return (int)$row['active_orders_count'];
     }
 
-    public static function getPendingAppointments(): int
+    public static function getPendingAppointmentsCount(): int
     {
         $sql = "SELECT COUNT(*) AS pending_orders_count
             FROM orders o

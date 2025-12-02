@@ -21,7 +21,15 @@
                         "primary": "#1173d4",
                         "background-light": "#f6f7f8",
                         "background-dark": "#101922",
-                        "destructive": "#D93025"
+                        "destructive": "#D93025",
+                        "text-light": "#333333",
+                        "text-dark": "#EAEAEA",
+                        "text-secondary-light": "#808080",
+                        "text-secondary-dark": "#A0AEC0",
+                        "border-light": "#dbe0e6",
+                        "border-dark": "#3A475A",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#1A2836"
                     },
                     fontFamily: {
                         "display": ["Inter", "sans-serif"]

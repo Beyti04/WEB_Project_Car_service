@@ -55,7 +55,7 @@
                     <span class="material-symbols-outlined text-primary text-2xl">directions_car</span>
                 </div>
                 <div class="flex flex-col">
-                    <h1 class="text-text-light dark:text-text-dark text-base font-bold leading-normal">AutoManager</h1>
+                    <h1 class="text-text-light dark:text-text-dark text-base font-bold leading-normal">TU Service</h1>
                     <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal">Admin View</p>
                 </div>
             </a>
@@ -125,8 +125,8 @@
 
                 use App\Models\Order;
 
-                $activeOrders = Order::getActiveOrders();
-                $pendingOrders = Order::getPendingAppointments();
+                $activeOrders = Order::getActiveOrdersCount();
+                $pendingOrders = Order::getPendingAppointmentsCount();
                 $totalIncome = Order::getTotalRevenue();
 
                 ?>
@@ -173,43 +173,56 @@
                         </div>
                     </div>
                     <!-- Upcoming Appointments -->
+                    <?php
+                    $orders = Order::getAllCurrentOrders();
+                    ?>
                     <div class="flex flex-col gap-4 rounded-xl border border-border-light dark:border-border-dark p-6 bg-card-light dark:bg-card-dark">
                         <p class="text-lg font-bold leading-normal">Upcoming Appointments</p>
+
                         <div class="flex flex-col gap-4">
-                            <div class="flex items-center gap-4">
-                                <div class="flex flex-col items-center justify-center p-3 rounded-lg bg-primary/10 w-16 h-16">
-                                    <p class="text-primary font-bold text-lg">10:00</p>
-                                    <p class="text-primary/80 text-xs">AM</p>
-                                </div>
-                                <div>
-                                    <p class="font-bold">Sarah Connor</p>
-                                    <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm">2022 Toyota Highlander - Oil Change</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-4">
-                                <div class="flex flex-col items-center justify-center p-3 rounded-lg bg-primary/10 w-16 h-16">
-                                    <p class="text-primary font-bold text-lg">11:30</p>
-                                    <p class="text-primary/80 text-xs">AM</p>
-                                </div>
-                                <div>
-                                    <p class="font-bold">Kyle Reese</p>
-                                    <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm">2020 Ford F-150 - Brake Inspection</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-4">
-                                <div class="flex flex-col items-center justify-center p-3 rounded-lg bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark w-16 h-16">
-                                    <p class="font-bold text-lg">1:00</p>
-                                    <p class="text-text-secondary-light dark:text-text-secondary-dark text-xs">PM</p>
-                                </div>
-                                <div>
-                                    <p class="font-bold">Ellen Ripley</p>
-                                    <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm">2018 Honda Civic - Tire Rotation</p>
-                                </div>
-                            </div>
-                            <button class="w-full text-center py-2 text-sm font-bold text-primary hover:bg-primary/10 rounded-lg transition-colors">View Full Schedule</button>
+                            <?php
+                            $orderCount = count($orders);
+
+                            if ($orderCount > 0) {
+                                $maxItems = min(3, $orderCount);
+
+                                for ($i = 0; $i < $maxItems; $i++) {
+                            ?>
+                                    <div class="flex items-start gap-4 p-3 rounded-lg">
+                                        <!-- Date Badge -->
+                                        <div class="px-3 py-3 bg-primary text-white font-bold rounded-lg text-center min-w-[80px]">
+                                            <?php echo date('d.m.Y', strtotime($orders[$i]['opened_at'])); ?>
+                                        </div>
+
+                                        <!-- Details -->
+                                        <div class="flex-1 flex flex-col">
+                                            <p class="font-bold truncate"><?php echo $orders[$i]['client_name']; ?></p>
+                                            <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm break-words">
+                                                <?php echo $orders[$i]['year'] . ' ' . $orders[$i]['brand_name'] . ' ' . $orders[$i]['model_name'] . ' - ' . $orders[$i]['service_name']; ?>
+                                            </p>
+                                        </div>
+                                    </div>
+                                <?php
+                                }
+                                ?>
                         </div>
-                    </div>
+                    
+
+
+                    <a href="index.php?action=orders">
+                        <button class="w-full text-center py-2 text-sm font-bold text-primary hover:bg-primary/10 rounded-lg transition-colors">
+                            View Full Schedule
+                        </button>
+                    </a>
+</div>
+                <?php
+                            } else {
+                                echo "<p class='text-center'>No Current Orders</p>";
+                            }
+                ?>
                 </div>
+
+
             </main>
         </div>
     </div>

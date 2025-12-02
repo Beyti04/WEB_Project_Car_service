@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html class="light" lang="en">
 
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Employee Update Order - TU Service</title>
+    <title>Admin Dashboard - TU Service</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
@@ -45,61 +46,76 @@
     </script>
 </head>
 
-<body class="font-display bg-background-light dark:bg-background-dark text-[#333333] dark:text-gray-200">
+<body class="font-display bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark">
     <div class="flex h-screen">
-        <!-- Sidebar -->
+        <!-- SideNavBar -->
         <aside class="flex flex-col w-64 bg-card-light dark:bg-card-dark border-r border-border-light dark:border-border-dark p-4 shrink-0">
-            <a href="index.php?action=employeeDashboard" class="flex items-center gap-3 mb-8">
+            <a href="#" class="flex items-center gap-3 mb-8">
                 <div class="bg-primary/20 rounded-lg p-2 flex items-center justify-center">
                     <span class="material-symbols-outlined text-primary text-2xl">directions_car</span>
                 </div>
                 <div class="flex flex-col">
                     <h1 class="text-text-light dark:text-text-dark text-base font-bold leading-normal">TU Service</h1>
-                    <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal">Employee View</p>
+                    <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal">Admin View</p>
                 </div>
             </a>
             <nav class="flex flex-col gap-2 flex-1">
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=userDashboard">
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=adminDashboard">
                     <span class="material-symbols-outlined">dashboard</span>
                     <p class="text-sm font-bold leading-normal">Dashboard</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=employeeAppointments">
-                    <span class="material-symbols-outlined">calendar_month</span>
-                    <p class="text-sm font-medium leading-normal">Appointments</p>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=orders">
+                    <span class="material-symbols-outlined">receipt_long</span>
+                    <p class="text-sm font-medium leading-normal">Orders</p>
                 </a>
-
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=clientManager">
+                    <span class="material-symbols-outlined">group</span>
+                    <p class="text-sm font-medium leading-normal">Clients</p>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=employeeManager">
+                    <span class="material-symbols-outlined">badge</span>
+                    <p class="text-sm font-medium leading-normal">Employees</p>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=serviceManager">
+                    <span class="material-symbols-outlined">build</span>
+                    <p class="text-sm font-medium leading-normal">Services</p>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=inventoryManager">
+                    <span class="material-symbols-outlined">inventory_2</span>
+                    <p class="text-sm font-medium leading-normal">Inventory</p>
+                </a>
             </nav>
-            <div class="flex flex-col gap-4 mt-4">
-                <a href="index.php?action=logout" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors">
-                    <span class="material-symbols-outlined">logout</span>
-                    <p class="text-sm font-medium leading-normal">Logout</p>
-                </a>
+            <div class="flex flex-col gap-4">
+                <div class="flex flex-col gap-1">
+                    <a href="index.php" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors">
+                        <span class="material-symbols-outlined">logout</span>
+                        <p class="text-sm font-medium leading-normal">Logout</p>
+                    </a>
+                </div>
             </div>
         </aside>
-
         <!-- Main Content -->
         <div class="flex-1 flex flex-col">
-            <header class="flex items-center justify-end whitespace-nowrap border-b border-solid border-border-light dark:border-border-dark px-10 py-3 bg-card-light dark:bg-card-dark">
+            <!-- TopNavBar -->
+            <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-border-light dark:border-border-dark px-10 py-3 bg-card-light dark:bg-card-dark">
                 <div class="flex flex-1 justify-end gap-4 items-center">
                     <button class="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark hover:bg-primary/10 transition-colors">
                         <span class="material-symbols-outlined">notifications</span>
                     </button>
                     <div class="flex items-center gap-3">
-                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Employee avatar image" style='background-image: url("https://via.placeholder.com/40");'></div>
+                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar image" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuADijiRLLPR2eRQXqbVqSmI5KeUFyXAg8F2zmY2mwfb1Pgm6eF-NmHWlSRm0xVvnz3wcPCkB7pflS81XhFJqdUyEEk4srBqEw81WqNgyxpAXWyBF4WXayX_79fjNwvjFvRP2mygTB8JtFtvmgwCmXAkWO1vUyZ6xTjfEnPmwsZD1QhwGVWu-iSAwpmnxmU_NGK7U5sH-U54t-zfth88S-uqzwxhC_4dJgAlM1nGXJJ3Wb2EztyredxX5Mc4g-N4vxPoQmZFTCyPxOs");'></div>
                         <div class="flex flex-col text-sm">
-                            <p class="font-bold">
-                                <?php echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?>
-                            </p>
-                            <p class="text-text-secondary-light dark:text-text-secondary-dark">Employee</p>
+                            <p class="font-bold"><?php echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?></p>
+                            <p class="text-text-secondary-light dark:text-text-secondary-dark">Admin</p>
                         </div>
                     </div>
                 </div>
             </header>
-
+            <!-- Main dashboard content -->
             <main class="flex-1 overflow-y-auto p-10">
                 <div class="flex justify-center">
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full max-w-6xl">
-                        <form action="index.php?action=updateOrder&order_id=<?= $_GET['order_id'] ?>" method="POST" class="lg:col-span-2 flex flex-col gap-6">
+                        <form action="index.php?action=updateOrderAdmin&order_id=<?= $_GET['order_id'] ?>" method="POST" class="lg:col-span-2 flex flex-col gap-6">
                             <!-- Active Service Requests -->
                             <?php
 
@@ -133,8 +149,6 @@
                                         <div class="flex items-center justify-between mb-1">
                                             <?php
                                             $statuses = Status::getAllStatuses();
-                                            array_shift($statuses);
-                                            array_pop($statuses);
                                             // Determine progress width and color based on current order status
                                             if ($currentOrder['status'] == 'В изчакване') {
                                                 $progressWidth = 0;
@@ -202,11 +216,11 @@
                                                     <label class="flex items-center gap-3">
                                                         <input type="checkbox" class="form-checkbox text-primary h-4 w-4 material-checkbox"
                                                             name="materials[<?php echo $material->id ?>][id]"
-                                                            value="<?php echo $material->id ?>" <?php echo $material->stock<=0?'disabled':''?>/>
+                                                            value="<?php echo $material->id ?>" <?php echo $material->stock <= 0 ? 'disabled' : '' ?> />
                                                         <span class="text-text-light dark:text-text-dark"><?php echo $material->name ?></span>
-                                                        <?php if($material->stock<=0){?>
+                                                        <?php if ($material->stock <= 0) { ?>
                                                             <span class="text-text-light dark:text-text-dark">OUT OF STOCK</span>
-                                                            <?php }?>
+                                                        <?php } ?>
                                                     </label>
 
                                                     <!-- Quantity input, initially disabled -->
@@ -244,7 +258,7 @@
 
                             </div>
                             <div class="flex justify-end gap-3">
-                                <a href="index.php?action=employeeAppointments">
+                                <a href="index.php?action=orders">
                                 <button type="button" class="bg-white border border-dark px-6 py-2 rounded-lg hover:bg-primary/10 transition-colors font-bold">
                                     Cancel
                                 </button>

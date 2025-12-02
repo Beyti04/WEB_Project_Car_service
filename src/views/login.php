@@ -57,7 +57,7 @@
                         <img alt="A mechanic working on a car engine in a well-lit workshop" class="absolute inset-0 h-full w-full object-cover opacity-30" data-alt="A mechanic working on a car engine in a well-lit workshop" src="https://lh3.googleusercontent.com/aida-public/AB6AXuApj0SgDYIKYqvuGY8so6z9hhPI8nw5kpNoEvxoVTyswsyKfwLz0doTiU6tEN_Hm9b9vTOetEm0BlT1mawBTR3YW7Z_16Y5btVoA8N7VeFvnCm6rry4UaQTNVMM6iuglqeCKkxu5lCCYdZGS5Z19fT4c3QfgekddWSX0SS_CKS9aVVO0jTONDjcX4GidE8l1jwlqhsU0rYtKY-ffAyWYk3O9VVYuWChiQagT1ZfjVm2mor2v_Ho0FvXFmYpr4v2aqR9IwKWM13KB70" />
                         <a href="index.php" class="relative z-10 p-12 text-center text-white">
                             <span aria-hidden="true" class="material-symbols-outlined mb-4 text-7xl text-primary">directions_car</span>
-                            <h1 class="font-display text-4xl font-bold tracking-tight">AutoManager Pro</h1>
+                            <h1 class="font-display text-4xl font-bold tracking-tight">TU Service</h1>
                             <p class="mt-4 max-w-md text-lg text-gray-300">Streamline your garage operations. Efficient, powerful, and reliable service management at your fingertips.</p>
                         </a>
                     </div>
@@ -87,7 +87,7 @@
                                             <label class="text-text-light dark:text-text-dark pb-2 text-sm font-medium" for="email-address">Email</label>
                                             <div class="relative">
                                                 <span aria-hidden="true" class="material-symbols-outlined pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400 input-icon">person</span>
-                                                <input autocomplete="email" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-border-light bg-white py-3 pl-12 pr-4 text-base font-normal text-text-light placeholder:text-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary dark:border-border-dark dark:bg-background-dark dark:text-text-dark" id="email-address" name="email" placeholder="Enter your username or email" required="" type="email" />
+                                                <input autocomplete="email" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-border-light bg-white py-3 pl-12 pr-4 text-base font-normal text-text-light placeholder:text-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary dark:border-border-dark dark:bg-background-dark dark:text-text-dark" id="email-address" name="email" placeholder="Enter your email" required="" type="email" />
                                             </div>
                                         </div>
                                         <!-- Password Field -->
@@ -101,7 +101,7 @@
                                         
                                         <?php
                                         if (isset($error)) {
-                                            echo '<p class="text-validation-error text-sm mt-1 text-center">' . htmlspecialchars($error) . '</p>';
+                                            echo '<p class="text-validation-error text-sm mt-1">' . htmlspecialchars($error) . '</p>';
                                         }
                                         ?>
 
@@ -129,7 +129,7 @@
                                 </form>
                                 <!-- Footer -->
                                 <div class="text-center">
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">© 2024 AutoManager Pro. All rights reserved.</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">© TU Service. All rights reserved.</p>
                                 </div>
                             </div>
                         </div>

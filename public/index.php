@@ -429,6 +429,14 @@ switch ($action) {
         require __DIR__ . '/../src/views/employeeUpdateOrder.php';
         break;
 
+    case 'editOrderAdmin':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        require __DIR__ . '/../src/views/adminUpdateOrder.php';
+        break;
+
     case 'updateOrder':
         if (!isset($_SESSION['user_id'])) {
             header("Location: index.php?action=login");
@@ -436,6 +444,15 @@ switch ($action) {
         }
         Order::updateOrder($_GET['order_id'], $_POST['materials'] ?? [], $_POST['status']);
         require __DIR__ . '/../src/views/employeeDashboard.php';
+        break;
+
+        case 'updateOrderAdmin':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        Order::updateOrder($_GET['order_id'], $_POST['materials'] ?? [], $_POST['status']);
+        require __DIR__ . '/../src/views/order.php';
         break;
 
     case 'downloadPDF':

@@ -41,6 +41,7 @@ class MaterialController
             exit;
         }
     }
+    
     public static function removeMaterial(int $materialId): void
     {
         Material::deleteById($materialId);

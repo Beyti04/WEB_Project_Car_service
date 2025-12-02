@@ -77,34 +77,6 @@ class Material
         }
     }
 
-    public static function getMaterialsByGroupId(int $groupId): array
-    {
-        $db = Database::getInstance();
-        $stmt = $db->prepare("SELECT id, name, group_id FROM materials WHERE group_id = :group_id");
-        $stmt->execute([':group_id' => $groupId]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public static function decreaseStock(int $materialId, int $amount): bool
-    {
-        $db = Database::getInstance();
-        $stmt = $db->prepare("UPDATE materials SET stock = stock - :amount WHERE id = :id AND stock >= :amount");
-        return $stmt->execute([
-            ':amount' => $amount,
-            ':id' => $materialId
-        ]);
-    }
-
-    public static function increaseStock(int $materialId, int $amount): bool
-    {
-        $db = Database::getInstance();
-        $stmt = $db->prepare("UPDATE materials SET stock = stock + :amount WHERE id = :id");
-        return $stmt->execute([
-            ':amount' => $amount,
-            ':id' => $materialId
-        ]);
-    }
-
     public function update(): bool
     {
         if ($this->id === null) {

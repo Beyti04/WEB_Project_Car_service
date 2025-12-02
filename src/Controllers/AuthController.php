@@ -149,7 +149,7 @@ class AuthController
         }
 
 
-        header("Location: index.php?action=login&error=invalid email or password");
+        header("Location: index.php?action=login&error=Invalid email or password");
         exit;
     }
 

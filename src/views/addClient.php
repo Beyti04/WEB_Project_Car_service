@@ -21,7 +21,15 @@
                         "primary": "#1173d4",
                         "background-light": "#f6f7f8",
                         "background-dark": "#101922",
-                        "destructive": "#D93025"
+                        "destructive": "#D93025",
+                        "text-light": "#333333",
+                        "text-dark": "#EAEAEA",
+                        "text-secondary-light": "#808080",
+                        "text-secondary-dark": "#A0AEC0",
+                        "border-light": "#dbe0e6",
+                        "border-dark": "#3A475A",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#1A2836"
                     },
                     fontFamily: {
                         "display": ["Inter", "sans-serif"]
@@ -35,14 +43,15 @@
 <body class="font-display bg-background-light dark:bg-background-dark text-[#333333] dark:text-gray-200">
     <div class="flex h-screen">
         <!-- Sidebar -->
-        <aside class="flex flex-col w-64 bg-card-light dark:bg-card-dark border-r border-border-light dark:border-border-dark p-4 shrink-0">
+        <aside class="flex flex-col w-64 bg-white border-r border-border-light p-4 shrink-0">
+
             <a href="index.php?action=adminDashboard" class="flex items-center gap-3 mb-8">
                 <div class="bg-primary/20 rounded-lg p-2 flex items-center justify-center">
                     <span class="material-symbols-outlined text-primary text-2xl">group</span>
                 </div>
                 <div class="flex flex-col">
-                    <h1 class="text-text-light dark:text-text-dark text-base font-bold leading-normal">AutoManager</h1>
-                    <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal">Admin Portal</p>
+                    <h1 class="text-text-light dark:text-text-dark text-base font-bold leading-normal">TU Service</h1>
+                    <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal">Admin View</p>
                 </div>
             </a>
 
@@ -51,8 +60,8 @@
                     <span class="material-symbols-outlined">dashboard</span>
                     <p class="text-sm font-bold leading-normal">Dashboard</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="index.php?action=clientManager">
-                    <span class="material-symbols-outlined text-primary">group</span>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=clientManager">
+                    <span class="material-symbols-outlined">group</span>
                     <p class="text-sm font-medium leading-normal">Clients</p>
                 </a>
             </nav>
@@ -69,7 +78,7 @@
 
         <!-- Main Layout -->
         <div class="flex-1 flex flex-col">
-            <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-border-light dark:border-border-dark px-10 py-3 bg-card-light dark:bg-card-dark">
+            <header class="flex items-center justify-between whitespace-nowrap border-b border-border-light px-10 py-3 bg-white">
                 <div class="flex flex-1 justify-end gap-4 items-center">
                     <button class="flex cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark hover:bg-primary/10 transition-colors">
                         <span class="material-symbols-outlined">notifications</span>

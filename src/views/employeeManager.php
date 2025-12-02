@@ -18,6 +18,14 @@
                         "primary": "#1173d4",
                         "background-light": "#f6f7f8",
                         "background-dark": "#101922",
+                        "text-light": "#333333",
+                        "text-dark": "#EAEAEA",
+                        "text-secondary-light": "#808080",
+                        "text-secondary-dark": "#A0AEC0",
+                        "border-light": "#dbe0e6",
+                        "border-dark": "#3A475A",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#1A2836"
                     },
                     fontFamily: {
                         "display": ["Inter", "sans-serif"]
@@ -53,7 +61,7 @@
                     <span class="material-symbols-outlined text-primary text-2xl">directions_car</span>
                 </div>
                 <div class="flex flex-col">
-                    <h1 class="text-text-light dark:text-text-dark text-base font-bold leading-normal">AutoManager</h1>
+                    <h1 class="text-text-light dark:text-text-dark text-base font-bold leading-normal">TU Service</h1>
                     <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-normal leading-normal">Admin View</p>
                 </div>
             </a>

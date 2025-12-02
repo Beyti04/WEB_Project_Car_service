@@ -44,46 +44,6 @@ class Client {
             return false;
         }
     }
-
-    public function loginUser(string $password): bool {
-        if($this->userFound() === false) {
-            return false;
-        }
-        $stmt=$this->db->prepare("SELECT password FROM clients WHERE email = ?");
-        $stmt->execute([$this->email]);
-        $data = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($data && password_verify($password, $data['password'])) {
-            return true;
-        }
-        return false;
-    }
-
-    public function userFound(): bool {
-        $stmt = $this->db->prepare("SELECT id FROM clients WHERE email = ?");
-        $stmt->execute([$this->email]);
-        return $stmt->rowCount() > 0;
-    }
-
-     public function hashPassword(string $password): string {
-        return password_hash($password, PASSWORD_DEFAULT);
-    }
-
-    public function getUserFromDB(string $email): ?Client {
-        $stmt = $this->db->prepare("SELECT * FROM clients WHERE email = ?");
-        $stmt->execute([$email]);
-        $data = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($data) {
-            return new Client(
-                id: $data['id'],
-                first_name: $data['first_name'],
-                last_name: $data['last_name'],
-                phone_number: $data['phone_number'],
-                email: $data['email'],
-                password: $data['password']
-            );
-        }
-        return null;
-    }
     
     public static function findByEmail(string $email): ?Client {
         $db = Database::getInstance();
@@ -119,20 +79,6 @@ class Client {
             );
         }
         return null;
-    }
-
-    public function getVehicles(): array {
-        $sql="SELECT c.id , b.brand_name, m.model_name, c.year, c.vin FROM car c
-              JOIN brands b ON c.brand_id = b.id
-              JOIN models m ON c.model_id = m.id
-              WHERE c.owner = $this->id";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([$this->id]);
-        $vehicles = [];
-        while ($data = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $vehicles[] = $data;
-        }
-        return $vehicles;
     }
 
     public static function getAllClients(): array {
