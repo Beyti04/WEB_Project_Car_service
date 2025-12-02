@@ -144,8 +144,8 @@
                             <!-- Category Dropdown -->
                             <div class="w-full">
                                 <div class="relative h-12">
-                                    <select class="flex w-full flex-1 items-stretch rounded-lg h-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-200 pl-4 pr-10 text-base font-normal leading-normal focus:outline-0 focus:ring-2 focus:ring-primary/50 appearance-none">
-                                        <option disabled selected>All Categories</option>
+                                    <select id="categoryDropdown" class="flex w-full flex-1 items-stretch rounded-lg h-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-200 pl-4 pr-10 text-base font-normal leading-normal focus:outline-0 focus:ring-2 focus:ring-primary/50 appearance-none">
+                                        <option selected>All Categories</option>
                                         <?php
 
                                         use App\Models\Service;
@@ -189,6 +189,9 @@
                                 <tbody>
                                     <?php
                                     $services = Service::getAllServices();
+                                    if (!$services) {
+                                        echo '<tr><td colspan="4" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">No services found.</td></tr>';
+                                    }
                                     foreach ($services as $service) {
                                         echo '<tr class="bg-white dark:bg-[#1C2A36] border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800">';
                                         echo '<th class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white" scope="row">' . htmlspecialchars($service->name) . '</th>';
@@ -219,40 +222,83 @@
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
                         const itemsPerPage = 5;
+
+                        const searchInput = document.querySelector('input[placeholder*="Search"]');
+                        const categoryDropdown = document.getElementById('categoryDropdown');
                         const tableBody = document.querySelector('tbody');
-                        const rows = Array.from(tableBody.querySelectorAll('tr'));
                         const paginationContainer = document.getElementById('pagination-controls');
-                        const totalPages = Math.ceil(rows.length / itemsPerPage);
 
-                        function showPage(page) {
-                            rows.forEach(row => row.style.display = 'none');
+                        const allRows = Array.from(tableBody.querySelectorAll('tr')).filter(row => !row.innerText.includes('No services found'));
 
-                            const start = (page - 1) * itemsPerPage;
-                            const end = start + itemsPerPage;
+                        let currentPage = 1;
+                        let filteredRows = [...allRows]; // Initialize with all rows
+                        
+                        function applyFilters() {
+                            const searchText = searchInput.value.toLowerCase();
+                            const selectedCategoryText = categoryDropdown.options[categoryDropdown.selectedIndex].text.trim();
+                            const isAllCategories = categoryDropdown.selectedIndex === 0;
 
-                            rows.slice(start, end).forEach(row => row.style.display = '');
-                            updateButtons(page);
+                            filteredRows = allRows.filter(row => {
+                                const nameText = row.children[0].textContent.toLowerCase();
+                                const categoryText = row.children[1].textContent.trim();
+
+                                const matchesSearch = nameText.includes(searchText);
+
+                                const matchesCategory = isAllCategories || (categoryText === selectedCategoryText);
+
+                                return matchesSearch && matchesCategory;
+                            });
+
+                            currentPage = 1;
+                            renderTable();
                         }
 
-                        function updateButtons(page) {
+                        function renderTable() {
+                            allRows.forEach(row => row.style.display = 'none');
+
+                            const totalPages = Math.ceil(filteredRows.length / itemsPerPage) || 1;
+                            const start = (currentPage - 1) * itemsPerPage;
+                            const end = start + itemsPerPage;
+
+                            const rowsToShow = filteredRows.slice(start, end);
+
+                            rowsToShow.forEach(row => row.style.display = '');
+                            renderPaginationButtons(totalPages);
+                        }
+
+                        function renderPaginationButtons(totalPages) {
                             paginationContainer.innerHTML = '';
 
-                            const prevBtn = document.createElement('button');
-                            prevBtn.innerHTML = '<span class="material-symbols-outlined text-xl">chevron_left</span>';
-                            prevBtn.className = `flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 ${page === 1 ? 'text-gray-300 cursor-not-allowed' : 'text-[#111418] dark:text-gray-400'}`;
-                            prevBtn.onclick = () => {
-                                if (page > 1) showPage(page - 1);
-                            };
+                            if (filteredRows.length === 0) {
+                                paginationContainer.innerHTML = '<span class="text-sm text-gray-500 dark:text-gray-400">No services match your filters.</span>';
+                                return;
+                            }
+
+                            const prevBtn = createButton('chevron_left', currentPage > 1, () => {
+                                if (currentPage > 1) {
+                                    currentPage--;
+                                    renderTable();
+                                }
+                            });
                             paginationContainer.appendChild(prevBtn);
 
                             for (let i = 1; i <= totalPages; i++) {
-                                if (i === 1 || i === totalPages || (i >= page - 1 && i <= page + 1)) {
+                                if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
                                     const btn = document.createElement('button');
                                     btn.innerText = i;
-                                    btn.className = `flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 ${i === page ? 'bg-primary text-white' : 'text-[#111418] dark:text-white'}`;
-                                    btn.onclick = () => showPage(i);
+
+                                    if (i === currentPage) {
+                                        btn.className = 'text-sm font-bold flex size-10 items-center justify-center text-white rounded-full bg-primary';
+                                    } else {
+                                        btn.className = 'text-sm font-normal flex size-10 items-center justify-center text-[#111418] dark:text-white rounded-full hover:bg-gray-200 dark:hover:bg-gray-800';
+                                    }
+
+                                    btn.onclick = () => {
+                                        currentPage = i;
+                                        renderTable();
+                                    };
                                     paginationContainer.appendChild(btn);
-                                } else if (i === page - 2 || i === page + 2) {
+                                } else if (i === currentPage - 2 || i === currentPage + 2) {
                                     const span = document.createElement('span');
                                     span.innerText = '...';
                                     span.className = 'text-sm font-normal flex size-10 items-center justify-center text-[#111418] dark:text-white';
@@ -260,16 +306,28 @@
                                 }
                             }
 
-                            const nextBtn = document.createElement('button');
-                            nextBtn.innerHTML = '<span class="material-symbols-outlined text-xl">chevron_right</span>';
-                            nextBtn.className = `flex size-10 items-center justify-center rounded-full hover:bg
-                            -200 dark:hover:bg-gray-800 ${page === totalPages ? 'text-gray-300 cursor-not-allowed' : 'text-[#111418] dark:text-gray-400'}`;
-                            nextBtn.onclick = () => {
-                                if (page < totalPages) showPage(page + 1);
-                            };
+                            const nextBtn = createButton('chevron_right', currentPage < totalPages, () => {
+                                if (currentPage < totalPages) {
+                                    currentPage++;
+                                    renderTable();
+                                }
+                            });
                             paginationContainer.appendChild(nextBtn);
                         }
-                        showPage(1);
+
+                        function createButton(icon, enabled, onClick) {
+                            const btn = document.createElement('button');
+                            btn.innerHTML = `<span class="material-symbols-outlined text-xl">${icon}</span>`;
+                            btn.className = `flex size-10 items-center justify-center rounded-full ${enabled ? 'hover:bg-gray-200 dark:hover:bg-gray-800 text-[#111418] dark:text-gray-400' : 'text-gray-300 cursor-not-allowed'}`;
+                            btn.disabled = !enabled;
+                            btn.onclick = onClick;
+                            return btn;
+                        }
+
+                        if (searchInput) searchInput.addEventListener('input', applyFilters);
+                        if (categoryDropdown) categoryDropdown.addEventListener('change', applyFilters);
+
+                        renderTable();
                     });
                 </script>
 

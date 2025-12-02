@@ -130,6 +130,9 @@
                                 </thead>
                                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                                     <?php
+                                    if (!$orders) {
+                                        echo '<tr><td colspan="7" class="px-4 py-4 text-center text-gray-500 dark:text-gray-400">No service orders available.</td></tr>';
+                                    }
 
                                     foreach ($orders as $order) {
 

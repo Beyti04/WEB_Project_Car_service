@@ -142,8 +142,8 @@
                         <!-- Filter Dropdown -->
                         <div class="w-full">
                             <div class="relative h-12">
-                                <select class="flex w-full flex-1 items-stretch rounded-lg h-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-200 pl-4 pr-10 text-base font-normal leading-normal focus:outline-0 focus:ring-2 focus:ring-primary/50 appearance-none">
-                                    <option disabled selected>All Groups</option>
+                                <select id="groupFilter" class="flex w-full flex-1 items-stretch rounded-lg h-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-200 pl-4 pr-10 text-base font-normal leading-normal focus:outline-0 focus:ring-2 focus:ring-primary/50 appearance-none">
+                                    <option selected>All Groups</option>
                                     <?php
 
                                     use App\Models\MaterialGroup;
@@ -215,45 +215,67 @@
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
                         const itemsPerPage = 5;
+
                         const tableBody = document.querySelector('tbody');
-                        const rows = Array.from(tableBody.querySelectorAll('tr'));
+                        const allRows = Array.from(tableBody.querySelectorAll('tr'));
                         const paginationContainer = document.getElementById('pagination-controls');
 
+                        const searchInput = document.querySelector('input[placeholder="Search by material name..."]');
+                        const groupFilter = document.getElementById('groupFilter');
+                        
                         let currentPage = 1;
-                        const totalPages = Math.ceil(rows.length / itemsPerPage);
+                        let filteredRows = [...allRows]; // Initially, filtered rows = all rows
 
-                        function showPage(page) {
-                            rows.forEach(row => row.style.display = 'none');
+                        function applyFilters() {
+                            const searchText = searchInput.value.toLowerCase();
+                            const selectedGroupText = groupFilter.options[groupFilter.selectedIndex].text;
+                            const isAllGroups = groupFilter.selectedIndex === 0; // Assuming first option is "All Groups"
 
-                            const start = (page - 1) * itemsPerPage;
-                            const end = start + itemsPerPage;
+                            filteredRows = allRows.filter(row => {
+                                const nameText = row.children[0].innerText.toLowerCase();
+                                const groupText = row.children[1].innerText;
 
-                            rows.slice(start, end).forEach(row => row.style.display = '');
+                                const matchesSearch = nameText.includes(searchText);
 
-                            updateButtons(page);
+                                const matchesGroup = isAllGroups || (groupText.trim() === selectedGroupText.trim());
+
+                                return matchesSearch && matchesGroup;
+                            });
+
+                            currentPage = 1;
+                            renderTable();
                         }
 
-                        function updateButtons(page) {
+                        function renderTable() {
+                            allRows.forEach(row => row.style.display = 'none');
+
+                            const totalPages = Math.ceil(filteredRows.length / itemsPerPage) || 1;
+                            const start = (currentPage - 1) * itemsPerPage;
+                            const end = start + itemsPerPage;
+
+                            const rowsToShow = filteredRows.slice(start, end);
+                            rowsToShow.forEach(row => row.style.display = '');
+
+                            renderPaginationButtons(totalPages);
+                        }
+
+                        function renderPaginationButtons(totalPages) {
                             paginationContainer.innerHTML = '';
 
-                            const prevBtn = document.createElement('button');
-                            prevBtn.innerHTML = '<span class="material-symbols-outlined text-xl">chevron_left</span>';
-                            prevBtn.className = `flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 ${page === 1 ? 'text-gray-300 cursor-not-allowed' : 'text-[#111418] dark:text-gray-400'}`;
-                            prevBtn.disabled = page === 1;
-                            prevBtn.onclick = () => {
+                            const prevBtn = createButton('chevron_left', currentPage > 1, () => {
                                 if (currentPage > 1) {
                                     currentPage--;
-                                    showPage(currentPage);
+                                    renderTable();
                                 }
-                            };
+                            });
                             paginationContainer.appendChild(prevBtn);
 
                             for (let i = 1; i <= totalPages; i++) {
-                                if (i === 1 || i === totalPages || (i >= page - 1 && i <= page + 1)) {
+                                if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
                                     const btn = document.createElement('button');
                                     btn.innerText = i;
 
-                                    if (i === page) {
+                                    if (i === currentPage) {
                                         btn.className = 'text-sm font-bold flex size-10 items-center justify-center text-white rounded-full bg-primary';
                                     } else {
                                         btn.className = 'text-sm font-normal flex size-10 items-center justify-center text-[#111418] dark:text-white rounded-full hover:bg-gray-200 dark:hover:bg-gray-800';
@@ -261,10 +283,10 @@
 
                                     btn.onclick = () => {
                                         currentPage = i;
-                                        showPage(currentPage);
+                                        renderTable();
                                     };
                                     paginationContainer.appendChild(btn);
-                                } else if (i === page - 2 || i === page + 2) {
+                                } else if (i === currentPage - 2 || i === currentPage + 2) {
                                     const span = document.createElement('span');
                                     span.innerText = '...';
                                     span.className = 'text-sm font-normal flex size-10 items-center justify-center text-[#111418] dark:text-white';
@@ -272,20 +294,28 @@
                                 }
                             }
 
-                            const nextBtn = document.createElement('button');
-                            nextBtn.innerHTML = '<span class="material-symbols-outlined text-xl">chevron_right</span>';
-                            nextBtn.className = `flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 ${page === totalPages ? 'text-gray-300 cursor-not-allowed' : 'text-[#111418] dark:text-gray-400'}`;
-                            nextBtn.disabled = page === totalPages;
-                            nextBtn.onclick = () => {
+                            const nextBtn = createButton('chevron_right', currentPage < totalPages, () => {
                                 if (currentPage < totalPages) {
                                     currentPage++;
-                                    showPage(currentPage);
+                                    renderTable();
                                 }
-                            };
+                            });
                             paginationContainer.appendChild(nextBtn);
                         }
 
-                        showPage(1);
+                        function createButton(icon, enabled, onClick) {
+                            const btn = document.createElement('button');
+                            btn.innerHTML = `<span class="material-symbols-outlined text-xl">${icon}</span>`;
+                            btn.className = `flex size-10 items-center justify-center rounded-full ${enabled ? 'hover:bg-gray-200 dark:hover:bg-gray-800 text-[#111418] dark:text-gray-400' : 'text-gray-300 cursor-not-allowed'}`;
+                            btn.disabled = !enabled;
+                            btn.onclick = onClick;
+                            return btn;
+                        }
+
+                        searchInput.addEventListener('input', applyFilters);
+                        groupFilter.addEventListener('change', applyFilters);
+
+                        renderTable();
                     });
                 </script>
             </main>

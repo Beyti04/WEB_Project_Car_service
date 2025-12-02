@@ -174,22 +174,18 @@
                             const totalPages = Math.ceil(rows.length / itemsPerPage);
 
                             function showPage(page) {
-                                // Скриване на всички редове
                                 rows.forEach(row => row.style.display = 'none');
 
-                                // Показване на редовете за текущата страница
                                 const start = (page - 1) * itemsPerPage;
                                 const end = start + itemsPerPage;
                                 rows.slice(start, end).forEach(row => row.style.display = '');
 
-                                // Актуализиране на бутоните за навигация
                                 updateButtons(page);
                             }
 
                             function updateButtons(page) {
                                 paginationContainer.innerHTML = '';
 
-                                // Бутон "Предишен"
                                 const prevBtn = document.createElement('button');
                                 prevBtn.innerHTML = '<span class="material-symbols-outlined text-xl">chevron_left</span>';
                                 prevBtn.className = `flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 ${page === 1 ? 'text-gray-300 cursor-not-allowed' : 'text-[#111418] dark:text-gray-400'}`;
@@ -206,7 +202,6 @@
                                     paginationContainer.appendChild(btn);
                                 }
 
-                                // Бутон "Следващ"
                                 const nextBtn = document.createElement('button');
                                 nextBtn.innerHTML = '<span class="material-symbols-outlined text-xl">chevron_right</span>';
                                 nextBtn.className = `flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 ${page === totalPages ? 'text-gray-300 cursor-not-allowed' : 'text-[#111418] dark:text-gray-400'}`;
@@ -216,7 +211,6 @@
                                 paginationContainer.appendChild(nextBtn);
                             }
 
-                            // Показване на първата страница при зареждане
                             showPage(1);
                         });
                     </script>

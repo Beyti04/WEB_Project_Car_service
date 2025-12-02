@@ -206,17 +206,6 @@
                         </div>
                     </div>
                     <!-- Pagination -->
-
-                    <!--<div class="flex items-center justify-between mt-6 px-1">
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Showing <span class="font-medium">1</span> to <span class="font-medium">5</span> of <span class="font-medium">20</span> results</p>
-                        <div class="flex items-center gap-2">
-                            <button class="flex items-center justify-center h-8 w-8 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50" disabled="">
-                                <span class="material-symbols-outlined text-lg">chevron_left</span>
-                            </button>
-                            <button class="flex items-center justify-center h-8 w-8 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
-                                <span class="material-symbols-outlined text-lg">chevron_right</span>
-                            </button>
-                        </div>-->
                 </div>
                 <div id="pagination-controls" class="flex items-center justify-center p-4 gap-2"></div>
                 <script>

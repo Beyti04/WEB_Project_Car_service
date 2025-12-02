@@ -125,9 +125,9 @@
                             </div>
                             <div class="flex items-center gap-3 overflow-x-auto">
                                 <div class="relative w-full">
-                                    <select
+                                    <select id="statusFilter" name="statusFilter"
                                         class="flex h-10 items-center justify-between gap-x-2 rounded-lg bg-background-light dark:bg-gray-700 px-4 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal border border-border-light dark:border-border-dark appearance-none cursor-pointer">
-                                        <option value="all" selected disabled>Status</option>
+                                        <option value="all" selected>Status</option>
 
                                         <?php
                                         $statuses = Status::getAllStatuses();
@@ -170,6 +170,9 @@
                                     </thead>
                                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                                         <?php
+                                        if (!$orders) {
+                                            echo '<tr><td colspan="7" class="px-4 py-4 text-center text-gray-500 dark:text-gray-400">No service orders assigned.</td></tr>';
+                                        }
 
                                         foreach ($orders as $order) {
                                             if ($order['status'] == 'Приета') {
@@ -212,7 +215,7 @@
                         </div>
                         <!-- Pagination -->
                         <div id="pagination-controls" class="flex items-center justify-center p-4 gap-2"></div>
-                        <script>
+                        <!--<script>
                             document.addEventListener('DOMContentLoaded', function() {
                                 const itemsPerPage = 5;
                                 const tableBody = document.querySelector('tbody');
@@ -286,6 +289,125 @@
                                 }
 
                                 showPage(1);
+                            });
+                        </script>-->
+
+
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const itemsPerPage = 5;
+                                const statusColumnIndex = 4;
+
+                                const tableBody = document.querySelector('tbody');
+                                const allRows = Array.from(tableBody.querySelectorAll('tr')).filter(row => !row.innerText.includes('No service orders'));
+                                const paginationContainer = document.getElementById('pagination-controls');
+                                const statusFilter = document.getElementById('statusFilter');
+                                const searchInput = document.querySelector('input[placeholder*="Search"]');
+
+                                let currentPage = 1;
+                                let filteredRows = [...allRows]; // Initialize with all rows
+
+                                function updateTable() {
+                                    const statusValue = statusFilter.value;
+                                    const searchText = searchInput.value.toLowerCase();
+
+                                    filteredRows = allRows.filter(row => {
+                                        let statusMatch = true;
+                                        if (statusValue !== 'all') {
+                                            const selectedText = statusFilter.options[statusFilter.selectedIndex].text.trim();
+                                            const rowStatusText = row.children[statusColumnIndex].textContent.trim();
+                                            statusMatch = (rowStatusText === selectedText);
+                                        }
+
+                                        const rowText = row.innerText.toLowerCase();
+                                        const searchMatch = rowText.includes(searchText);
+
+                                        return statusMatch && searchMatch;
+                                    });
+
+                                    const totalPages = Math.ceil(filteredRows.length / itemsPerPage) || 1;
+                                    if (currentPage > totalPages) currentPage = 1;
+
+                                    renderRows();
+                                    renderPagination(totalPages);
+                                }
+
+                                function renderRows() {
+                                    allRows.forEach(row => row.style.display = 'none');
+
+                                    const start = (currentPage - 1) * itemsPerPage;
+                                    const end = start + itemsPerPage;
+                                    const rowsToShow = filteredRows.slice(start, end);
+
+                                    rowsToShow.forEach(row => row.style.display = '');
+                                }
+
+                                function renderPagination(totalPages) {
+                                    paginationContainer.innerHTML = '';
+
+                                    if (filteredRows.length === 0) {
+                                        paginationContainer.innerHTML = '<span class="text-sm text-gray-500">No results found.</span>';
+                                        return;
+                                    }
+
+                                    const prevBtn = createButton('chevron_left', currentPage > 1, () => {
+                                        if (currentPage > 1) {
+                                            currentPage--;
+                                            updateTable();
+                                        }
+                                    });
+                                    paginationContainer.appendChild(prevBtn);
+
+                                    for (let i = 1; i <= totalPages; i++) {
+                                        if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+                                            const btn = document.createElement('button');
+                                            btn.innerText = i;
+                                            if (i === currentPage) {
+                                                btn.className = 'flex size-10 items-center justify-center text-white rounded-full bg-primary font-bold text-sm';
+                                            } else {
+                                                btn.className = 'flex size-10 items-center justify-center text-[#111418] dark:text-white rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 text-sm font-normal';
+                                            }
+                                            btn.onclick = () => {
+                                                currentPage = i;
+                                                updateTable();
+                                            };
+                                            paginationContainer.appendChild(btn);
+                                        } else if (i === currentPage - 2 || i === currentPage + 2) {
+                                            const span = document.createElement('span');
+                                            span.innerText = '...';
+                                            span.className = 'flex size-10 items-center justify-center text-[#111418] dark:text-white text-sm';
+                                            paginationContainer.appendChild(span);
+                                        }
+                                    }
+
+                                    const nextBtn = createButton('chevron_right', currentPage < totalPages, () => {
+                                        if (currentPage < totalPages) {
+                                            currentPage++;
+                                            updateTable();
+                                        }
+                                    });
+                                    paginationContainer.appendChild(nextBtn);
+                                }
+
+                                function createButton(icon, enabled, onClick) {
+                                    const btn = document.createElement('button');
+                                    btn.innerHTML = `<span class="material-symbols-outlined text-xl">${icon}</span>`;
+                                    btn.className = `flex size-10 items-center justify-center rounded-full ${enabled ? 'hover:bg-gray-200 dark:hover:bg-gray-800 text-[#111418] dark:text-gray-400' : 'text-gray-300 cursor-not-allowed'}`;
+                                    btn.disabled = !enabled;
+                                    btn.onclick = onClick;
+                                    return btn;
+                                }
+
+                                statusFilter.addEventListener('change', () => {
+                                    currentPage = 1;
+                                    updateTable();
+                                });
+                                searchInput.addEventListener('input', () => {
+                                    currentPage = 1;
+                                    updateTable();
+                                });
+
+                                updateTable();
                             });
                         </script>
                     </div>
