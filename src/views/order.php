@@ -144,16 +144,37 @@
                                 </label>
                             </div>
                             <div class="flex items-center gap-3 overflow-x-auto">
-                                <button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-background-light dark:bg-gray-700 px-4 w-full">
-                                    <p class="text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal">Status: All</p>
-                                    <span class="material-symbols-outlined text-gray-500 dark:text-gray-400 text-base">expand_more</span>
-                                </button>
+                                <div class="relative w-full">
+                                    <select class="flex h-10 items-center justify-between gap-x-2 rounded-lg bg-background-light dark:bg-gray-700 px-4 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal border border-border-light dark:border-border-dark appearance-none cursor-pointer">
+                                        <option value="" selected>Status</option>
+                                        <?php
+
+                                        use App\Models\Status;
+
+                                        $statuses = Status::getAllStatuses();
+                                        foreach ($statuses as $status) {
+                                            echo '<option value="' . htmlspecialchars($status->status) . '">' . htmlspecialchars($status->status) . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
                             </div>
                             <div class="flex items-center gap-3 overflow-x-auto">
-                                <button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-background-light dark:bg-gray-700 px-4 w-full">
-                                    <p class="text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal">Employee</p>
-                                    <span class="material-symbols-outlined text-gray-500 dark:text-gray-400 text-base">expand_more</span>
-                                </button>
+                                <div class="relative w-full">
+                                    <select class="flex h-10 items-center justify-between gap-x-2 rounded-lg bg-background-light dark:bg-gray-700 px-4 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal border border-border-light dark:border-border-dark appearance-none cursor-pointer">
+                                        <option value="" selected>Assigned Employee</option>
+                                        <?php
+
+                                        use App\Models\Employee;
+
+                                        $employees = Employee::getAllEmployees();
+                                        var_dump($employees);
+                                        foreach ($employees as $employee) {
+                                            echo '<option value="' . htmlspecialchars($employee["first_name"]) .' '. htmlspecialchars($employee["last_name"])  . '">' . htmlspecialchars($employee["first_name"]) .' '. htmlspecialchars($employee["last_name"]) . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -221,46 +242,103 @@
                 <div id="pagination-controls" class="flex items-center justify-center p-4 gap-2"></div>
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
+                        // --- CONFIGURATION ---
                         const itemsPerPage = 5;
+
+                        // --- DOM ELEMENTS ---
                         const tableBody = document.querySelector('tbody');
-                        const rows = Array.from(tableBody.querySelectorAll('tr'));
+                        // Get all rows, excluding "No orders" message if present
+                        const allRows = Array.from(tableBody.querySelectorAll('tr')).filter(row => !row.innerText.includes('No service orders assigned'));
                         const paginationContainer = document.getElementById('pagination-controls');
 
+                        // INPUTS
+                        const searchInput = document.querySelector('input[placeholder*="Search"]');
+
+                        // Selects: [0] is Status, [1] is Employee (based on your HTML structure)
+                        const selects = document.querySelectorAll('select');
+                        const statusFilter = selects[0];
+                        const employeeFilter = selects[1];
+
+                        // --- STATE ---
                         let currentPage = 1;
-                        const totalPages = Math.ceil(rows.length / itemsPerPage);
+                        let filteredRows = [...allRows];
 
-                        function showPage(page) {
-                            rows.forEach(row => row.style.display = 'none');
+                        // --- CORE FUNCTIONS ---
 
-                            const start = (page - 1) * itemsPerPage;
-                            const end = start + itemsPerPage;
+                        // 1. Filter Logic
+                        function applyFilters() {
+                            const searchText = searchInput.value.toLowerCase();
+                            const selectedStatus = statusFilter.value; // e.g. "Ремонт"
+                            const selectedEmployee = employeeFilter.value; // e.g. "John"
 
-                            rows.slice(start, end).forEach(row => row.style.display = '');
+                            filteredRows = allRows.filter(row => {
+                                // Column Indices based on your HTML:
+                                // 0: ID, 1: Client, 2: Car, 3: Status, 4: Employee, 5: Date
 
-                            updateButtons(page);
+                                const clientText = row.children[1].textContent.toLowerCase();
+                                const carText = row.children[2].textContent.toLowerCase();
+                                const idText = row.children[0].textContent.toLowerCase();
+                                const statusText = row.children[3].textContent.trim();
+                                const employeeText = row.children[4].textContent.trim();
+
+                                // 1. Search (matches Client, Car, or ID)
+                                const matchesSearch = clientText.includes(searchText) ||
+                                    carText.includes(searchText) ||
+                                    idText.includes(searchText);
+
+                                // 2. Status Filter
+                                // If value is empty or default, ignore filter
+                                const matchesStatus = !selectedStatus || (statusText === selectedStatus);
+
+                                // 3. Employee Filter
+                                const matchesEmployee = !selectedEmployee || (employeeText === selectedEmployee);
+
+                                return matchesSearch && matchesStatus && matchesEmployee;
+                            });
+
+                            // Reset to page 1
+                            currentPage = 1;
+                            renderTable();
                         }
 
-                        function updateButtons(page) {
+                        // 2. Render Table
+                        function renderTable() {
+                            // Hide all original rows
+                            allRows.forEach(row => row.style.display = 'none');
+
+                            // Calculate pagination for filtered rows
+                            const totalPages = Math.ceil(filteredRows.length / itemsPerPage) || 1;
+                            const start = (currentPage - 1) * itemsPerPage;
+                            const end = start + itemsPerPage;
+
+                            // Show visible rows
+                            const rowsToShow = filteredRows.slice(start, end);
+                            rowsToShow.forEach(row => row.style.display = '');
+
+                            // Update buttons
+                            renderPaginationButtons(totalPages);
+                        }
+
+                        // 3. Render Buttons
+                        function renderPaginationButtons(totalPages) {
                             paginationContainer.innerHTML = '';
 
-                            const prevBtn = document.createElement('button');
-                            prevBtn.innerHTML = '<span class="material-symbols-outlined text-xl">chevron_left</span>';
-                            prevBtn.className = `flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 ${page === 1 ? 'text-gray-300 cursor-not-allowed' : 'text-[#111418] dark:text-gray-400'}`;
-                            prevBtn.disabled = page === 1;
-                            prevBtn.onclick = () => {
+                            // Previous
+                            const prevBtn = createButton('chevron_left', currentPage > 1, () => {
                                 if (currentPage > 1) {
                                     currentPage--;
-                                    showPage(currentPage);
+                                    renderTable();
                                 }
-                            };
+                            });
                             paginationContainer.appendChild(prevBtn);
 
+                            // Page Numbers
                             for (let i = 1; i <= totalPages; i++) {
-                                if (i === 1 || i === totalPages || (i >= page - 1 && i <= page + 1)) {
+                                if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
                                     const btn = document.createElement('button');
                                     btn.innerText = i;
 
-                                    if (i === page) {
+                                    if (i === currentPage) {
                                         btn.className = 'text-sm font-bold flex size-10 items-center justify-center text-white rounded-full bg-primary';
                                     } else {
                                         btn.className = 'text-sm font-normal flex size-10 items-center justify-center text-[#111418] dark:text-white rounded-full hover:bg-gray-200 dark:hover:bg-gray-800';
@@ -268,10 +346,10 @@
 
                                     btn.onclick = () => {
                                         currentPage = i;
-                                        showPage(currentPage);
+                                        renderTable();
                                     };
                                     paginationContainer.appendChild(btn);
-                                } else if (i === page - 2 || i === page + 2) {
+                                } else if (i === currentPage - 2 || i === currentPage + 2) {
                                     const span = document.createElement('span');
                                     span.innerText = '...';
                                     span.className = 'text-sm font-normal flex size-10 items-center justify-center text-[#111418] dark:text-white';
@@ -279,20 +357,33 @@
                                 }
                             }
 
-                            const nextBtn = document.createElement('button');
-                            nextBtn.innerHTML = '<span class="material-symbols-outlined text-xl">chevron_right</span>';
-                            nextBtn.className = `flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 ${page === totalPages ? 'text-gray-300 cursor-not-allowed' : 'text-[#111418] dark:text-gray-400'}`;
-                            nextBtn.disabled = page === totalPages;
-                            nextBtn.onclick = () => {
+                            // Next
+                            const nextBtn = createButton('chevron_right', currentPage < totalPages, () => {
                                 if (currentPage < totalPages) {
                                     currentPage++;
-                                    showPage(currentPage);
+                                    renderTable();
                                 }
-                            };
+                            });
                             paginationContainer.appendChild(nextBtn);
                         }
 
-                        showPage(1);
+                        // Helper
+                        function createButton(icon, enabled, onClick) {
+                            const btn = document.createElement('button');
+                            btn.innerHTML = `<span class="material-symbols-outlined text-xl">${icon}</span>`;
+                            btn.className = `flex size-10 items-center justify-center rounded-full ${enabled ? 'hover:bg-gray-200 dark:hover:bg-gray-800 text-[#111418] dark:text-gray-400' : 'text-gray-300 cursor-not-allowed'}`;
+                            btn.disabled = !enabled;
+                            btn.onclick = onClick;
+                            return btn;
+                        }
+
+                        // --- EVENT LISTENERS ---
+                        searchInput.addEventListener('input', applyFilters);
+                        statusFilter.addEventListener('change', applyFilters);
+                        employeeFilter.addEventListener('change', applyFilters);
+
+                        // --- INIT ---
+                        renderTable();
                     });
                 </script>
         </div>
