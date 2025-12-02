@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Client;
+use Config\Database;
 
 class ClientController
 {
@@ -35,6 +36,13 @@ class ClientController
         );
 
         if ($client->registerUser()) {
+            $db = Database::getInstance();
+            $sql = "INSERT INTO audit_logs (user_id,action,entity,entity_id,created_at) VALUES (?,?,?,?,NOW())";
+
+            $clientId = $db->lastInsertId();
+
+            $stmt = $db->prepare($sql);
+            $stmt->execute([$_SESSION['user_id'], "Created new client", "clients", $clientId]);
             header("Location: index.php?action=clientManager");
             exit;
         } else {

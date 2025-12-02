@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Employee;
+use Config\Database;
 
 class EmployeeController
 {
@@ -34,6 +35,13 @@ class EmployeeController
             password: $password
         );
         if ($employee->registerUser()) {
+            $db=Database::getInstance();
+            $sql="INSERT INTO audit_logs (user_id,action,entity,entity_id,created_at) VALUES (?,?,?,?,NOW())";
+            
+            $empId=$db->lastInsertId();
+            
+            $stmt=$db->prepare($sql);
+            $stmt->execute([$_SESSION['user_id'],"Created new employee","employees",$empId]);
             header("Location: index.php?action=employeeManager");
             exit;
         } else {

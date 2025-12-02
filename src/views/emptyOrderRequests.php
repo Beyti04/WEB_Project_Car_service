@@ -106,7 +106,7 @@
                     <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
                         <h1 class="text-gray-900 dark:text-white text-3xl font-bold leading-tight">Service Order Management</h1>
                     </div>
-                    
+
                     <!-- Table -->
                     <div class="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
                         <div class="overflow-x-auto">
@@ -140,14 +140,14 @@
                                             <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400"><?php echo $order['car_data'][0] . ' ' . $order['car_data'][1]; ?></td>
                                             <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400"><?php echo $order['service_group']; ?></td>
                                             <td class="px-4 py-3 whitespace-nowrap text-sm">
-                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800"><?php echo $order['status']?></span>
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800"><?php echo $order['status'] ?></span>
                                             </td>
                                             <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400"><?php echo $order['opened_at']; ?></td>
                                             <td class="px-4 py-3 whitespace-nowrap text-sm font-medium">
                                                 <a href="index.php?action=takeOrder&order_id=<?php echo $order['id']; ?>">
-                                                <div class="flex items-center gap-2">
-                                                    <button class="w-full flex items-center justify-center gap-2 h-10 px-4 rounded-lg bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark text-sm font-bold hover:bg-primary/10 transition-colors">Take Order</button>
-                                                </div>
+                                                    <div class="flex items-center gap-2">
+                                                        <button class="w-full flex items-center justify-center gap-2 h-10 px-4 rounded-lg bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark text-sm font-bold hover:bg-primary/10 transition-colors">Take Order</button>
+                                                    </div>
                                             </td>
                                         </tr>
                                     <?php } ?>
@@ -156,17 +156,83 @@
                         </div>
                     </div>
                     <!-- Pagination -->
-                    <div class="flex items-center justify-between mt-6 px-1">
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Showing <span class="font-medium">1</span> to <span class="font-medium">5</span> of <span class="font-medium">20</span> results</p>
-                        <div class="flex items-center gap-2">
-                            <button class="flex items-center justify-center h-8 w-8 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50" disabled="">
-                                <span class="material-symbols-outlined text-lg">chevron_left</span>
-                            </button>
-                            <button class="flex items-center justify-center h-8 w-8 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
-                                <span class="material-symbols-outlined text-lg">chevron_right</span>
-                            </button>
-                        </div>
-                    </div>
+                    <div id="pagination-controls" class="flex items-center justify-center p-4 gap-2"></div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const itemsPerPage = 5;
+                            const tableBody = document.querySelector('tbody');
+                            const rows = Array.from(tableBody.querySelectorAll('tr'));
+                            const paginationContainer = document.getElementById('pagination-controls');
+
+                            let currentPage = 1;
+                            const totalPages = Math.ceil(rows.length / itemsPerPage);
+
+                            function showPage(page) {
+                                rows.forEach(row => row.style.display = 'none');
+
+                                const start = (page - 1) * itemsPerPage;
+                                const end = start + itemsPerPage;
+
+                                rows.slice(start, end).forEach(row => row.style.display = '');
+
+                                updateButtons(page);
+                            }
+
+                            function updateButtons(page) {
+                                paginationContainer.innerHTML = '';
+
+                                const prevBtn = document.createElement('button');
+                                prevBtn.innerHTML = '<span class="material-symbols-outlined text-xl">chevron_left</span>';
+                                prevBtn.className = `flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 ${page === 1 ? 'text-gray-300 cursor-not-allowed' : 'text-[#111418] dark:text-gray-400'}`;
+                                prevBtn.disabled = page === 1;
+                                prevBtn.onclick = () => {
+                                    if (currentPage > 1) {
+                                        currentPage--;
+                                        showPage(currentPage);
+                                    }
+                                };
+                                paginationContainer.appendChild(prevBtn);
+
+                                for (let i = 1; i <= totalPages; i++) {
+                                    if (i === 1 || i === totalPages || (i >= page - 1 && i <= page + 1)) {
+                                        const btn = document.createElement('button');
+                                        btn.innerText = i;
+
+                                        if (i === page) {
+                                            btn.className = 'text-sm font-bold flex size-10 items-center justify-center text-white rounded-full bg-primary';
+                                        } else {
+                                            btn.className = 'text-sm font-normal flex size-10 items-center justify-center text-[#111418] dark:text-white rounded-full hover:bg-gray-200 dark:hover:bg-gray-800';
+                                        }
+
+                                        btn.onclick = () => {
+                                            currentPage = i;
+                                            showPage(currentPage);
+                                        };
+                                        paginationContainer.appendChild(btn);
+                                    } else if (i === page - 2 || i === page + 2) {
+                                        const span = document.createElement('span');
+                                        span.innerText = '...';
+                                        span.className = 'text-sm font-normal flex size-10 items-center justify-center text-[#111418] dark:text-white';
+                                        paginationContainer.appendChild(span);
+                                    }
+                                }
+
+                                const nextBtn = document.createElement('button');
+                                nextBtn.innerHTML = '<span class="material-symbols-outlined text-xl">chevron_right</span>';
+                                nextBtn.className = `flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 ${page === totalPages ? 'text-gray-300 cursor-not-allowed' : 'text-[#111418] dark:text-gray-400'}`;
+                                nextBtn.disabled = page === totalPages;
+                                nextBtn.onclick = () => {
+                                    if (currentPage < totalPages) {
+                                        currentPage++;
+                                        showPage(currentPage);
+                                    }
+                                };
+                                paginationContainer.appendChild(nextBtn);
+                            }
+
+                            showPage(1);
+                        });
+                    </script>
                 </div>
             </main>
         </div>

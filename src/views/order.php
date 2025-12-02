@@ -63,10 +63,6 @@
                     <span class="material-symbols-outlined ">dashboard</span>
                     <p class="text-sm font-bold leading-normal">Dashboard</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
-                    <span class="material-symbols-outlined">calendar_month</span>
-                    <p class="text-sm font-medium leading-normal">Schedule</p>
-                </a>
                 <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="index.php?action=orders">
                     <span class="material-symbols-outlined text-primary">receipt_long</span>
                     <p class="text-sm font-medium leading-normal">Orders</p>
@@ -87,15 +83,8 @@
                     <span class="material-symbols-outlined">inventory_2</span>
                     <p class="text-sm font-medium leading-normal">Inventory</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
-                    <span class="material-symbols-outlined">assessment</span>
-                    <p class="text-sm font-medium leading-normal">Reports</p>
-                </a>
             </nav>
             <div class="flex flex-col gap-4">
-                <button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
-                    <span class="truncate">Create New Order</span>
-                </button>
                 <div class="flex flex-col gap-1">
                     <a href="index.php" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors">
                         <span class="material-symbols-outlined">logout</span>
@@ -188,10 +177,9 @@
                                             $color = 'text-purple-700 dark:text-purple-300 bg-purple-100 dark:bg-purple-900/50';
                                         } elseif ($order['status'] == 'В изчакване') {
                                             $color = 'text-lightgray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-900/50';
-                                        } elseif($order['status'] == 'Готова') {
+                                        } elseif ($order['status'] == 'Готова') {
                                             $color = 'text-green-700 dark:text-green-300 bg-green-100 dark:bg-green-900/50';
-                                        } else
-                                        {
+                                        } else {
                                             $color = 'text-red-700 dark:text-red-300 bg-red-100 dark:bg-red-900/50';
                                         }
                                     ?>
@@ -218,7 +206,8 @@
                         </div>
                     </div>
                     <!-- Pagination -->
-                    <div class="flex items-center justify-between mt-6 px-1">
+
+                    <!--<div class="flex items-center justify-between mt-6 px-1">
                         <p class="text-sm text-gray-600 dark:text-gray-400">Showing <span class="font-medium">1</span> to <span class="font-medium">5</span> of <span class="font-medium">20</span> results</p>
                         <div class="flex items-center gap-2">
                             <button class="flex items-center justify-center h-8 w-8 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50" disabled="">
@@ -227,11 +216,88 @@
                             <button class="flex items-center justify-center h-8 w-8 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
                                 <span class="material-symbols-outlined text-lg">chevron_right</span>
                             </button>
-                        </div>
-                    </div>
+                        </div>-->
                 </div>
-            </main>
+                <div id="pagination-controls" class="flex items-center justify-center p-4 gap-2"></div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const itemsPerPage = 5;
+                        const tableBody = document.querySelector('tbody');
+                        const rows = Array.from(tableBody.querySelectorAll('tr'));
+                        const paginationContainer = document.getElementById('pagination-controls');
+
+                        let currentPage = 1;
+                        const totalPages = Math.ceil(rows.length / itemsPerPage);
+
+                        function showPage(page) {
+                            rows.forEach(row => row.style.display = 'none');
+
+                            const start = (page - 1) * itemsPerPage;
+                            const end = start + itemsPerPage;
+
+                            rows.slice(start, end).forEach(row => row.style.display = '');
+
+                            updateButtons(page);
+                        }
+
+                        function updateButtons(page) {
+                            paginationContainer.innerHTML = '';
+
+                            const prevBtn = document.createElement('button');
+                            prevBtn.innerHTML = '<span class="material-symbols-outlined text-xl">chevron_left</span>';
+                            prevBtn.className = `flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 ${page === 1 ? 'text-gray-300 cursor-not-allowed' : 'text-[#111418] dark:text-gray-400'}`;
+                            prevBtn.disabled = page === 1;
+                            prevBtn.onclick = () => {
+                                if (currentPage > 1) {
+                                    currentPage--;
+                                    showPage(currentPage);
+                                }
+                            };
+                            paginationContainer.appendChild(prevBtn);
+
+                            for (let i = 1; i <= totalPages; i++) {
+                                if (i === 1 || i === totalPages || (i >= page - 1 && i <= page + 1)) {
+                                    const btn = document.createElement('button');
+                                    btn.innerText = i;
+
+                                    if (i === page) {
+                                        btn.className = 'text-sm font-bold flex size-10 items-center justify-center text-white rounded-full bg-primary';
+                                    } else {
+                                        btn.className = 'text-sm font-normal flex size-10 items-center justify-center text-[#111418] dark:text-white rounded-full hover:bg-gray-200 dark:hover:bg-gray-800';
+                                    }
+
+                                    btn.onclick = () => {
+                                        currentPage = i;
+                                        showPage(currentPage);
+                                    };
+                                    paginationContainer.appendChild(btn);
+                                } else if (i === page - 2 || i === page + 2) {
+                                    const span = document.createElement('span');
+                                    span.innerText = '...';
+                                    span.className = 'text-sm font-normal flex size-10 items-center justify-center text-[#111418] dark:text-white';
+                                    paginationContainer.appendChild(span);
+                                }
+                            }
+
+                            const nextBtn = document.createElement('button');
+                            nextBtn.innerHTML = '<span class="material-symbols-outlined text-xl">chevron_right</span>';
+                            nextBtn.className = `flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 ${page === totalPages ? 'text-gray-300 cursor-not-allowed' : 'text-[#111418] dark:text-gray-400'}`;
+                            nextBtn.disabled = page === totalPages;
+                            nextBtn.onclick = () => {
+                                if (currentPage < totalPages) {
+                                    currentPage++;
+                                    showPage(currentPage);
+                                }
+                            };
+                            paginationContainer.appendChild(nextBtn);
+                        }
+
+                        showPage(1);
+                    });
+                </script>
         </div>
+        </main>
+    </div>
 </body>
 
 </html>

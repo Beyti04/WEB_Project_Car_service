@@ -62,10 +62,6 @@
                     <span class="material-symbols-outlined text-primary">group</span>
                     <p class="text-sm font-medium leading-normal">Inventory</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=appointments">
-                    <span class="material-symbols-outlined">calendar_month</span>
-                    <p class="text-sm font-medium leading-normal">Appointments</p>
-                </a>
             </nav>
 
             <div class="flex flex-col gap-4">

@@ -70,10 +70,6 @@
                     <span class="material-symbols-outlined text-primary">group</span>
                     <p class="text-sm font-medium leading-normal">Employees</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=appointments">
-                    <span class="material-symbols-outlined">calendar_month</span>
-                    <p class="text-sm font-medium leading-normal">Appointments</p>
-                </a>
             </nav>
 
             <div class="flex flex-col gap-4">
@@ -105,7 +101,7 @@
 
             <main class="p-10">
                 <div class="max-w-3xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-lg shadow border dark:border-gray-700">
-                    <h1 class="text-3xl font-bold mb-6">Edit Employee</h1>
+                    <h1 class="text-3xl font-bold mb-6">Add Employee</h1>
 
                     <form action="index.php?action=addEmployee" method="POST" class="space-y-4">
 
@@ -163,7 +159,7 @@
 
                             <button type="submit"
                                 class="px-4 h-10 rounded-lg bg-primary text-white font-bold hover:bg-primary/90">
-                                Save Changes
+                                Add Employee
                             </button>
                         </div>
 

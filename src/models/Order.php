@@ -246,4 +246,52 @@ class Order
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public static function getActiveOrders(): int
+    {
+        $sql = "SELECT COUNT(*) AS active_orders_count
+            FROM orders o
+            LEFT JOIN status s ON s.id = o.status_id
+            WHERE s.status NOT IN ('В изчакване','Готова','Отказана')";
+
+        $db = Database::getInstance();
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return (int)$row['active_orders_count'];
+    }
+
+    public static function getPendingAppointments(): int
+    {
+        $sql = "SELECT COUNT(*) AS pending_orders_count
+            FROM orders o
+            LEFT JOIN status s ON s.id = o.status_id
+            WHERE s.status = 'В изчакване'";
+
+        $db = Database::getInstance();
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return (int)$row['pending_orders_count'];
+    }
+
+    public static function getTotalRevenue(): float
+    {
+        $sql = "SELECT SUM(o.full_price) AS total_price
+        FROM orders o
+        JOIN status s ON s.id = o.status_id
+        WHERE s.status = 'Готова'";
+
+        $db = Database::getInstance();
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return (float)$row["total_price"];
+    }
 }

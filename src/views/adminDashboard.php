@@ -64,10 +64,6 @@
                     <span class="material-symbols-outlined text-primary">dashboard</span>
                     <p class="text-sm font-bold leading-normal">Dashboard</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
-                    <span class="material-symbols-outlined">calendar_month</span>
-                    <p class="text-sm font-medium leading-normal">Schedule</p>
-                </a>
                 <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=orders">
                     <span class="material-symbols-outlined">receipt_long</span>
                     <p class="text-sm font-medium leading-normal">Orders</p>
@@ -90,9 +86,6 @@
                 </a>
             </nav>
             <div class="flex flex-col gap-4">
-                <button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
-                    <span class="truncate">Create New Order</span>
-                </button>
                 <div class="flex flex-col gap-1">
                     <a href="index.php" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors">
                         <span class="material-symbols-outlined">logout</span>
@@ -126,32 +119,29 @@
                         <p class="text-3xl font-bold leading-tight tracking-tight">Welcome back, <?php echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?>!</p>
                         <p class="text-text-secondary-light dark:text-text-secondary-dark text-base font-normal leading-normal">Here's what's happening with your shop today.</p>
                     </div>
-                    <button class="flex min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
-                        <span class="material-symbols-outlined text-base">note_add</span>
-                        <span class="truncate">New Order</span>
-                    </button>
                 </div>
                 <!-- Stats -->
-                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+                <?php
+
+                use App\Models\Order;
+
+                $activeOrders = Order::getActiveOrders();
+                $pendingOrders = Order::getPendingAppointments();
+                $totalIncome = Order::getTotalRevenue();
+
+                ?>
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
                     <div class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark">
                         <p class="text-base font-medium leading-normal text-text-secondary-light dark:text-text-secondary-dark">Total Revenue (MTD)</p>
-                        <p class="tracking-light text-3xl font-bold leading-tight">$42,580</p>
-                        <p class="text-success text-sm font-medium leading-normal">+5.2% vs last month</p>
+                        <p class="tracking-light text-3xl font-bold leading-tight">€<?php echo $totalIncome ?></p>
                     </div>
                     <div class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark">
                         <p class="text-base font-medium leading-normal text-text-secondary-light dark:text-text-secondary-dark">Active Orders</p>
-                        <p class="tracking-light text-3xl font-bold leading-tight">14</p>
-                        <p class="text-success text-sm font-medium leading-normal">+2 since yesterday</p>
+                        <p class="tracking-light text-3xl font-bold leading-tight"><?php echo $activeOrders ?></p>
                     </div>
                     <div class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark">
                         <p class="text-base font-medium leading-normal text-text-secondary-light dark:text-text-secondary-dark">Pending Appointments</p>
-                        <p class="tracking-light text-3xl font-bold leading-tight">8</p>
-                        <p class="text-danger text-sm font-medium leading-normal">-1 from yesterday</p>
-                    </div>
-                    <div class="flex flex-col gap-2 rounded-xl p-6 bg-card-light dark:bg-card-dark border border-border-light dark:border-border-dark">
-                        <p class="text-base font-medium leading-normal text-text-secondary-light dark:text-text-secondary-dark">Available Technicians</p>
-                        <p class="tracking-light text-3xl font-bold leading-tight">4</p>
-                        <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm font-medium leading-normal">of 6 total</p>
+                        <p class="tracking-light text-3xl font-bold leading-tight"><?php echo $pendingOrders ?></p>
                     </div>
                 </div>
                 <!-- Charts and Lists -->
