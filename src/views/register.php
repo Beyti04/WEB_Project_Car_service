@@ -63,6 +63,11 @@ use App\Models\Role;
                 </div>
             </div>
             <!-- Form Container -->
+             <?php
+            if (isset($_GET['error'])) {
+                $error = htmlspecialchars(urldecode($_GET['error']));
+            }
+            ?>
             <div class="bg-white dark:bg-background-dark dark:border dark:border-gray-700/50 p-8 rounded-xl shadow-sm space-y-6">
                 <form class="space-y-6" action="index.php?action=registerSubmit" method="POST">
                     <div class="flex flex-col sm:flex-row sm:gap-4 space-y-6 sm:space-y-0">
@@ -100,8 +105,12 @@ use App\Models\Role;
                     <!-- Email -->
                     <label class="flex flex-col min-w-40 flex-1">
                         <p class="text-[#111418] dark:text-gray-300 text-base font-medium leading-normal pb-2">Email</p>
-                        <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white dark:bg-gray-800 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-validation-error bg-white focus:border-primary h-14 placeholder:text-[#617589] dark:placeholder:text-gray-500 p-[15px] text-base font-normal leading-normal" placeholder="Enter your email" name="email" value="" />
-                        <p class="text-validation-error text-sm mt-1">Email is invalid</p>
+                        <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white dark:bg-gray-800 focus:outline-0 focus:ring-2 focus:ring-primary/50 border <?php if (isset($error) && strpos($error, 'Този имейл вече е регистриран!') !== false) echo 'border-validation-error'; ?> bg-white focus:border-primary h-14 placeholder:text-[#617589] dark:placeholder:text-gray-500 p-[15px] text-base font-normal leading-normal" placeholder="Enter your email" name="email" value="" />
+                        <?php 
+                        if (isset($error) && strpos($error, 'имейл') !== false) {
+                            echo '<p class="text-validation-error text-sm mt-1">' . htmlspecialchars($error) . '</p>';
+                        }
+                        ?>
                     </label>
                     <!-- Password -->
                     <label class="flex flex-col min-w-40 flex-1">
@@ -121,13 +130,22 @@ use App\Models\Role;
                     <label class="flex flex-col min-w-40 flex-1">
                         <p class="text-[#111418] dark:text-gray-300 text-base font-medium leading-normal pb-2">Confirm Password</p>
                         <div class="relative flex w-full flex-1 items-center">
-                            <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white dark:bg-gray-800 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-validation-error bg-white focus:border-primary h-14 placeholder:text-[#617589] dark:placeholder:text-gray-500 p-[15px] pr-12 text-base font-normal leading-normal" placeholder="Confirm your password" name="confirm_password" type="password" value="" />
+                            <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white dark:bg-gray-800 focus:outline-0 focus:ring-2 focus:ring-primary/50 border <?php if (isset($error) && strpos($error, 'Паролите не съвпадат') !== false) echo 'border-validation-error'; ?> bg-white focus:border-primary h-14 placeholder:text-[#617589] dark:placeholder:text-gray-500 p-[15px] pr-12 text-base font-normal leading-normal" placeholder="Confirm your password" name="confirm_password" type="password" value="" />
                             <button class="absolute right-0 mr-4 text-[#617589] dark:text-gray-400" type="button">
                                 <span class="material-symbols-outlined">visibility_off</span>
                             </button>
                         </div>
-                        <p class="text-validation-error text-sm mt-1">Passwords do not match</p>
+                        <?php 
+                        if (isset($error) && strpos($error, 'Паролите не съвпадат!') !== false) {
+                            echo '<p class="text-validation-error text-sm mt-1">' . htmlspecialchars($error) . '</p>';
+                        }
+                        ?>
                     </label>
+                    <?php
+                    if (isset($error) && strpos($error, 'Моля, попълнете всички задължителни полета!') !== false) {
+                        echo '<p class="text-validation-error text-sm mt-1 text-center">' . htmlspecialchars($error) . '</p>';
+                    }
+                    ?>
                     <!-- Register Button -->
                     <button class="flex w-full items-center justify-center rounded-lg bg-primary h-14 px-6 text-base font-semibold text-white shadow-sm hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" type="submit">
                         Register

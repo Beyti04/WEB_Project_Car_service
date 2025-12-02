@@ -74,12 +74,17 @@
                                 <p class="mt-2 text-base text-gray-600 dark:text-gray-400">Sign in to manage your services</p>
                             </div>
                             <!-- Form Container -->
+                             <?php
+                            if (isset($_GET['error'])) {
+                                $error = htmlspecialchars(urldecode($_GET['error']));
+                            }
+                            ?>
                             <div class="bg-white dark:bg-background-dark dark:border dark:border-gray-700/50 p-8 rounded-xl shadow-sm space-y-6">
                                 <form class="space-y-6" action="index.php?action=loginSubmit" method="POST">
                                     <div class="flex flex-col gap-y-6">
                                         <!-- Username or Email Field -->
                                         <div class="flex flex-col">
-                                            <label class="text-text-light dark:text-text-dark pb-2 text-sm font-medium" for="email-address">Username or Email</label>
+                                            <label class="text-text-light dark:text-text-dark pb-2 text-sm font-medium" for="email-address">Email</label>
                                             <div class="relative">
                                                 <span aria-hidden="true" class="material-symbols-outlined pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400 input-icon">person</span>
                                                 <input autocomplete="email" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-border-light bg-white py-3 pl-12 pr-4 text-base font-normal text-text-light placeholder:text-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary dark:border-border-dark dark:bg-background-dark dark:text-text-dark" id="email-address" name="email" placeholder="Enter your username or email" required="" type="email" />
@@ -93,6 +98,13 @@
                                                 <input autocomplete="current-password" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-border-light bg-white py-3 pl-12 pr-4 text-base font-normal text-text-light placeholder:text-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary dark:border-border-dark dark:bg-background-dark dark:text-text-dark" id="password" name="password" placeholder="Enter your password" required="" type="password" />
                                             </div>
                                         </div>
+                                        
+                                        <?php
+                                        if (isset($error)) {
+                                            echo '<p class="text-validation-error text-sm mt-1 text-center">' . htmlspecialchars($error) . '</p>';
+                                        }
+                                        ?>
+
                                         <!-- Remember Me & Forgot Password -->
                                         <div class="flex items-center justify-between">
                                             <div class="flex items-center">

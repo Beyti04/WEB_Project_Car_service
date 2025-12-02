@@ -8,12 +8,8 @@ use App\Models\Role;
 
 class AuthController
 {
-
-    // --- РЕГИСТРАЦИЯ ---
-
     public function showRegister(): void
     {
-        // Зареждаме вашето View за регистрация
         require __DIR__ . '/../../src/views/register.php';
     }
 
@@ -23,7 +19,6 @@ class AuthController
             header("Location: index.php?action=register");
             exit;
         }
-        // 1. Взимаме данните от POST заявката
         $fname = trim($_POST['first_name'] ?? '');
         $lname = trim($_POST['last_name'] ?? '');
         $phone = trim($_POST['phone'] ?? '');
@@ -32,33 +27,36 @@ class AuthController
         $pass  = $_POST['password'] ?? '';
         $confirm = $_POST['confirm_password'] ?? '';
 
-        // 2. Валидация (Опростена)
         if (empty($fname) || empty($email) || empty($pass)) {
             $error = "Моля, попълнете всички задължителни полета!";
-            header("Location: index.php?action=register");
+            header("Location: index.php?action=register&error=" . urlencode($error));
+            return;
+        }
+
+        if(strlen($phone) != 10 && !empty($phone)) {
+            $error = "Невалиден телефонен номер!";
+            header("Location: index.php?action=register&error=" . urlencode($error));
             return;
         }
 
         if ($pass !== $confirm) {
             $error = "Паролите не съвпадат!";
-            header("Location: index.php?action=register");
+            header("Location: index.php?action=register&error=" . urlencode($error));
             return;
         }
 
-        // 3. Проверка дали имейлът вече съществува
         if (Client::findByEmail($email)) {
             $error = "Този имейл вече е регистриран!";
-            header("Location: index.php?action=register");
+            header("Location: index.php?action=register&error=" . urlencode($error));
             return;
         }
 
         if (Employee::findByEmail($email)) {
             $error = "Този имейл вече е регистриран!";
-            header("Location: index.php?action=register");
+            header("Location: index.php?action=register&error=" . urlencode($error));
             return;
         }
 
-        // 4. Създаваме нов потребител
         $roles = Role::getAllRoles();
         $roleName = '';
         foreach ($roles as $role) {
@@ -96,7 +94,6 @@ class AuthController
         }
     }
 
-    // --- ВХОД ---
 
     public function showLogin(): void
     {
@@ -136,7 +133,6 @@ class AuthController
         }
 
         if ($employee && password_verify($pass, $employee->password) && $roleName === 'Admin') {
-            // Успешен вход за администратор! Записваме в сесията.
             $_SESSION['user_id'] = $employee->id;
             $_SESSION['user_role'] = 'Admin';
             $_SESSION['user_name'] = $employee->first_name;
@@ -144,7 +140,6 @@ class AuthController
             header("Location: index.php?action=adminDashboard");
             exit;
         } elseif ($employee && password_verify($pass, $employee->password)) {
-            // Успешен вход за служител! Записваме в сесията.
             $_SESSION['user_id'] = $employee->id;
             $_SESSION['user_role'] = 'Employee';
             $_SESSION['user_name'] = $employee->first_name;
@@ -154,13 +149,11 @@ class AuthController
         }
 
 
-        header("Location: index.php?action=login");
+        header("Location: index.php?action=login&error=invalid email or password");
         exit;
     }
 
 
-
-    // --- ИЗХОД ---
 
     public function logout(): void
     {
