@@ -115,178 +115,253 @@
                     </div>
                 </div>
             </header>
-            <main class="flex-1 overflow-y-auto p-10">
-                <div class="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm ">
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-sm">
-                            <thead class="bg-gray-50 dark:bg-gray-700/50 text-xs text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                <tr>
-                                    <th class="px-6 py-4 font-medium" scope="col">Employee</th>
-                                    <th class="px-6 py-4 font-medium" scope="col">Action</th>
-                                    <th class="px-6 py-4 font-medium" scope="col">Entity</th>
-                                    <th class="px-6 py-4 font-medium" scope="col">Entity id</th>
-                                    <th class="px-6 py-4 font-medium text-right" scope="col">Created at</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                                <?php
+            <main class="flex-1 overflow-y-auto p-8">
+                <div class="mx-auto max-w-7xl">
+                    <div class="flex flex-col gap-6 mb-6">
+                        <div class="flex justify-between items-center">
+                            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Audit Log</h1>
+                        </div>
 
-                                use App\Models\Order;
+                        <div class="flex flex-col md:flex-row justify-between items-center gap-4 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+                            
+                            <div class="flex bg-gray-100 dark:bg-gray-700 p-1 rounded-lg">
+                                <button id="tab-employee" onclick="switchTab('employee')" class="px-4 py-2 text-sm font-medium rounded-md transition-colors bg-white dark:bg-gray-600 text-primary shadow-sm">
+                                    Employee Logs
+                                </button>
+                                <button id="tab-client" onclick="switchTab('client')" class="px-4 py-2 text-sm font-medium rounded-md transition-colors text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white">
+                                    Client Logs
+                                </button>
+                            </div>
 
-                                $employeeLogs = Order::getAuditLogEmployees();
-                                $clientLogs = Order::getAuditLogClients();
-
-                                foreach ($employeeLogs as $employeeLog) {
-                                ?>
-                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30">
-                                        <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"><?php echo htmlspecialchars($employeeLog['employee_name']); ?></td>
-                                        <td class="px-6 py-4 text-gray-600 dark:text-gray-300"><?php echo htmlspecialchars($employeeLog["action"]); ?></td>
-                                        <td class="px-6 py-4 text-gray-600 dark:text-gray-300">
-                                            <?php echo htmlspecialchars($employeeLog["entity"]); ?>
-                                        </td>
-                                        <td class="px-6 py-4 text-gray-600 dark:text-gray-300"><?php echo htmlspecialchars($employeeLog["entity_id"]); ?></td>
-                                        <td class="px-6 py-4 text-right space-x-2">
-                                            <?php echo htmlspecialchars($employeeLog["created_at"]); ?>
-                                        </td>
-                                    </tr>
-                                <?php } ?>
-                            </tbody>
-                        </table>
-                        <div id="pagination-controls" class="flex items-center justify-center p-4 gap-2"></div>
-                        <script>
-                            document.addEventListener('DOMContentLoaded', function() {
-                                const itemsPerPage = 5;
-                                const tableBody = document.querySelector('tbody');
-                                const rows = Array.from(tableBody.querySelectorAll('tr'));
-                                const paginationContainer = document.getElementById('pagination-controls');
-                                const totalPages = Math.ceil(rows.length / itemsPerPage);
-
-                                function showPage(page) {
-                                    rows.forEach(row => row.style.display = 'none');
-
-                                    const start = (page - 1) * itemsPerPage;
-                                    const end = start + itemsPerPage;
-                                    rows.slice(start, end).forEach(row => row.style.display = '');
-
-                                    updateButtons(page);
-                                }
-
-                                function updateButtons(page) {
-                                    paginationContainer.innerHTML = '';
-
-                                    const prevBtn = document.createElement('button');
-                                    prevBtn.innerHTML = '<span class="material-symbols-outlined text-xl">chevron_left</span>';
-                                    prevBtn.className = `flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 ${page === 1 ? 'text-gray-300 cursor-not-allowed' : 'text-[#111418] dark:text-gray-400'}`;
-                                    prevBtn.onclick = () => {
-                                        if (page > 1) showPage(page - 1);
-                                    };
-                                    paginationContainer.appendChild(prevBtn);
-
-                                    for (let i = 1; i <= totalPages; i++) {
-                                        const btn = document.createElement('button');
-                                        btn.innerText = i;
-                                        btn.className = `flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 ${i === page ? 'bg-primary text-white' : 'text-[#111418] dark:text-white'}`;
-                                        btn.onclick = () => showPage(i);
-                                        paginationContainer.appendChild(btn);
-                                    }
-
-                                    const nextBtn = document.createElement('button');
-                                    nextBtn.innerHTML = '<span class="material-symbols-outlined text-xl">chevron_right</span>';
-                                    nextBtn.className = `flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 ${page === totalPages ? 'text-gray-300 cursor-not-allowed' : 'text-[#111418] dark:text-gray-400'}`;
-                                    nextBtn.onclick = () => {
-                                        if (page < totalPages) showPage(page + 1);
-                                    };
-                                    paginationContainer.appendChild(nextBtn);
-                                }
-
-                                showPage(1);
-                            });
-                        </script>
+                            <div class="relative w-full md:w-64">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <span class="material-symbols-outlined text-gray-500 text-xl">search</span>
+                                </div>
+                                <input type="text" id="globalSearch" 
+                                       class="pl-10 block w-full rounded-lg border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-sm focus:ring-primary focus:border-primary dark:text-white dark:placeholder-gray-400" 
+                                       placeholder="Search logs...">
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm mt-5">
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-sm">
-                            <thead class="bg-gray-50 dark:bg-gray-700/50 text-xs text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                                <tr>
-                                    <th class="px-6 py-4 font-medium" scope="col">Client</th>
-                                    <th class="px-6 py-4 font-medium" scope="col">Action</th>
-                                    <th class="px-6 py-4 font-medium" scope="col">Entity</th>
-                                    <th class="px-6 py-4 font-medium" scope="col">Entity id</th>
-                                    <th class="px-6 py-4 font-medium text-right" scope="col">Created at</th>
-                                </tr>
-                            </thead>
-                            <tbody id="client" class="divide-y divide-gray-200 dark:divide-gray-700">
-                                <?php
-                                foreach ($clientLogs as $clientLog) {
-                                ?>
-                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30">
-                                        <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"><?php echo htmlspecialchars($clientLog['client_name']); ?></td>
-                                        <td class="px-6 py-4 text-gray-600 dark:text-gray-300"><?php echo htmlspecialchars($clientLog["action"]); ?></td>
-                                        <td class="px-6 py-4 text-gray-600 dark:text-gray-300">
-                                            <?php echo htmlspecialchars($clientLog["entity"]); ?>
-                                        </td>
-                                        <td class="px-6 py-4 text-gray-600 dark:text-gray-300"><?php echo htmlspecialchars($clientLog["entity_id"]); ?></td>
-                                        <td class="px-6 py-4 text-right space-x-2">
-                                            <?php echo htmlspecialchars($clientLog["created_at"]); ?>
-                                        </td>
-                                    </tr>
-                                <?php } ?>
 
-                            </tbody>
-                        </table>
-                        <div id="pagination-controls-2" class="flex items-center justify-center p-4 gap-2"></div>
-                        <script>
-                            document.addEventListener('DOMContentLoaded', function() {
-                                const itemsPerPage = 5;
-                                const tableBody = document.getElementById('client');
-                                const rows = Array.from(tableBody.querySelectorAll('tr'));
-                                const paginationContainer = document.getElementById('pagination-controls-2');
-                                const totalPages = Math.ceil(rows.length / itemsPerPage);
+                    <?php
+                    use App\Models\Order;
+                    // Fetch data once
+                    $employeeLogs = Order::getAuditLogEmployees();
+                    $clientLogs = Order::getAuditLogClients();
+                    ?>
 
-                                function showPage(page) {
-                                    rows.forEach(row => row.style.display = 'none');
-
-                                    const start = (page - 1) * itemsPerPage;
-                                    const end = start + itemsPerPage;
-                                    rows.slice(start, end).forEach(row => row.style.display = '');
-
-                                    updateButtons(page);
-                                }
-
-                                function updateButtons(page) {
-                                    paginationContainer.innerHTML = '';
-
-                                    const prevBtn = document.createElement('button');
-                                    prevBtn.innerHTML = '<span class="material-symbols-outlined text-xl">chevron_left</span>';
-                                    prevBtn.className = `flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 ${page === 1 ? 'text-gray-300 cursor-not-allowed' : 'text-[#111418] dark:text-gray-400'}`;
-                                    prevBtn.onclick = () => {
-                                        if (page > 1) showPage(page - 1);
-                                    };
-                                    paginationContainer.appendChild(prevBtn);
-
-                                    for (let i = 1; i <= totalPages; i++) {
-                                        const btn = document.createElement('button');
-                                        btn.innerText = i;
-                                        btn.className = `flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 ${i === page ? 'bg-primary text-white' : 'text-[#111418] dark:text-white'}`;
-                                        btn.onclick = () => showPage(i);
-                                        paginationContainer.appendChild(btn);
-                                    }
-
-                                    const nextBtn = document.createElement('button');
-                                    nextBtn.innerHTML = '<span class="material-symbols-outlined text-xl">chevron_right</span>';
-                                    nextBtn.className = `flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 ${page === totalPages ? 'text-gray-300 cursor-not-allowed' : 'text-[#111418] dark:text-gray-400'}`;
-                                    nextBtn.onclick = () => {
-                                        if (page < totalPages) showPage(page + 1);
-                                    };
-                                    paginationContainer.appendChild(nextBtn);
-                                }
-
-                                showPage(1);
-                            });
-                        </script>
+                    <div id="view-employee" class="transition-opacity duration-300">
+                        <div class="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-sm" id="table-employee">
+                                    <thead class="bg-gray-50 dark:bg-gray-700/50 text-xs text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                                        <tr>
+                                            <th class="px-6 py-4 font-medium">Employee</th>
+                                            <th class="px-6 py-4 font-medium">Action</th>
+                                            <th class="px-6 py-4 font-medium">Entity</th>
+                                            <th class="px-6 py-4 font-medium">Entity ID</th>
+                                            <th class="px-6 py-4 font-medium text-right">Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                        <?php foreach ($employeeLogs as $log): ?>
+                                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
+                                                <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                                                    <?php echo htmlspecialchars($log['employee_name']); ?>
+                                                </td>
+                                                <td class="px-6 py-4 text-gray-600 dark:text-gray-300">
+                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                                                        <?php echo htmlspecialchars($log["action"]); ?>
+                                                    </span>
+                                                </td>
+                                                <td class="px-6 py-4 text-gray-600 dark:text-gray-300"><?php echo htmlspecialchars($log["entity"]); ?></td>
+                                                <td class="px-6 py-4 font-mono text-gray-500 dark:text-gray-400">#<?php echo htmlspecialchars($log["entity_id"]); ?></td>
+                                                <td class="px-6 py-4 text-right text-gray-500 dark:text-gray-400"><?php echo htmlspecialchars($log["created_at"]); ?></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div id="pagination-employee" class="flex items-center justify-center p-4 gap-2 border-t border-gray-200 dark:border-gray-700"></div>
+                        </div>
                     </div>
+
+                    <div id="view-client" class="hidden transition-opacity duration-300">
+                        <div class="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-sm" id="table-client">
+                                    <thead class="bg-gray-50 dark:bg-gray-700/50 text-xs text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                                        <tr>
+                                            <th class="px-6 py-4 font-medium">Client</th>
+                                            <th class="px-6 py-4 font-medium">Action</th>
+                                            <th class="px-6 py-4 font-medium">Entity</th>
+                                            <th class="px-6 py-4 font-medium">Entity ID</th>
+                                            <th class="px-6 py-4 font-medium text-right">Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                        <?php foreach ($clientLogs as $log): ?>
+                                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
+                                                <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                                                    <?php echo htmlspecialchars($log['client_name']); ?>
+                                                </td>
+                                                <td class="px-6 py-4 text-gray-600 dark:text-gray-300">
+                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                                        <?php echo htmlspecialchars($log["action"]); ?>
+                                                    </span>
+                                                </td>
+                                                <td class="px-6 py-4 text-gray-600 dark:text-gray-300"><?php echo htmlspecialchars($log["entity"]); ?></td>
+                                                <td class="px-6 py-4 font-mono text-gray-500 dark:text-gray-400">#<?php echo htmlspecialchars($log["entity_id"]); ?></td>
+                                                <td class="px-6 py-4 text-right text-gray-500 dark:text-gray-400"><?php echo htmlspecialchars($log["created_at"]); ?></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div id="pagination-client" class="flex items-center justify-center p-4 gap-2 border-t border-gray-200 dark:border-gray-700"></div>
+                        </div>
+                    </div>
+
                 </div>
-
-
             </main>
+        </div>
+    </div>
+
+    <script>
+        let currentTab = 'employee';
+
+        function switchTab(tabName) {
+            currentTab = tabName;
+            
+            const viewEmployee = document.getElementById('view-employee');
+            const viewClient = document.getElementById('view-client');
+            const btnEmployee = document.getElementById('tab-employee');
+            const btnClient = document.getElementById('tab-client');
+            const searchInput = document.getElementById('globalSearch');
+
+            searchInput.value = ''; 
+
+            if(tabName === 'employee') employeeTableController.filter(''); 
+            else clientTableController.filter('');
+
+            if (tabName === 'employee') {
+                viewEmployee.classList.remove('hidden');
+                viewClient.classList.add('hidden');
+                
+                btnEmployee.classList.add('bg-white', 'dark:bg-gray-600', 'text-primary', 'shadow-sm');
+                btnEmployee.classList.remove('text-gray-500', 'dark:text-gray-300', 'hover:text-gray-700');
+                
+                btnClient.classList.remove('bg-white', 'dark:bg-gray-600', 'text-primary', 'shadow-sm');
+                btnClient.classList.add('text-gray-500', 'dark:text-gray-300', 'hover:text-gray-700');
+            } else {
+                viewEmployee.classList.add('hidden');
+                viewClient.classList.remove('hidden');
+
+                btnClient.classList.add('bg-white', 'dark:bg-gray-600', 'text-primary', 'shadow-sm');
+                btnClient.classList.remove('text-gray-500', 'dark:text-gray-300', 'hover:text-gray-700');
+
+                btnEmployee.classList.remove('bg-white', 'dark:bg-gray-600', 'text-primary', 'shadow-sm');
+                btnEmployee.classList.add('text-gray-500', 'dark:text-gray-300', 'hover:text-gray-700');
+            }
+        }
+
+        class TableController {
+            constructor(tableId, paginationId, itemsPerPage = 5) {
+                this.tableBody = document.querySelector(`#${tableId} tbody`);
+                this.paginationContainer = document.getElementById(paginationId);
+
+                this.allRows = Array.from(this.tableBody.querySelectorAll('tr'));
+                this.filteredRows = [...this.allRows];
+                this.currentPage = 1;
+                this.itemsPerPage = itemsPerPage;
+
+                this.render();
+            }
+
+            filter(searchTerm) {
+                const term = searchTerm.toLowerCase();
+                
+                this.filteredRows = this.allRows.filter(row => {
+                    return row.innerText.toLowerCase().includes(term);
+                });
+
+                this.currentPage = 1;
+                this.render();
+            }
+
+            render() {
+                this.allRows.forEach(row => row.style.display = 'none');
+
+                const totalPages = Math.ceil(this.filteredRows.length / this.itemsPerPage) || 1;
+                const start = (this.currentPage - 1) * this.itemsPerPage;
+                const end = start + this.itemsPerPage;
+
+                this.filteredRows.slice(start, end).forEach(row => row.style.display = '');
+
+                this.renderButtons(totalPages);
+            }
+
+            renderButtons(totalPages) {
+                this.paginationContainer.innerHTML = '';
+
+                const prevBtn = this.createButton('chevron_left', this.currentPage > 1, () => {
+                    if (this.currentPage > 1) { this.currentPage--; this.render(); }
+                });
+                this.paginationContainer.appendChild(prevBtn);
+
+                for (let i = 1; i <= totalPages; i++) {
+                    if (i === 1 || i === totalPages || (i >= this.currentPage - 1 && i <= this.currentPage + 1)) {
+                        const btn = document.createElement('button');
+                        btn.innerText = i;
+                        if (i === this.currentPage) {
+                            btn.className = 'flex size-8 items-center justify-center text-white rounded-lg bg-primary font-bold text-sm';
+                        } else {
+                            btn.className = 'flex size-8 items-center justify-center text-gray-700 dark:text-white rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 text-sm';
+                        }
+                        btn.onclick = () => { this.currentPage = i; this.render(); };
+                        this.paginationContainer.appendChild(btn);
+                    } else if (i === this.currentPage - 2 || i === this.currentPage + 2) {
+                        const span = document.createElement('span');
+                        span.innerText = '...';
+                        span.className = 'text-gray-500 px-1';
+                        this.paginationContainer.appendChild(span);
+                    }
+                }
+
+                const nextBtn = this.createButton('chevron_right', this.currentPage < totalPages, () => {
+                    if (this.currentPage < totalPages) { this.currentPage++; this.render(); }
+                });
+                this.paginationContainer.appendChild(nextBtn);
+            }
+
+            createButton(icon, enabled, onClick) {
+                const btn = document.createElement('button');
+                btn.innerHTML = `<span class="material-symbols-outlined text-lg">${icon}</span>`;
+                btn.className = `flex size-8 items-center justify-center rounded-lg transition-colors ${enabled ? 'hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300' : 'text-gray-300 cursor-not-allowed'}`;
+                btn.disabled = !enabled;
+                btn.onclick = onClick;
+                return btn;
+            }
+        }
+
+        let employeeTableController;
+        let clientTableController;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            employeeTableController = new TableController('table-employee', 'pagination-employee', 5);
+            clientTableController = new TableController('table-client', 'pagination-client', 5);
+
+            const searchInput = document.getElementById('globalSearch');
+            searchInput.addEventListener('input', (e) => {
+                const term = e.target.value;
+                if (currentTab === 'employee') {
+                    employeeTableController.filter(term);
+                } else {
+                    clientTableController.filter(term);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
