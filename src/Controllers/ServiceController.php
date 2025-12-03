@@ -3,9 +3,12 @@
 namespace App\Controllers;
 
 use App\Models\Service;
+use Config\Database;
 
 class ServiceController
 {
+
+
     public function addService(): void
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -31,6 +34,11 @@ class ServiceController
         );
 
         if ($service->save()) {
+            $db = Database::getInstance();
+            $sqlAuditLog = "INSERT INTO audit_logs (user_id,action,entity,entity_id,created_at) VALUES (?,?,?,?,NOW())";
+            $serviceId = $db->lastInsertId();
+            $stmt = $db->prepare($sqlAuditLog);
+            $stmt->execute([$_SESSION['user_id'], "Added new service", "services", $serviceId]);
             header("Location: index.php?action=serviceManager");
             exit;
         } else {

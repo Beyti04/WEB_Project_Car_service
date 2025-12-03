@@ -28,6 +28,7 @@
                         "border-dark": "#3A475A",
                         "card-light": "#FFFFFF",
                         "card-dark": "#1A2836",
+                        "danger": "#E74C3C"
                     },
                     fontFamily: {
                         "display": ["Inter", "sans-serif"]
@@ -161,7 +162,7 @@
                                                 </button>
                                             </a>
                                             <form action="index.php?action=removeVehicle&car_id=<?php echo htmlspecialchars($car->id); ?>" method="POST">
-                                                <button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-transparent px-4 text-sm font-medium leading-normal text-destructive hover:bg-destructive/10 transition-colors" type="submit">
+                                                <button class="flex h-8 w-fit min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-gray-100 px-4 text-sm font-medium leading-normal text-danger hover:bg-danger/10 transition-colors" type="submit">
                                                     <span class="truncate">Remove</span>
                                                 </button>
                                             </form>
