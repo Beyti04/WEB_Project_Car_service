@@ -60,6 +60,11 @@ class ClientController
             $client->email = $email;
             $client->phone_number = $phone_number;
             $client->updateClient();
+
+            $auditLogSql="INSERT INTO audit_logs (user_id,action,entity,entity_id,created_at) VALUES (?,?,?,?,NOW())";
+            $db=Database::getInstance();
+            $stmt=$db->prepare($auditLogSql);
+            $stmt->execute([$_SESSION['user_id'],"Employee updated client data","clients",$client->id]);
         }
     }
 
@@ -97,8 +102,8 @@ class ClientController
             $queryAuditLog = "INSERT INTO audit_logs (user_id,action,entity,entity_id,created_at) VALUES (?,?,?,?,NOW())";
 
             $stmt = $db->prepare($queryAuditLog);
-            $stmt->execute([$clientId, "Created order for vehicle: $vehicle", "orders", $orderId]);
-            $stmt->execute([$clientId, "Created service order for order: $orderId", "order_service", $serviceId]);
+            $stmt->execute([$clientId, "Client created order for vehicle: $vehicle", "orders", $orderId]);
+            $stmt->execute([$clientId, "Client created service order for order: $orderId", "order_service", $serviceId]);
         }
     }
 
@@ -237,6 +242,6 @@ class ClientController
 
         $queryAuditLog = "INSERT INTO audit_logs (user_id,action,entity,entity_id,created_at) VALUES (?,?,?,?,NOW())";
         $stmt = $db->prepare($queryAuditLog);
-        $stmt->execute([$_SESSION['user_id'], "Canceled order", "orders", $orderId]);
+        $stmt->execute([$_SESSION['user_id'], "Client canceled order", "orders", $orderId]);
     }
 }

@@ -145,8 +145,11 @@ class Employee
     public function deleteEmployee(): bool
     {
         $sql = "DELETE FROM employees WHERE id = ?";
+        $sqlAuditLog = "INSERT INTO audit_logs (user_id,action,entity,entity_id,created_at) VALUES (?,?,?,?,NOW())";
 
         try {
+            $stmt = $this->db->prepare($sqlAuditLog);
+            $stmt->execute([$_SESSION['user_id'], "Employee deleted", "employees", $this->id]);
             $stmt = $this->db->prepare($sql);
             return $stmt->execute([$this->id]);
         } catch (PDOException $e) {
@@ -158,8 +161,11 @@ class Employee
     public function takeOrder(int $orderId): bool
     {
         $sql = "UPDATE orders SET employee_id = ?,status_id = 2 WHERE id = ?";
-
+        $sqlAuditLog = "INSERT INTO audit_logs (user_id,action,entity,entity_id,created_at) VALUES (?,?,?,?,NOW())";
         try {
+            $sqlAuditLog = "INSERT INTO audit_logs (user_id,action,entity,entity_id,created_at) VALUES (?,?,?,?,NOW())";
+            $stmt = $this->db->prepare($sqlAuditLog);
+            $stmt->execute([$_SESSION['user_id'], "Employee took order", "orders", $orderId]);
             $stmt = $this->db->prepare($sql);
             return $stmt->execute([
                 $this->id,
@@ -180,7 +186,7 @@ class Employee
         $stmt->execute([$orderId]);
 
         $stmt = $this->db->prepare($sqlAuditLog);
-        $stmt->execute([$_SESSION['user_id'], "Canceled order", "orders", $orderId]);
+        $stmt->execute([$_SESSION['user_id'], "Employee canceled order", "orders", $orderId]);
     }
 
     public function getPastAppointments(): array

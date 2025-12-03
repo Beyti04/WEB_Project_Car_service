@@ -142,7 +142,7 @@ class Order
                 $materialOrderId = $db->lastInsertId();
 
                 $stmt = $db->prepare($sqlAuditLog);
-                $stmt->execute([$_SESSION['user_id'], "Updated order materials for order: $orderId", "order_materials", $materialOrderId]);
+                $stmt->execute([$_SESSION['user_id'], "Employee updated order materials for order: $orderId", "order_materials", $materialOrderId]);
 
                 $stmt = $db->prepare($sqlGetOrderFullPrice);
                 $stmt->execute();
@@ -177,14 +177,14 @@ class Order
 
 
                 $stmt = $db->prepare($sqlAuditLog);
-                $stmt->execute([$_SESSION['user_id'], "Updated order status to: $status", "orders", $orderId]);
+                $stmt->execute([$_SESSION['user_id'], "Employee updated order status to: $status", "orders", $orderId]);
             } else {
                 $sqlSetStatus = "UPDATE orders SET status_id = ? WHERE id=?";
                 $stmt = $db->prepare($sqlSetStatus);
                 $stmt->execute([$status, $orderId]);
 
                 $stmt = $db->prepare($sqlAuditLog);
-                $stmt->execute([$_SESSION['user_id'], "Updated order status to: $status", "orders", $orderId]);
+                $stmt->execute([$_SESSION['user_id'], "Employee updated order status to: $status", "orders", $orderId]);
             }
         }
     }
@@ -271,5 +271,29 @@ class Order
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return (float)$row["total_price"];
+    }
+
+    public static function getAuditLogEmployees(): array
+    {
+        $sql = "SELECT a.id, CONCAT(e.first_name,' ',e.last_name) as employee_name, a.action, a.entity,a.entity_id,a.created_at FROM audit_logs a
+                JOIN employees e ON e.id=a.user_id
+                WHERE a.action LIKE 'Employee%'";
+
+        $db = Database::getInstance();
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function getAuditLogClients(): array
+    {
+        $sql = "SELECT a.id, CONCAT(cli.first_name,' ',cli.last_name) as client_name, a.action, a.entity,a.entity_id,a.created_at FROM audit_logs a
+                JOIN clients cli ON cli.id=a.user_id
+                WHERE a.action LIKE 'Client%'";
+
+        $db = Database::getInstance();
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

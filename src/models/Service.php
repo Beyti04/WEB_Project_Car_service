@@ -75,6 +75,10 @@ class Service
         $db = Database::getInstance();
         $stmt = $db->prepare("DELETE FROM services WHERE id = :id");
         $stmt->execute([':id' => $id]);
+
+        $sqlAuditLog = "INSERT INTO audit_logs (user_id,action,entity,entity_id,created_at) VALUES (?,?,?,?,NOW())";
+        $stmt = $db->prepare($sqlAuditLog);
+        $stmt->execute([$_SESSION['user_id'], "Employee deleted service", "services", $id]);
     }
 
     public function update(): void
@@ -90,5 +94,8 @@ class Service
             ':group_id' => $this->group_id_FK,
             ':id' => $this->id
         ]);
+        $sqlAuditLog = "INSERT INTO audit_logs (user_id,action,entity,entity_id,created_at) VALUES (?,?,?,?,NOW())";
+        $stmt = $this->db->prepare($sqlAuditLog);
+        $stmt->execute([$_SESSION['user_id'], "Employee updated service", "services", $this->id]);
     }
 }

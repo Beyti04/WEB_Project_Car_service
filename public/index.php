@@ -446,7 +446,7 @@ switch ($action) {
         require __DIR__ . '/../src/views/employeeDashboard.php';
         break;
 
-        case 'updateOrderAdmin':
+    case 'updateOrderAdmin':
         if (!isset($_SESSION['user_id'])) {
             header("Location: index.php?action=login");
             exit;
@@ -539,10 +539,21 @@ switch ($action) {
         break;
 
     case 'admin':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
         // Тук по-късно ще сложим проверка за роля 'admin'
         require __DIR__ . '/../views/adminDashboard.php';
         break;
 
+    case 'auditLog':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        require __DIR__ . '/../src/views/adminAuditLog.php';
+        break;
     default:
         echo "404 Not Found";
         break;

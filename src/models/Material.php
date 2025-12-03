@@ -36,6 +36,10 @@ class Material
         $db = Database::getInstance();
         $stmt = $db->prepare("DELETE FROM materials WHERE id = :id");
         $stmt->execute([':id' => $id]);
+
+         $sqlAuditLog = "INSERT INTO audit_logs (user_id,action,entity,entity_id,created_at) VALUES (?,?,?,?,NOW())";
+         $stmt=$db->prepare($sqlAuditLog);
+         $stmt->execute([$_SESSION['user_id'],"Employee deleted material","materials",$id]);
     }
 
     public static function getAllMaterials(): array

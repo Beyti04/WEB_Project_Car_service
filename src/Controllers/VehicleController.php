@@ -57,7 +57,7 @@ class VehicleController
         $sqlAuditLog = "INSERT INTO audit_logs (user_id,action,entity,entity_id,created_at) VALUES (?,?,?,?,NOW())";
         $stmt = $db->prepare($sqlAuditLog);
 
-        $stmt->execute([$_SESSION['user_id'], "Added new vehicle", "car", $carId]);
+        $stmt->execute([$_SESSION['user_id'], "CLient added new vehicle", "car", $carId]);
 
         // Зареждаме вашето View за добавяне на превозно средство
         require __DIR__ . '/../../src/views/userVehicleManager.php';
@@ -77,7 +77,7 @@ class VehicleController
         $sqlAuditLog = "INSERT INTO audit_logs (user_id,action,entity,entity_id,created_at) VALUES (?,?,?,?,NOW())";
         $stmt = $db->prepare($sqlAuditLog);
 
-        $stmt->execute([$_SESSION['user_id'], "Removed vehicle", "car", $carId]);
+        $stmt->execute([$_SESSION['user_id'], "Client removed vehicle", "car", $carId]);
 
         header("Location: index.php?action=myVehicles");
         exit;

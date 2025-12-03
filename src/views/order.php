@@ -92,6 +92,10 @@
                     <span class="material-symbols-outlined">inventory_2</span>
                     <p class="text-sm font-medium leading-normal">Inventory</p>
                 </a>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=auditLog">
+                    <span class="material-symbols-outlined">inventory_2</span>
+                    <p class="text-sm font-medium leading-normal">Audit Log</p>
+                </a>
             </nav>
             <div class="flex flex-col gap-4">
                 <div class="flex flex-col gap-1">
