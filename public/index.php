@@ -74,6 +74,14 @@ switch ($action) {
         (new AuthController())->logout();
         break;
 
+    case 'forgotPassword':
+        (new AuthController())->showForgotPassword();
+        break;
+
+    case 'resetPassword':
+        (new AuthController())->resetPassword();
+        break;
+
     case 'myVehicles':
         // Проверяваме дали е логнат
         if (!isset($_SESSION['user_id'])) {

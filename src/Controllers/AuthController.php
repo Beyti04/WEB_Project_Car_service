@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use Config\Database;
 use App\Models\Client;
 use App\Models\Employee;
 use App\Models\Role;
@@ -160,5 +161,54 @@ class AuthController
         session_destroy();
         header("Location: index.php?action=home");
         exit;
+    }
+
+    public function showForgotPassword(): void
+    {
+        require __DIR__ . '/../../src/views/forgotPassword.php';
+    }
+
+    public function resetPassword(): void
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header("Location: index.php?action=forgotPassword");
+            exit;
+        }
+
+        $email = trim($_POST['email'] ?? '');
+        $pass  = $_POST['password'] ?? '';
+        $conf  = $_POST['confirm_password'] ?? '';
+
+        if (empty($email) || empty($pass) || empty($conf)) {
+            header("Location: index.php?action=forgotPassword&error=Попълнете всички полета");
+            exit;
+        }
+
+        if ($pass !== $conf) {
+            header("Location: index.php?action=forgotPassword&error=Паролите не съвпадат");
+            exit;
+        }
+
+        $newHashedPassword = password_hash($pass, PASSWORD_DEFAULT);
+        $db = Database::getInstance();
+
+        $stmtClient = $db->prepare("UPDATE clients SET password = ? WHERE email = ?");
+        $stmtClient->execute([$newHashedPassword, $email]);
+        $clientUpdated = $stmtClient->rowCount();
+
+        $employeeUpdated = 0;
+        if ($clientUpdated === 0) {
+            $stmtEmp = $db->prepare("UPDATE employees SET password = ? WHERE email = ?");
+            $stmtEmp->execute([$newHashedPassword, $email]);
+            $employeeUpdated = $stmtEmp->rowCount();
+        }
+
+        if ($clientUpdated > 0 || $employeeUpdated > 0) {
+            header("Location: index.php?action=login&success=pass_updated");
+            exit;
+        } else {
+            header("Location: index.php?action=forgotPassword&error=Имейлът не е намерен");
+            exit;
+        }
     }
 }

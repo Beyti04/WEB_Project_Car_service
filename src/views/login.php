@@ -112,7 +112,7 @@
                                                 <label class="ml-2 block text-sm text-gray-900 dark:text-gray-300" for="remember-me">Remember me</label>
                                             </div>
                                             <div class="text-sm">
-                                                <a class="font-medium text-primary hover:text-primary/80" href="#">Forgot Password?</a>
+                                                <a class="font-medium text-primary hover:text-primary/80" href="index.php?action=forgotPassword">Forgot Password?</a>
                                             </div>
                                         </div>
                                         <!-- Login Button -->
