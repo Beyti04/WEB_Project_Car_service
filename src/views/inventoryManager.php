@@ -181,10 +181,30 @@
                             <table class="w-full text-left text-sm">
                                 <thead class="bg-gray-50 dark:bg-gray-700/50 text-xs text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                                     <tr>
-                                        <th class="px-6 py-4 font-medium" scope="col">Material Name</th>
-                                        <th class="px-6 py-4 font-medium" scope="col">Group</th>
-                                        <th class="px-6 py-4 font-medium" scope="col">Stock</th>
-                                        <th class="px-6 py-4 font-medium" scope="col">Unit Price</th>
+                                        <th class="px-6 py-4 font-medium cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors group select-none" data-sort="name">
+                                            <div class="flex items-center gap-1">
+                                                Material Name
+                                                <span class="material-symbols-outlined text-base text-gray-400 group-hover:text-primary sort-icon">unfold_more</span>
+                                            </div>
+                                        </th>
+                                        <th class="px-6 py-4 font-medium cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors group select-none" data-sort="group">
+                                            <div class="flex items-center gap-1">
+                                                Group
+                                                <span class="material-symbols-outlined text-base text-gray-400 group-hover:text-primary sort-icon">unfold_more</span>
+                                            </div>
+                                        </th>
+                                        <th class="px-6 py-4 font-medium cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors group select-none" data-sort="stock">
+                                            <div class="flex items-center gap-1">
+                                                Stock
+                                                <span class="material-symbols-outlined text-base text-gray-400 group-hover:text-primary sort-icon">unfold_more</span>
+                                            </div>
+                                        </th>
+                                        <th class="px-6 py-4 font-medium cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors group select-none" data-sort="price">
+                                            <div class="flex items-center gap-1">
+                                                Unit Price
+                                                <span class="material-symbols-outlined text-base text-gray-400 group-hover:text-primary sort-icon">unfold_more</span>
+                                            </div>
+                                        </th>
                                         <th class="px-6 py-4 font-medium text-right" scope="col">Actions</th>
                                     </tr>
                                 </thead>
@@ -226,7 +246,7 @@
                 <div id="pagination-controls" class="flex items-center justify-center p-4 gap-2"></div>
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
-                        const itemsPerPage = 5;
+                        const itemsPerPage = 4;
 
                         const tableBody = document.querySelector('tbody');
                         const allRows = Array.from(tableBody.querySelectorAll('tr'));
@@ -234,28 +254,112 @@
 
                         const searchInput = document.querySelector('input[placeholder="Search by material name..."]');
                         const groupFilter = document.getElementById('groupFilter');
-                        
+                        const sortHeaders = document.querySelectorAll('th[data-sort]');
+
                         let currentPage = 1;
-                        let filteredRows = [...allRows]; // Initially, filtered rows = all rows
+                        let filteredRows = [...allRows];
+                        let currentSort = {
+                            column: null,
+                            direction: 'asc'
+                        };
 
                         function applyFilters() {
                             const searchText = searchInput.value.toLowerCase();
                             const selectedGroupText = groupFilter.options[groupFilter.selectedIndex].text;
-                            const isAllGroups = groupFilter.selectedIndex === 0; // Assuming first option is "All Groups"
+                            const isAllGroups = groupFilter.selectedIndex === 0;
 
                             filteredRows = allRows.filter(row => {
                                 const nameText = row.children[0].innerText.toLowerCase();
                                 const groupText = row.children[1].innerText;
 
                                 const matchesSearch = nameText.includes(searchText);
-
+                                
                                 const matchesGroup = isAllGroups || (groupText.trim() === selectedGroupText.trim());
 
                                 return matchesSearch && matchesGroup;
                             });
 
+                            if (currentSort.column) {
+                                sortRowsInternal();
+                            }
+
                             currentPage = 1;
                             renderTable();
+                        }
+
+                        function handleSort(e) {
+                            const header = e.target.closest('th');
+                            const columnType = header.getAttribute('data-sort');
+
+                            if (currentSort.column === columnType) {
+                                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+                            } else {
+                                currentSort.column = columnType;
+                                currentSort.direction = 'asc';
+                            }
+
+                            updateSortIcons(header);
+
+                            sortRowsInternal();
+
+                            renderTable();
+                        }
+
+                        function sortRowsInternal() {
+                            const dir = currentSort.direction === 'asc' ? 1 : -1;
+
+                            filteredRows.sort((a, b) => {
+                                // Помощна функция за извличане на текст (маха нови редове и интервали)
+                                const getTxt = (row, index) => row.children[index].textContent.trim();
+
+                                let valA, valB;
+
+                                switch (currentSort.column) {
+                                    case 'name':
+                                        valA = getTxt(a, 0).toLowerCase();
+                                        valB = getTxt(b, 0).toLowerCase();
+                                        return valA.localeCompare(valB) * dir;
+
+                                    case 'group':
+                                        valA = getTxt(a, 1).toLowerCase();
+                                        valB = getTxt(b, 1).toLowerCase();
+                                        return valA.localeCompare(valB) * dir;
+
+                                    case 'stock':
+                                        valA = parseInt(getTxt(a, 2).replace(/\D/g, '')) || 0;
+                                        valB = parseInt(getTxt(b, 2).replace(/\D/g, '')) || 0;
+                                        return (valA - valB) * dir;
+
+                                    case 'price':
+                                        let txtA = getTxt(a, 3);
+                                        let txtB = getTxt(b, 3);
+
+                                        txtA = txtA.replace(/[€$]/g, '').replace(/,/g, '');
+                                        txtB = txtB.replace(/[€$]/g, '').replace(/,/g, '');
+
+                                        valA = parseFloat(txtA) || 0;
+                                        valB = parseFloat(txtB) || 0;
+
+                                        return (valA - valB) * dir;
+
+                                    default:
+                                        return 0;
+                                }
+                            });
+                        }
+
+                        function updateSortIcons(activeHeader) {
+                            sortHeaders.forEach(th => {
+                                const icon = th.querySelector('.sort-icon');
+                                icon.textContent = 'unfold_more';
+                                icon.classList.remove('text-primary');
+                                icon.classList.add('text-gray-400');
+                            });
+
+                            const activeIcon = activeHeader.querySelector('.sort-icon');
+                            activeIcon.textContent = currentSort.direction === 'asc' ? 'expand_less' : 'expand_more';
+                            activeIcon.classList.remove('text-gray-400');
+                            activeIcon.classList.add('text-primary');
                         }
 
                         function renderTable() {
@@ -326,6 +430,10 @@
 
                         searchInput.addEventListener('input', applyFilters);
                         groupFilter.addEventListener('change', applyFilters);
+
+                        sortHeaders.forEach(th => {
+                            th.addEventListener('click', handleSort);
+                        });
 
                         renderTable();
                     });
