@@ -132,7 +132,16 @@
                 <div class="p-8">
                     <!-- PageHeading -->
                     <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
-                        <h1 class="text-gray-900 dark:text-white text-3xl font-bold leading-tight">Service Order Management</h1>
+                        <h1 class="text-gray-900 dark:text-white text-3xl font-bold leading-tight">
+                            Service Order Management
+                        </h1>
+
+                        <!-- PDF Export Button -->
+                        <a href="index.php?action=exportOrdersPdf"
+                            class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/80 transition">
+                            <span class="material-symbols-outlined">picture_as_pdf</span>
+                            Export PDF
+                        </a>
                     </div>
                     <!-- Search and Filter Bar -->
                     <div class="p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm mb-6">
@@ -165,6 +174,7 @@
                             </div>
                             <div class="flex items-center gap-3 overflow-x-auto">
                                 <div class="relative w-full">
+
                                     <select class="flex h-10 items-center justify-between gap-x-2 rounded-lg bg-background-light dark:bg-gray-700 px-4 w-full text-gray-800 dark:text-gray-200 text-sm font-medium leading-normal border border-border-light dark:border-border-dark appearance-none cursor-pointer">
                                         <option value="" selected>Assigned Employee</option>
                                         <?php
@@ -172,9 +182,8 @@
                                         use App\Models\Employee;
 
                                         $employees = Employee::getAllEmployees();
-                                        var_dump($employees);
                                         foreach ($employees as $employee) {
-                                            echo '<option value="' . htmlspecialchars($employee["first_name"]) .' '. htmlspecialchars($employee["last_name"])  . '">' . htmlspecialchars($employee["first_name"]) .' '. htmlspecialchars($employee["last_name"]) . '</option>';
+                                            echo '<option value="' . htmlspecialchars($employee["first_name"]) . ' ' . htmlspecialchars($employee["last_name"])  . '">' . htmlspecialchars($employee["first_name"]) . ' ' . htmlspecialchars($employee["last_name"]) . '</option>';
                                         }
                                         ?>
                                     </select>

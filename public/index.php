@@ -464,6 +464,15 @@ switch ($action) {
         exit;
         break;
 
+    case 'exportOrdersPdf':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        require __DIR__ . '/../src/views/exportOrdersPDF.php';
+        exit;
+        break;
+
     case 'addClientService':
         // Проверяваме дали е логнат
         if (!isset($_SESSION['user_id'])) {

@@ -273,6 +273,99 @@ class Order
         return (float)$row["total_price"];
     }
 
+    public static function getFinishedOrders(): array
+{
+    $sql = "SELECT 
+                o.id AS order_id,
+                o.closed_at,
+                o.full_price,
+                CONCAT(e.first_name,' ',e.last_name) AS employee_name,
+                CONCAT(cli.first_name,' ',cli.last_name) AS client_name,
+                cb.brand_name,
+                cm.model_name,
+                c.year,
+                sv.id AS service_id,
+                sv.name AS service_name,
+                sv.base_price AS service_base_price,
+                os.price AS service_price,
+                om.id AS material_order_id,
+                m.id AS material_id,
+                m.name AS material_name,
+                om.quantity AS material_quantity,
+                om.price AS material_price
+            FROM orders o
+            JOIN employees e ON e.id = o.employee_id
+            JOIN car c ON c.id = o.car_id
+            JOIN car_model cm ON cm.id = c.model_id
+            JOIN car_brand cb ON cb.id = cm.brand_id
+            JOIN clients cli ON cli.id = c.owner
+            JOIN order_service os ON os.order_id = o.id
+            JOIN services sv ON sv.id = os.service_id
+            LEFT JOIN order_materials om ON om.order_id = o.id
+            LEFT JOIN materials m ON m.id = om.material_id
+            JOIN status s ON s.id = o.status_id
+            WHERE s.status = 'Готова'";
+
+    $db = Database::getInstance();
+    $stmt = $db->prepare($sql);
+    $stmt->execute();
+
+    $orderData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $orders = [];
+
+    foreach ($orderData as $row) {
+        $id = $row['order_id'];
+
+        if (!isset($orders[$id])) {
+            $orders[$id] = [
+                'order_id' => $row['order_id'],
+                'employee_name' => $row['employee_name'],
+                'client_name' => $row['client_name'],
+                'brand_name' => $row['brand_name'],
+                'model_name' => $row['model_name'],
+                'year' => $row['year'],
+                'service' => [],
+                'materials' => [],
+                'full_price'=>$row['full_price']
+            ];
+        }
+
+        // Add service if not already added
+        $serviceKey = $row['service_id'];
+        if (!isset($orders[$id]['service'][$serviceKey])) {
+            $orders[$id]['service'][$serviceKey] = [
+                'service_id' => $row['service_id'],
+                'service_name' => $row['service_name'],
+                'base_price' => $row['service_base_price'],
+                'price' => $row['service_price']
+            ];
+        }
+
+        // Add material if it exists
+        if (!empty($row['material_id'])) {
+            $materialKey = $row['material_id'];
+            if (!isset($orders[$id]['materials'][$materialKey])) {
+                $orders[$id]['materials'][$materialKey] = [
+                    'material_id' => $row['material_id'],
+                    'material_name' => $row['material_name'],
+                    'price' => $row['material_price'],
+                    'quantity' => $row['material_quantity']
+                ];
+            }
+        }
+    }
+
+    // Optional: reset numeric keys
+    foreach ($orders as &$order) {
+        $order['service'] = array_values($order['service']);
+        $order['materials'] = array_values($order['materials']);
+    }
+
+    return array_values($orders);
+}
+
+
     public static function getAuditLogEmployees(): array
     {
         $sql = "SELECT a.id, CONCAT(e.first_name,' ',e.last_name) as employee_name, a.action, a.entity,a.entity_id,a.created_at FROM audit_logs a
