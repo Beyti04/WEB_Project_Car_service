@@ -152,6 +152,60 @@
                                 <?php } ?>
                             </tbody>
                         </table>
+                        <div id="pagination-controls" class="flex items-center justify-center p-4 gap-2"></div>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const itemsPerPage = 5;
+                                const tableBody = document.querySelector('tbody');
+                                const rows = Array.from(tableBody.querySelectorAll('tr'));
+                                const paginationContainer = document.getElementById('pagination-controls');
+                                const totalPages = Math.ceil(rows.length / itemsPerPage);
+
+                                function showPage(page) {
+                                    rows.forEach(row => row.style.display = 'none');
+
+                                    const start = (page - 1) * itemsPerPage;
+                                    const end = start + itemsPerPage;
+                                    rows.slice(start, end).forEach(row => row.style.display = '');
+
+                                    updateButtons(page);
+                                }
+
+                                function updateButtons(page) {
+                                    paginationContainer.innerHTML = '';
+
+                                    const prevBtn = document.createElement('button');
+                                    prevBtn.innerHTML = '<span class="material-symbols-outlined text-xl">chevron_left</span>';
+                                    prevBtn.className = `flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 ${page === 1 ? 'text-gray-300 cursor-not-allowed' : 'text-[#111418] dark:text-gray-400'}`;
+                                    prevBtn.onclick = () => {
+                                        if (page > 1) showPage(page - 1);
+                                    };
+                                    paginationContainer.appendChild(prevBtn);
+
+                                    for (let i = 1; i <= totalPages; i++) {
+                                        const btn = document.createElement('button');
+                                        btn.innerText = i;
+                                        btn.className = `flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 ${i === page ? 'bg-primary text-white' : 'text-[#111418] dark:text-white'}`;
+                                        btn.onclick = () => showPage(i);
+                                        paginationContainer.appendChild(btn);
+                                    }
+
+                                    const nextBtn = document.createElement('button');
+                                    nextBtn.innerHTML = '<span class="material-symbols-outlined text-xl">chevron_right</span>';
+                                    nextBtn.className = `flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 ${page === totalPages ? 'text-gray-300 cursor-not-allowed' : 'text-[#111418] dark:text-gray-400'}`;
+                                    nextBtn.onclick = () => {
+                                        if (page < totalPages) showPage(page + 1);
+                                    };
+                                    paginationContainer.appendChild(nextBtn);
+                                }
+
+                                showPage(1);
+                            });
+                        </script>
+                    </div>
+                </div>
+                <div class="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm mt-5">
+                    <div class="overflow-x-auto">
                         <table class="w-full text-left text-sm">
                             <thead class="bg-gray-50 dark:bg-gray-700/50 text-xs text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                                 <tr>
@@ -162,25 +216,75 @@
                                     <th class="px-6 py-4 font-medium text-right" scope="col">Created at</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-200 dark:divide-gray-700"></tbody>
-                            <?php
-                            foreach ($clientLogs as $clientLog) {
-                            ?>
-                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30">
-                                    <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"><?php echo htmlspecialchars($clientLog['client_name']); ?></td>
-                                    <td class="px-6 py-4 text-gray-600 dark:text-gray-300"><?php echo htmlspecialchars($clientLog["action"]); ?></td>
-                                    <td class="px-6 py-4 text-gray-600 dark:text-gray-300">
-                                        <?php echo htmlspecialchars($clientLog["entity"]); ?>
-                                    </td>
-                                    <td class="px-6 py-4 text-gray-600 dark:text-gray-300"><?php echo htmlspecialchars($clientLog["entity_id"]); ?></td>
-                                    <td class="px-6 py-4 text-right space-x-2">
-                                        <?php echo htmlspecialchars($clientLog["created_at"]); ?>
-                                    </td>
-                                </tr>
-                            <?php } ?>
+                            <tbody id="client" class="divide-y divide-gray-200 dark:divide-gray-700">
+                                <?php
+                                foreach ($clientLogs as $clientLog) {
+                                ?>
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30">
+                                        <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap"><?php echo htmlspecialchars($clientLog['client_name']); ?></td>
+                                        <td class="px-6 py-4 text-gray-600 dark:text-gray-300"><?php echo htmlspecialchars($clientLog["action"]); ?></td>
+                                        <td class="px-6 py-4 text-gray-600 dark:text-gray-300">
+                                            <?php echo htmlspecialchars($clientLog["entity"]); ?>
+                                        </td>
+                                        <td class="px-6 py-4 text-gray-600 dark:text-gray-300"><?php echo htmlspecialchars($clientLog["entity_id"]); ?></td>
+                                        <td class="px-6 py-4 text-right space-x-2">
+                                            <?php echo htmlspecialchars($clientLog["created_at"]); ?>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
 
                             </tbody>
                         </table>
+                        <div id="pagination-controls-2" class="flex items-center justify-center p-4 gap-2"></div>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const itemsPerPage = 5;
+                                const tableBody = document.getElementById('client');
+                                const rows = Array.from(tableBody.querySelectorAll('tr'));
+                                const paginationContainer = document.getElementById('pagination-controls-2');
+                                const totalPages = Math.ceil(rows.length / itemsPerPage);
+
+                                function showPage(page) {
+                                    rows.forEach(row => row.style.display = 'none');
+
+                                    const start = (page - 1) * itemsPerPage;
+                                    const end = start + itemsPerPage;
+                                    rows.slice(start, end).forEach(row => row.style.display = '');
+
+                                    updateButtons(page);
+                                }
+
+                                function updateButtons(page) {
+                                    paginationContainer.innerHTML = '';
+
+                                    const prevBtn = document.createElement('button');
+                                    prevBtn.innerHTML = '<span class="material-symbols-outlined text-xl">chevron_left</span>';
+                                    prevBtn.className = `flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 ${page === 1 ? 'text-gray-300 cursor-not-allowed' : 'text-[#111418] dark:text-gray-400'}`;
+                                    prevBtn.onclick = () => {
+                                        if (page > 1) showPage(page - 1);
+                                    };
+                                    paginationContainer.appendChild(prevBtn);
+
+                                    for (let i = 1; i <= totalPages; i++) {
+                                        const btn = document.createElement('button');
+                                        btn.innerText = i;
+                                        btn.className = `flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 ${i === page ? 'bg-primary text-white' : 'text-[#111418] dark:text-white'}`;
+                                        btn.onclick = () => showPage(i);
+                                        paginationContainer.appendChild(btn);
+                                    }
+
+                                    const nextBtn = document.createElement('button');
+                                    nextBtn.innerHTML = '<span class="material-symbols-outlined text-xl">chevron_right</span>';
+                                    nextBtn.className = `flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 ${page === totalPages ? 'text-gray-300 cursor-not-allowed' : 'text-[#111418] dark:text-gray-400'}`;
+                                    nextBtn.onclick = () => {
+                                        if (page < totalPages) showPage(page + 1);
+                                    };
+                                    paginationContainer.appendChild(nextBtn);
+                                }
+
+                                showPage(1);
+                            });
+                        </script>
                     </div>
                 </div>
 
