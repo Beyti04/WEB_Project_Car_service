@@ -20,27 +20,27 @@ class VehicleController
 
         if (empty($model_id) || empty($year) || empty($vin) || empty($owner)) {
             $error = "Моля, попълнете всички задължителни полета!";
-            require __DIR__ . '/../../src/views/userVehicleManager.php';
-            return;
+            header("Location: index.php?action=myVehicles&error=" . urlencode($error));
+            exit;
         }
 
         if (empty($year) || $year < 1886 || $year > (int)date("Y") + 1) {
             $error = "Моля, въведете валидна година на производство!";
-            require __DIR__ . '/../../src/views/userVehicleManager.php';
-            return;
+            header("Location: index.php?action=myVehicles&error=" . urlencode($error));
+            exit;
         }
 
         if (empty($vin) || strlen($vin) != 17) {
             $error = "Моля, въведете валиден VIN (17 символа)!";
-            require __DIR__ . '/../../src/views/userVehicleManager.php';
-            return;
+            header("Location: index.php?action=myVehicles&error=" . urlencode($error));
+            exit;
         }
 
         Car::findByVin($vin);
         if (Car::findByVin($vin)) {
             $error = "Това превозно средство вече е регистрирано!";
-            require __DIR__ . '/../../src/views/userVehicleManager.php';
-            return;
+            header("Location: index.php?action=myVehicles&error=" . urlencode($error));
+            exit;
         }
 
         $car = new Car(
@@ -59,8 +59,8 @@ class VehicleController
 
         $stmt->execute([$_SESSION['user_id'], "CLient added new vehicle", "car", $carId]);
 
-        // Зареждаме вашето View за добавяне на превозно средство
-        require __DIR__ . '/../../src/views/userVehicleManager.php';
+        header("Location: index.php?action=myVehicles");
+        exit;
     }
 
     public function removeVehicle(int $carId): void

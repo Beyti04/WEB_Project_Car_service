@@ -101,7 +101,7 @@
                                         
                                         <?php
                                         if (isset($error)) {
-                                            echo '<p class="text-validation-error text-sm mt-1">' . htmlspecialchars($error) . '</p>';
+                                            echo '<div class="p-4 text-sm text-red-700 bg-red-100 rounded-lg">' . htmlspecialchars($error) . '</div>';
                                         }
                                         ?>
 

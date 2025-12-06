@@ -126,6 +126,11 @@
                 </div>
             </header>
             <!-- Main Content -->
+            <?php if (isset($_GET['error'])): ?>
+                <div class="p-4 text-sm text-red-700 bg-red-100 rounded-lg m-4" id="error-message">
+                    <?php echo htmlspecialchars($_GET['error']); ?>
+                </div>
+            <?php endif; ?>
             <main class="flex-1 overflow-y-auto p-10">
                 <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
                     <!-- Left Column: Vehicle List -->
