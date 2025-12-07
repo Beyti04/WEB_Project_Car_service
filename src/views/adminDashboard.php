@@ -123,6 +123,11 @@
                         <p class="text-3xl font-bold leading-tight tracking-tight">Welcome back, <?php echo htmlspecialchars($_SESSION['user_name'] ?? ''); ?>!</p>
                         <p class="text-text-secondary-light dark:text-text-secondary-dark text-base font-normal leading-normal">Here's what's happening with your shop today.</p>
                     </div>
+                    <a href="index.php?action=monthlyReportPDF"
+                            class="inline-flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/80 transition">
+                            <span class="material-symbols-outlined">picture_as_pdf</span>
+                            Monthly Report
+                        </a>
                 </div>
                 <!-- Stats -->
                 <?php

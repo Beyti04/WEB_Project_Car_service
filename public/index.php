@@ -481,6 +481,16 @@ switch ($action) {
         exit;
         break;
 
+    case 'monthlyReportPDF':
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: index.php?action=login");
+            exit;
+        }
+        require __DIR__ . '/../src/views/monthlyReportPDF.php';
+        exit;
+        break;
+
+
     case 'addClientService':
         // Проверяваме дали е логнат
         if (!isset($_SESSION['user_id'])) {
