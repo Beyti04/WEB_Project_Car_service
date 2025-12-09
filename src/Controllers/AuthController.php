@@ -34,7 +34,7 @@ class AuthController
             return;
         }
 
-        if(strlen($phone) != 10 && !empty($phone)) {
+        if (strlen($phone) != 10 && !empty($phone)) {
             $error = "Невалиден телефонен номер!";
             header("Location: index.php?action=register&error=" . urlencode($error));
             return;
@@ -88,10 +88,11 @@ class AuthController
         }
         $success = $user->registerUser();
         if ($success) {
-            header("Location: index.php?action=userDashboard");
+            header("Location: index.php?action=login");
         } else {
             $error = "Грешка при регистрацията. Моля, опитайте отново.";
-            header("Location: index.php?action=home");
+            header("Location: index.php?action=register&error=" . urlencode($error));
+            return;
         }
     }
 

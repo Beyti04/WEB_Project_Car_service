@@ -150,11 +150,18 @@ switch ($action) {
             exit;
         }
         // Зареждаме клиентското табло
-        if ($_SESSION['user_role'] === 'Client' || $_SESSION['user_role'] === '') {
-            require __DIR__ . '/../src/views/userDashboard.php';
-            break;
-        } elseif ($_SESSION['user_role'] === 'Employee') {
+        if ($_SESSION['user_role'] === 'Employee') {
             require __DIR__ . '/../src/views/employeeDashboard.php';
+            
+            break;
+        }
+        elseif($_SESSION['user_role'] === 'Admin'){
+            $role=$_SESSION['user_role'];
+            header("Location: index.php?action=adminDashboard&$role");  
+            
+            exit;
+        }else{
+            require __DIR__ . '/../src/views/userDashboard.php';
             break;
         }
         break;
