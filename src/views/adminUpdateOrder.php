@@ -68,26 +68,6 @@
                     <span class="material-symbols-outlined">receipt_long</span>
                     <p class="text-sm font-medium leading-normal">Orders</p>
                 </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=clientManager">
-                    <span class="material-symbols-outlined">group</span>
-                    <p class="text-sm font-medium leading-normal">Clients</p>
-                </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=employeeManager">
-                    <span class="material-symbols-outlined">badge</span>
-                    <p class="text-sm font-medium leading-normal">Employees</p>
-                </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=serviceManager">
-                    <span class="material-symbols-outlined">build</span>
-                    <p class="text-sm font-medium leading-normal">Services</p>
-                </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="index.php?action=inventoryManager">
-                    <span class="material-symbols-outlined">inventory_2</span>
-                    <p class="text-sm font-medium leading-normal">Inventory</p>
-                </a>
-                <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary" href="index.php?action=auditLog">
-                    <span class="material-symbols-outlined text-primary">inventory_2</span>
-                    <p class="text-sm font-medium leading-normal">Audit Log</p>
-                </a>
             </nav>
             <div class="flex flex-col gap-4">
                 <div class="flex flex-col gap-1">
